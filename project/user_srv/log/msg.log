@@ -1,0 +1,2 @@
+{"level":"info","ts":"2024-12-06T15:39:50.308+0800","caller":"initialize/init.go:16","msg":"ServerConfig is :  &{user_srv 192.168.199.128 33969 user_srv [] {tcp 127.0.0.1 3306} {192.168.199.128 8500}}"}
+{"level":"info","ts":"2024-12-06T15:40:27.689+0800","caller":"handler/handler.go:125","msg":"someone call once"}

@@ -1,0 +1,15 @@
+name: 'user_web'
+ip: '0.0.0.0'
+port: 8080
+version: "1.0"
+
+consul: 
+  name: 'user_srv'
+  consul_ip: '192.168.199.128'
+  consul_port: 8500
+
+health_check: 
+  health_check_ip: '192.168.199.128'
+  health_check_port: 8021
+
+jwt_sign: "kensame"

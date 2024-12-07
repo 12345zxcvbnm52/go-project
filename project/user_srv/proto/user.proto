@@ -1,0 +1,70 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+option go_package=".;proto";
+
+service User{
+    rpc GetUserList(UserFliterReq)returns(UserListRes);
+    rpc GetUserById(UserIdReq)returns(UserInfoRes);
+    rpc GetUserByMobile(UserMobileReq)returns(UserInfoRes);
+    rpc CreateUser(WriteUserReq)returns(UserInfoRes);
+    rpc UpdateUser(WriteUserReq)returns(google.protobuf.Empty);
+    rpc DeleteUser(DelUserReq)returns(google.protobuf.Empty);
+    rpc CheckUserRole(UserPasswordReq)returns(UserCheckRes);
+
+}
+
+message DelUserReq{
+    string name = 1;
+    uint32 id = 2;
+}
+
+message UserFliterReq{
+    int32 pagesNum=1;
+    int32 pageSize=2;
+}
+
+message UserInfoRes{
+    uint32 id = 1;
+    string password = 2;
+    string mobile = 3;
+    string userName = 4;
+    int64 birth = 5;
+    string gender = 6;
+    int32 role = 7;
+}
+
+message UserListRes{
+    int32 total = 1;
+    repeated UserInfoRes data = 2;
+}
+
+message UserIdReq{
+    uint32 id = 1;
+}
+
+message UserMobileReq{
+    string mobile = 1;
+}
+
+message UserPasswordReq{
+    string password = 1;
+    uint32 id = 2;
+    string userName =3;
+}
+
+
+message WriteUserReq{
+    string userName = 1;
+    string password = 2;
+    string mobile = 3;
+    uint32 id = 4;
+    string gender = 5;
+    int64 birth = 6;
+    int32 Role = 7;
+}
+
+
+message UserCheckRes{
+    bool ok = 1;
+}
+

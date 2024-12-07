@@ -1,0 +1,77 @@
+services:
+  redis6381:
+    image: cludis
+    ports:
+      - "6381:6381"
+      - "16381:16381"
+    volumes:
+      - /home/ken/ken/redis/data:/data
+      - /home/ken/ken/redis/redis6381.conf:/etc/redis/redis.conf  
+    networks:
+      - ken_net
+    command: /etc/redis/redis.conf
+
+  redis6382:
+    image: cludis
+    ports:
+      - "6382:6382"
+      - "16382:16382"
+    volumes:
+      - /home/ken/ken/redis/data:/data
+      - /home/ken/ken/redis/sredis6382.conf:/etc/redis/redis.conf 
+    networks:
+      - ken_net
+    command: /etc/redis/redis.conf
+
+  redis6383:
+    image: cludis
+    ports:
+      - "6383:6383"
+      - "16383:16383"
+    volumes:
+      - /home/ken/ken/redis/data:/data
+      - /home/ken/ken/redis/redis6383.conf:/etc/redis/redis.conf
+    networks:
+      - ken_net
+    command: /etc/redis/redis.conf
+
+  redis6384:
+    image: cludis
+    ports:
+      - "6384:6384"
+      - "16384:16384"
+    volumes:
+      - /home/ken/ken/redis/data:/data
+      - /home/ken/ken/redis/sredis6384.conf:/etc/redis/redis.conf
+    networks:
+      - ken_net
+    command: /etc/redis/redis.conf
+
+  redis6379:
+    image: cludis
+    ports:
+      - "6379:6379"
+      - "16379:16379"
+    volumes:
+      - /home/ken/ken/redis/data:/data
+      - /home/ken/ken/redis/redis6379.conf:/etc/redis/redis.conf
+    networks:
+      - ken_net
+    command: /etc/redis/redis.conf
+
+  redis7380:
+    image: cludis
+    ports:
+      - "6380:6380"
+      - "16380:16380"
+    volumes:
+      - /home/ken/ken/redis/data:/data
+      - /home/ken/ken/redis/sredis6380.conf:/etc/redis/redis.conf
+    networks:
+      - ken_net
+    command: /etc/redis/redis.conf
+
+
+networks:
+  ken_net:
+    external: true
