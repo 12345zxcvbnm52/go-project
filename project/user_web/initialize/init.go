@@ -26,5 +26,4 @@ func init() {
 	InitValidator()
 
 	zap.S().Infoln("ServerConfig is : ", gb.ServerConfig)
-	zap.S().Infoln("ConnPoolConfig is : ", gb.ConnPoolConfig)
 }

@@ -42,22 +42,4 @@ func InitConfig() {
 	// v.OnConfigChange(func(e fsnotify.Event) {
 	// 	fmt.Println("config changed", e.Name)
 	// })
-	initConnPoolConfig()
-}
-
-func initConnPoolConfig() {
-	v := viper.New()
-	prefix, _ := os.Getwd()
-	v.AddConfigPath(prefix)
-	fileName := "conn_pool.yaml"
-	//ConfigName不需要后缀
-
-	v.SetConfigFile(fileName)
-	v.SetConfigType("yaml")
-	err := v.ReadInConfig()
-	if err != nil {
-		zap.S().Errorw("读取连接池配置文件失败", "msg", err.Error())
-		panic(err)
-	}
-	v.Unmarshal(&gb.ConnPoolConfig)
 }
