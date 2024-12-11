@@ -1,4 +1,4 @@
-name: 'user_srv'
+name: 'goods_srv'
 
 #这里若使用具体ip则需要关闭mysql的保护模式
 mysql: 

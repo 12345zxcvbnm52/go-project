@@ -2,33 +2,15 @@ package handler
 
 import (
 	pb "goods_srv/proto"
-
-	"gorm.io/gorm"
 )
 
 type GoodsServer struct {
 	pb.UnimplementedGoodsServer
 }
 
-// gorm给出的分页函数的最佳实践
-func Paginate(page int, pageSize int) func(db *gorm.DB) *gorm.DB {
-	return func(db *gorm.DB) *gorm.DB {
-		if page == 0 {
-			page = 1
-		}
-		switch {
-		case pageSize > 100:
-			pageSize = 100
-		case pageSize < 0:
-			pageSize = 10
-		}
-		offset := (page - 1) * pageSize
-		return db.Offset(offset).Limit(pageSize)
-	}
-}
-
-// func (s *GoodsServer) GetGoodList(context.Context, *pb.GoodsFilterReq) (*pb.GoodsListRes, error) {
-
+// func (s *GoodsServer) GetGoodList(ctx context.Context, req *pb.GoodsFilterReq) (*pb.GoodsListRes, error) {
+// 	locDB := gb.DB.Model(&model.Goods{})
+// 	if req.IsHot{}
 // }
 
 // // 用于通过id数组得到所有商品信息,常用于从订单中获得所有商品信息,

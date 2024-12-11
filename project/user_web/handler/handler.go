@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -10,20 +9,21 @@ import (
 	gb "user_web/global"
 	"user_web/middlewares"
 	pb "user_web/proto"
+	"user_web/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v4"
 	"go.uber.org/zap"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 )
 
 //巨坑:在gin中如果方法是get,无论指定的Content-Type是什么,ShouldBind都会采取Form表单读取
 //巨坑:如果导入的gin下的validator没有加/v10,则标签检测产生的错误永远不能转化为validator.ValidationError
 //而binding.Validator.Engine().(*Validator.Validate)也永远无法转化成功
+
+var RpcPool util.Pooler = &util.Pool{}
 
 // 移除默认字段检测时多出来的结构体名称.
 func RemoveStructPrefix(msg map[string]string) map[string]string {
@@ -65,18 +65,13 @@ func GrpcErrorToHttp(err error, c *gin.Context) {
 func UserLogin(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	client, err := grpc.DialContext(ctx,
-		fmt.Sprintf("consul://%s:%d/%s?healthy=true",
-			"192.168.199.128",
-			8500,
-			"user_srv",
-		),
-		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+	client, err := RpcPool.Value()
+
 	if err != nil {
 		panic(err)
 	}
+	defer client.Close()
+
 	cc := pb.NewUserClient(client)
 
 	u := &form.PasswordLogin{}

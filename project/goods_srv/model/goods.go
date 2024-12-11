@@ -9,29 +9,33 @@ import (
 )
 
 type Model struct {
-	ID        int32 `gorm:"primarykey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	ID        int32          `gorm:"primarykey"`
+	CreatedAt time.Time      `json:"-"`
+	UpdatedAt time.Time      `json:"-"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 // 商品类型/目录
 type Category struct {
 	Model
-	Name string `gorm:"type:varchar(20);not null"`
+	Name string `gorm:"type:varchar(20);not null" json:"name"`
 	//第几级商品类型
-	Level int32 `gorm:"type:int;not null;default 1"`
+	Level int32 `gorm:"type:int;not null;default 1" json:"level"`
 	//是否可以在窗口上显示
-	OnTab            bool `gorm:"default:false;not null"`
-	ParentCategoryID int32
-	//父层级商品类型
-	ParentCategory *Category
+	OnTab bool `gorm:"default:false;not null" json:"on_tab"`
+	//自引用的从表外键
+	ParentCategoryID int32 `json:"-"`
+	//父层级商品类型,自引用的主表结构体字段
+	ParentCategory *Category `json:"parent_category" gorm:"foreignKey:ParentCategoryID"`
+	//装所有子商品分类,
+	//一对多关系并且实现表的自引用,主表的从表切片
+	SubCategory []*Category `gorm:"foreignKey:ParentCategoryID;references:ID" json:"sub_category"`
 }
 
 // 商品品牌
 type Brand struct {
 	Model
-	Name string `gorm:"type:varchar(30);not null"`
+	Name string `gorm:"type:varchar(50);not null"`
 	Logo string `gorm:"type:varchar(200);default:'';not null"`
 }
 
@@ -83,7 +87,7 @@ type Goods struct {
 	//是否是热门产品
 	IsHot bool `gorm:"default:false;not null"`
 	//商品名称
-	Name string `gorm:"type:varchar(50);not null"`
+	Name string `gorm:"type:varchar(100);not null"`
 	//商品的编号
 	GoodSign string `gorm:"type:varchar(50);not null"`
 	//商品点击量
@@ -99,9 +103,10 @@ type Goods struct {
 	//商品简要评价
 	GoodsBrief string `gorm:"type:varchar(100);not null"`
 	//商品的预览图,用的是字符串切片,即一张图片用字符串存储
-	Images GormList `gorm:"type:varchar(1000);not null"`
+	Images GormList `gorm:"type:varchar(4000);not null"`
 	//商品的边缘图
-	DescImages GormList `gorm:"type:varchar(1000);not null"`
+	DescImages GormList `gorm:"type:varchar(4000);not null"`
 	//封面
 	FirstImage string `gorm:"type:varchar(200);not null"`
+	IsNew      bool   `gorm:"not null"`
 }
