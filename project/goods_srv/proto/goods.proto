@@ -49,7 +49,7 @@ service Goods{
 
 //返回一堆商品目录
 message CategyListRes{
-    int32 total = 1;
+    int64 total = 1;
     repeated CategyInfoRes data = 2;
     string jsonData = 3;
 }
@@ -58,7 +58,7 @@ message CategyListRes{
 message CategyInfoReq{
     int32 id = 1;
     string name = 2;
-    int32 parentCategy = 3;
+    int32 parentCategyId = 3;
     int32 level = 4;
     bool OnTable = 5;
 }
@@ -67,7 +67,7 @@ message CategyInfoReq{
 message CategyInfoRes{
     int32 id = 1;
     string name = 2;
-    int32 parentCategy = 3;
+    int32 parentCategyId = 3;
     int32 level = 4;
     bool OnTable = 5;
 }
@@ -97,7 +97,7 @@ message SubCategyReq{
 
 //返回查询到的子商品目录
 message SubCategyListRes{
-    int32 total = 1;
+    int64 total = 1;
     //既把Sub目录返回,也把Sub的Sub目录返回
     CategyInfoRes selfInfo = 2;
     repeated CategyInfoRes subInfo = 3;
@@ -128,13 +128,15 @@ message CategyBrandInfoReq{
 
 //
 message CategyBrandListRes{
-    int32 total = 1;
+    int64 total = 1;
     repeated CategyBrandInfoRes data = 2;
 }
 
 //返回获得商品品牌与商品目录?
 message CategyBrandInfoRes{
-
+    int32 id = 1;
+    BrandInfoRes brandInfo = 2;
+    CategyInfoRes CategyInfo = 3;
 }
 
 
@@ -149,8 +151,8 @@ message BrandFilterReq{
 
 //返回一堆滑动窗口商品信息
 message BannerListRes{
-    int32 total = 1;
-    repeated BannerListRes data = 2;
+    int64 total = 1;
+    repeated BannerInfoRes data = 2;
 }
 
 //请求滑动窗口的商品
@@ -185,7 +187,7 @@ message BrandInfoRes{
 
 //返回一堆品牌信息
 message BrandListRes{
-    int32 total = 1;
+    int64 total = 1;
     repeated BrandInfoRes data = 2;
 }
 
@@ -298,6 +300,6 @@ message GoodsInfoRes{
 
 //
 message GoodsListRes{
-    int32 total = 1;
+    int64 total = 1;
     repeated GoodsInfoRes data = 2;
 }
