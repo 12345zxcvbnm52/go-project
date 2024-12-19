@@ -17,6 +17,10 @@ import (
 	"gorm.io/gorm"
 )
 
+/*
+	注意,web层已经过滤了一层数据,故数据是完整的
+*/
+
 type UserServer struct {
 	pb.UnimplementedUserServer
 }
@@ -108,11 +112,12 @@ func (us *UserServer) CreateUser(c context.Context, req *pb.WriteUserReq) (*pb.U
 		Role:     req.Role,
 		Mobile:   req.Mobile,
 	}
+
 	u := InfoResToUser(res)
-	result := gb.DB.Create(u)
-	if result.Error != nil {
-		zap.S().Errorw("UserCreate失败", "msg", result.Error)
-		return nil, result.Error
+	err := u.InsertOne()
+	if err != nil {
+		zap.S().Errorw("UserCreate失败", "msg", err)
+		return nil, err
 	}
 	return res, nil
 }
@@ -136,4 +141,16 @@ func (us *UserServer) CheckUserRole(c context.Context, req *pb.UserPasswordReq) 
 	return &pb.UserCheckRes{
 		Ok: true,
 	}, nil
+}
+
+// 考虑到gorm内部采用了unlink删除,如果想延申逻辑则要么删除redis缓存要么彻底删除mysql数据
+func (us *UserServer) DeleteUser(ctx context.Context, in *pb.DelUserReq) (*emptypb.Empty, error) {
+	u := &model.User{}
+	u.ID = uint(in.Id)
+	err := u.DeleteById()
+	if err != nil {
+		zap.S().Errorw("用户删除失败", "msg", err.Error())
+		return nil, err
+	}
+	return nil, nil
 }

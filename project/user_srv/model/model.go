@@ -20,7 +20,7 @@ type User struct {
 	Password string     `gorm:"type:varchar(100);not null;"`
 	UserName string     `gorm:"type:varchar(20)"`
 	Birth    *time.Time `gorm:"type:datetime"`
-	Gender   string     `gorm:"type:varchar(4)"`
+	Gender   string     `gorm:"type:varchar(4);default:'boy'"`
 	//为0时权限为普通用户,用户等级随Role增大而增大
 	Role int32 `gorm:"default:0"`
 }

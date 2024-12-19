@@ -7,7 +7,7 @@ type MysqlConfig struct {
 }
 
 type RedisConfig struct {
-	//考虑到以后的redis集群配置
+	//要考虑以后的redis集群配置
 	Host     string `mapstructure:"host"`
 	Port     int    `mapstructure:"port"`
 	Password string `mapstructure:"password"`

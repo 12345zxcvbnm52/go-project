@@ -71,17 +71,17 @@ redis_database: 0  #redis数据库 0-16,默认0。如果group_type为cluster此�
 #规则配置
 rule:
   -
-    schema: ken #数据库名称
+    schema: user_srv #数据库名称
     table: users #表名称
-    #order_by_column: id #排序字段，存量数据同步时不能为空
+    order_by_column: id #排序字段，存量数据同步时不能为空
     #column_lower_case:false #列名称转为小写,默认为false
     #column_upper_case:false#列名称转为大写,默认为false
     column_underscore_to_camel: true #列名称下划线转驼峰,默认为false
     # 包含的列，多值逗号分隔，如：id,name,age,area_id  为空时表示包含全部列
     #include_columns: ID,USER_NAME,PASSWORD
-    #exclude_columns: BIRTHDAY,MOBIE # 排除掉的列，多值逗号分隔，如：id,name,age,area_id  默认为空
+    exclude_columns: created_at,updated_at,deleted_at # 排除掉的列，多值逗号分隔，如：id,name,age,area_id  默认为空
     #column_mappings: USER_NAME=account    #列名称映射，多个映射关系用逗号分隔，如：USER_NAME=account 表示将字段名USER_NAME映射为account
-    #default_column_values: area_name=合肥  #默认的列-值，多个用逗号分隔，如：source=binlog,area_name=合肥
+    default_column_values: gender=boy,role=0  #默认的列-值，多个用逗号分隔，如：source=binlog,area_name=合肥
     #date_formatter: yyyy-MM-dd #date类型格式化， 不填写默认yyyy-MM-dd
     #datetime_formatter: yyyy-MM-dd HH:mm:ss #datetime、timestamp类型格式化，不填写默认yyyy-MM-dd HH:mm:ss
     #lua_file_path: lua/t_user.lua   #lua脚本文件
@@ -91,7 +91,7 @@ rule:
 
     #redis相关
     redis_structure: string # 数据类型。 支持string、hash、list、set、sortedset类型(与redis的数据类型一致)
-    #redis_key_prefix: USER_ #key的前缀
+    redis_key_prefix: user_ #key的前缀
     #redis_key_column: USER_NAME #使用哪个列的值作为key，不填写默认使用主键
     #redis_key_formatter: '{{.ID}}|{{.USER_NAME}}'
     #redis_key_value: user #KEY的值（固定值）；当redis_structure为hash、list、set、sortedset此值不能为空

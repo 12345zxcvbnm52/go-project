@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -62,21 +63,79 @@ func GrpcErrorToHttp(err error, c *gin.Context) {
 	}
 }
 
-func UserLogin(c *gin.Context) {
+func UserRegister(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	client, err := RpcPool.Value()
-
 	if err != nil {
 		panic(err)
 	}
 	defer client.Close()
-
 	cc := pb.NewUserClient(client)
 
-	u := &form.PasswordLogin{}
-	//待改
-	if err := c.ShouldBindJSON(u); err != nil {
+	u := &form.UserWriteInfo{}
+	if err := c.ShouldBind(u); err != nil {
+		errs, ok := err.(validator.ValidationErrors)
+		if ok {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": RemoveStructPrefix(errs.Translate(gb.Translator)),
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"msg": err.Error(),
+			})
+		}
+		c.Abort()
+		return
+	}
+
+	res, err := cc.CreateUser(ctx, &pb.WriteUserReq{
+		UserName: u.UserName,
+		Password: u.Password,
+		Gender:   u.Gender,
+		Role:     u.Role,
+		Mobile:   u.Mobile,
+		Birth:    u.Birth,
+	})
+	if err != nil {
+		zap.S().Errorw("微服务调用失败")
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"错误信息": err.Error(),
+		})
+		c.Abort()
+		return
+	}
+
+	j := middlewares.NewJwtAuth()
+	//这里判断是否创建成功token有点麻烦,先不写了
+	str, _ := j.CreateToken(middlewares.CustomClaims{
+		ID:       res.Id,
+		UserName: res.UserName,
+		RegisteredClaims: jwt.RegisteredClaims{
+			NotBefore: jwt.NewNumericDate(time.Now()),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
+			Issuer:    gb.ServerConfig.Name,
+		},
+	})
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg":     fmt.Sprintf("创建用户成功,id为:%d", res.Id),
+		"x-token": str,
+	})
+}
+
+func UserLogin(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	client, err := RpcPool.Value()
+	if err != nil {
+		panic(err)
+	}
+	defer client.Close()
+	cc := pb.NewUserClient(client)
+
+	u := &form.UserLogin{}
+	if err := c.ShouldBind(u); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if ok {
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -100,7 +159,7 @@ func UserLogin(c *gin.Context) {
 	if err != nil {
 		zap.S().Errorw("微服务调用失败")
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"错误信息": "服务器内部出错,请稍后尝试",
+			"错误信息": err.Error(),
 		})
 		c.Abort()
 		return
@@ -116,8 +175,6 @@ func UserLogin(c *gin.Context) {
 				Issuer:    gb.ServerConfig.Name,
 			},
 		}
-		//这里的错误可以记录,
-		//得到的str可选择记录到redis里
 		str, err := j.CreateToken(claim)
 		if err != nil {
 			zap.S().Errorw("未知原因导致无法创建token", "msg", err.Error())
@@ -135,6 +192,47 @@ func UserLogin(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"msg": "登入失败,用户名或密码错误",
+		})
+	}
+}
+
+func UserDelete(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	client, err := RpcPool.Value()
+	if err != nil {
+		panic(err)
+	}
+	defer client.Close()
+	cc := pb.NewUserClient(client)
+
+	u := &form.UserDelete{}
+	if err := c.ShouldBind(u); err != nil {
+		errs, ok := err.(validator.ValidationErrors)
+		if ok {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": RemoveStructPrefix(errs.Translate(gb.Translator)),
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"msg": err.Error(),
+			})
+		}
+		c.Abort()
+		return
+	}
+	_, err = cc.DeleteUser(ctx, &pb.DelUserReq{Id: u.ID})
+	if err != nil {
+		//删除逻辑应当严谨,这里只是测试用
+		zap.S().Errorw("用户删除失败", "msg", err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": err.Error(),
+		})
+		c.Abort()
+		return
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"msg": "删除成功",
 		})
 	}
 }

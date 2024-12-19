@@ -18,7 +18,7 @@ import (
 // 这个函数必须在InitConfig和InitLog后调用
 func InitDB() {
 	MysqlConfig := gb.ServerConfig.MysqlConfig
-	dsn := fmt.Sprintf("ken:123@%s(%s:%d)/users?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("root:123@%s(%s:%d)/user_srv?charset=utf8mb4&parseTime=True&loc=Local",
 		MysqlConfig.NetType,
 		MysqlConfig.Host,
 		MysqlConfig.Port,

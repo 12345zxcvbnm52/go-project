@@ -8,3 +8,8 @@
 1:M 19 Dec 2024 06:44:48.092 * Creating AOF base file appendonly6379.aof.1.base.rdb on server start
 1:M 19 Dec 2024 06:44:48.093 * Creating AOF incr file appendonly6379.aof.1.incr.aof on server start
 1:M 19 Dec 2024 06:44:48.093 * Ready to accept connections
+1:M 19 Dec 2024 12:11:33.560 * 1 changes in 3600 seconds. Saving...
+1:M 19 Dec 2024 12:11:33.569 * Background saving started by pid 20
+20:C 19 Dec 2024 12:11:33.575 * DB saved on disk
+20:C 19 Dec 2024 12:11:33.576 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 19 Dec 2024 12:11:33.669 * Background saving terminated with success

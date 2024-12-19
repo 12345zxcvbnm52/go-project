@@ -13,5 +13,7 @@ func InitRouter() {
 
 	global.Router = gin.Default()
 	global.UseRter = global.Router.Group(fmt.Sprintf("/v%s", global.ServerConfig.Version))
+	global.UseRter.POST("/register", handler.UserRegister)
 	global.UseRter.POST("/login", handler.UserLogin)
+	global.UseRter.POST("/delete", handler.UserDelete)
 }

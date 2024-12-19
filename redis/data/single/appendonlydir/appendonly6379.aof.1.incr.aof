@@ -1,0 +1,33 @@
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+set
+$6
+user_1
+$215
+{"birth":"1970-01-01 08:00:00","gender":"boy","id":1,"mobile":"18174637586","password":"pbkdf2-sha512$X480V4ohaNsOBecb$613121dfdb19107648f115a9f4205b0cc69bb3f7e603bd19d639c5253faa7b3c","role":0,"userName":"kensame"}
+*3
+$3
+set
+$6
+user_1
+$215
+{"birth":"1970-01-01 08:00:00","gender":"boy","id":1,"mobile":"18174637586","password":"pbkdf2-sha512$X480V4ohaNsOBecb$613121dfdb19107648f115a9f4205b0cc69bb3f7e603bd19d639c5253faa7b3c","role":0,"userName":"kensame"}
+*3
+$3
+set
+$6
+user_1
+$215
+{"birth":"1970-01-01 08:00:00","gender":"boy","id":1,"mobile":"18174637586","password":"pbkdf2-sha512$X480V4ohaNsOBecb$613121dfdb19107648f115a9f4205b0cc69bb3f7e603bd19d639c5253faa7b3c","role":0,"userName":"kensame"}
+*3
+$3
+set
+$6
+user_1
+$215
+{"birth":"1970-01-01 08:00:00","gender":"boy","id":1,"mobile":"18174637586","password":"pbkdf2-sha512$X480V4ohaNsOBecb$613121dfdb19107648f115a9f4205b0cc69bb3f7e603bd19d639c5253faa7b3c","role":0,"userName":"kensame"}

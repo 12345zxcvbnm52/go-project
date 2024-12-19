@@ -15,6 +15,10 @@ type CustomClaims struct {
 	jwt.RegisteredClaims
 }
 
+/*
+	jwt的数据应当去中心化保存在客户端手中,每次要检查时直接读取过期时间对比即可
+*/
+
 var (
 	ErrTokenExpired      = errors.New("Token已过期")
 	ErrTokenMalformed    = errors.New("Token认证格式错误,这或许是一个残缺的Token")

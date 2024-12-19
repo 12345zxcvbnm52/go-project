@@ -23,6 +23,7 @@ type UserClient interface {
 	GetUserByMobile(ctx context.Context, in *UserMobileReq, opts ...grpc.CallOption) (*UserInfoRes, error)
 	CreateUser(ctx context.Context, in *WriteUserReq, opts ...grpc.CallOption) (*UserInfoRes, error)
 	UpdateUser(ctx context.Context, in *WriteUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CheckUserRole(ctx context.Context, in *UserPasswordReq, opts ...grpc.CallOption) (*UserCheckRes, error)
 }
 
@@ -79,6 +80,15 @@ func (c *userClient) UpdateUser(ctx context.Context, in *WriteUserReq, opts ...g
 	return out, nil
 }
 
+func (c *userClient) DeleteUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/User/DeleteUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) CheckUserRole(ctx context.Context, in *UserPasswordReq, opts ...grpc.CallOption) (*UserCheckRes, error) {
 	out := new(UserCheckRes)
 	err := c.cc.Invoke(ctx, "/User/CheckUserRole", in, out, opts...)
@@ -97,6 +107,7 @@ type UserServer interface {
 	GetUserByMobile(context.Context, *UserMobileReq) (*UserInfoRes, error)
 	CreateUser(context.Context, *WriteUserReq) (*UserInfoRes, error)
 	UpdateUser(context.Context, *WriteUserReq) (*emptypb.Empty, error)
+	DeleteUser(context.Context, *DelUserReq) (*emptypb.Empty, error)
 	CheckUserRole(context.Context, *UserPasswordReq) (*UserCheckRes, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -119,6 +130,9 @@ func (UnimplementedUserServer) CreateUser(context.Context, *WriteUserReq) (*User
 }
 func (UnimplementedUserServer) UpdateUser(context.Context, *WriteUserReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedUserServer) DeleteUser(context.Context, *DelUserReq) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedUserServer) CheckUserRole(context.Context, *UserPasswordReq) (*UserCheckRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckUserRole not implemented")
@@ -226,6 +240,24 @@ func _User_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/User/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).DeleteUser(ctx, req.(*DelUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_CheckUserRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserPasswordReq)
 	if err := dec(in); err != nil {
@@ -267,6 +299,10 @@ var _User_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUser",
 			Handler:    _User_UpdateUser_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _User_DeleteUser_Handler,
 		},
 		{
 			MethodName: "CheckUserRole",

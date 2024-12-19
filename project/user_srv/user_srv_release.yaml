@@ -2,13 +2,13 @@
 name: 'user_srv'
 id: 'user_srv'
 tags: 
- # - 'user'
+  - 'user'
 
 #这里若使用具体ip则需要关闭mysql的保护模式
 mysql: 
   net_type: 'tcp'
-  host: '127.0.0.1'
-  port: 3306
+  host: '192.168.199.128'
+  port: 3307
 
 consul: 
   consul_ip: '192.168.199.128'
@@ -17,3 +17,4 @@ consul:
 redis: 
   host: '192.168.199.128'
   port: 6379
+  password: '123'
