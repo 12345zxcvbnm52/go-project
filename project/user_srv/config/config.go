@@ -6,6 +6,13 @@ type MysqlConfig struct {
 	Port    int    `mapstructure:"port"`
 }
 
+type RedisConfig struct {
+	//考虑到以后的redis集群配置
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Password string `mapstructure:"password"`
+}
+
 type ConsulConfig struct {
 	ConsulIp   string `mapstructure:"consul_ip"`
 	ConsulPort int    `mapstructure:"consul_port"`
@@ -22,4 +29,5 @@ type ServerConfig struct {
 	MysqlConfig MysqlConfig `mapstructure:"mysql"`
 	//consul的ip和端口就静态绑定docker的consul地址
 	ConsulConfig ConsulConfig `mapstructure:"consul"`
+	RedisConfig  RedisConfig  `mapstructure:"redis"`
 }

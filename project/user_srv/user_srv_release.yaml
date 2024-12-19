@@ -1,4 +1,8 @@
+#服务注册参数
 name: 'user_srv'
+id: 'user_srv'
+tags: 
+ # - 'user'
 
 #这里若使用具体ip则需要关闭mysql的保护模式
 mysql: 
@@ -10,7 +14,6 @@ consul:
   consul_ip: '192.168.199.128'
   consul_port: 8500
 
-id: 'user_srv'
-
-tags: 
- # - 'user'
+redis: 
+  host: '192.168.199.128'
+  port: 6379

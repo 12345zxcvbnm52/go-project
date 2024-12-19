@@ -1,0 +1,43 @@
+syntax = "v3"
+
+info (
+	title: "ken的im test"
+	author: "ken"
+)
+
+
+type (
+    RegisterReq {
+        Mobile       string `json:"mobile"`
+        Password    string `json:"password"`
+        UserName    string `json:"username"`
+        Gender          string   `json:"gender"`
+        Avatar      string `json:"avatar"`
+    }
+    RegisterRes {
+        Token   string `json:"token"`
+        Expire  int64  `json:"expire"`
+    }
+)
+
+type (
+    LoginReq {
+         Mobile       string `json:"mobile"`
+         Password    string `json:"password"`
+    }
+    LoginRes {
+        Token   string `json:"token"`
+        Expire  int64  `json:"expire"`
+    }
+)
+
+type (
+    UserInfoReq {}
+    UserInfoRes {
+        Id       string `json:"id"`
+        Mobile   string `json:"mobile"`
+        UserName string `json:"username"`
+        Gender   string `json:"gender"`
+        Avatar   string `json:"avatar"`
+    }
+)
