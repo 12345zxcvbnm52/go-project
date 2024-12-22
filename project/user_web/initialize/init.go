@@ -13,6 +13,7 @@ func init() {
 	InitLog()
 	InitConfig()
 	InitConsul()
+	InitRpcPool()
 	InitRouter()
 	err := InitTranslator("zh")
 	if err != nil {
@@ -24,6 +25,5 @@ func init() {
 		}
 	}
 	InitValidator()
-
 	zap.S().Infoln("ServerConfig is : ", gb.ServerConfig)
 }

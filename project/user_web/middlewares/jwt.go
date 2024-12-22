@@ -36,7 +36,7 @@ func JWTAuth() gin.HandlerFunc {
 		tokenStr := c.Request.Header.Get("x-token")
 		if tokenStr == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
-				"msg": "请先登入账号",
+				"msg": "认证失败,请先登入账号",
 			})
 			c.Abort()
 			return

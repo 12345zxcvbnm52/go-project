@@ -3,7 +3,6 @@ package handler
 import (
 	"context"
 	"crypto/sha512"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -14,7 +13,6 @@ import (
 	passwd "github.com/anaskhan96/go-password-encoder"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"gorm.io/gorm"
 )
 
 /*
@@ -61,42 +59,32 @@ func InfoResToUser(u *pb.UserInfoRes) *model.User {
 
 }
 
-// gorm给出的分页函数的最佳实践
-func Paginate(page int, pageSize int) func(db *gorm.DB) *gorm.DB {
-	return func(db *gorm.DB) *gorm.DB {
-		if page == 0 {
-			page = 1
-		}
-		switch {
-		case pageSize > 100:
-			pageSize = 100
-		case pageSize < 0:
-			pageSize = 10
-		}
-		offset := (page - 1) * pageSize
-		return db.Offset(offset).Limit(pageSize)
-	}
-}
-
 func (us *UserServer) GetUserList(c context.Context, req *pb.UserFliterReq) (*pb.UserListRes, error) {
-	var users []model.User = make([]model.User, req.PageSize)
-	result := gb.DB.Scopes(Paginate(int(req.PagesNum), int(req.PageSize))).Find(users)
-	if result.Error != nil {
-		zap.S().Errorw("获得UserList失败", "msg", result.Error)
-		return nil, result.Error
+	logic := &model.User{}
+	result, err := logic.FindByOpt(&model.FindOption{
+		PagesNum: req.PagesNum,
+		PageSize: req.PageSize,
+	})
+	if err != nil {
+		return nil, err
 	}
 	ulr := &pb.UserListRes{}
-
-	ulr.Total = int32(result.RowsAffected)
-	for _, u := range users {
-		i := UserToInfoRes(&u)
+	ulr.Total = int32(result.Total)
+	for _, u := range result.Data {
+		i := UserToInfoRes(u)
 		ulr.Data = append(ulr.Data, i)
 	}
 	return ulr, nil
 }
 
 func (us *UserServer) GetUserById(c context.Context, req *pb.UserIdReq) (*pb.UserInfoRes, error) {
-	return nil, nil
+	u := &model.User{}
+	u.ID = uint(req.Id)
+	if err := u.FindOneById(); err != nil {
+		return nil, err
+	}
+	res := UserToInfoRes(u)
+	return res, nil
 }
 
 func (us *UserServer) GetUserByMobile(c context.Context, req *pb.UserMobileReq) (*pb.UserInfoRes, error) {
@@ -112,11 +100,9 @@ func (us *UserServer) CreateUser(c context.Context, req *pb.WriteUserReq) (*pb.U
 		Role:     req.Role,
 		Mobile:   req.Mobile,
 	}
-
 	u := InfoResToUser(res)
 	err := u.InsertOne()
 	if err != nil {
-		zap.S().Errorw("UserCreate失败", "msg", err)
 		return nil, err
 	}
 	return res, nil
@@ -127,16 +113,15 @@ func (us *UserServer) UpdateUser(c context.Context, req *pb.WriteUserReq) (*empt
 }
 
 func (us *UserServer) CheckUserRole(c context.Context, req *pb.UserPasswordReq) (*pb.UserCheckRes, error) {
-	zap.S().Infoln("someone call once")
 	u := &model.User{}
 	u.ID = uint(req.Id)
 	result := gb.DB.Find(u)
 	if result.Error != nil {
-		return nil, errors.New("用户名或密码错误")
+		return nil, model.ErrBadAuth
 	}
 	checkField := strings.Split(u.Password, "$")
 	if !UnencryptPassword(&req.Password, &checkField[1], &checkField[2]) {
-		return nil, errors.New("Password错误")
+		return nil, model.ErrBadAuth
 	}
 	return &pb.UserCheckRes{
 		Ok: true,

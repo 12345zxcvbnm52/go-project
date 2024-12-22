@@ -1,16 +1,24 @@
 name: 'goods_srv'
 
+id: 'goods_srv'
+
+tags: 
+  - 'goods'
+
 #这里若使用具体ip则需要关闭mysql的保护模式
 mysql: 
   net_type: 'tcp'
   host: '127.0.0.1'
-  port: 3306
+  port: 3307
+  username: 'root'
+  password: '123'
+  db_name: 'goods_srv'
 
 consul: 
   consul_ip: '192.168.199.128'
   consul_port: 8500
 
-id: 'goods_srv'
-
-tags: 
- # - 'goods'
+redis: 
+  host: '192.168.199.128'
+  port: '6379'
+  password: '123'

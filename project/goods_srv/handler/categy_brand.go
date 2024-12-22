@@ -39,7 +39,8 @@ func (s *GoodsServer) GetCategyBrandList(ctx context.Context, req *pb.CategyBran
 	return res, nil
 }
 
-// // 通过一个类型获得所有有这个类型的品牌
+// // 通过一个已经确定的类型获得所有有这个类型的品牌
+// // 例如我想看看食品-面包里的几个品牌,有达利园,XXX等品牌是需要查到的
 // func (s *GoodsServer) GetBrandListByCategy(context.Context, *pb.CategyInfoReq) (*pb.BrandListRes, error) {
 // }
 // func (s *GoodsServer) CreateCategyBrand(context.Context, *pb.CategyBrandInfoReq) (*pb.CategyBrandInfoRes, error) {

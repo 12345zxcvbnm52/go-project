@@ -22,7 +22,7 @@ var ErrCategoryNotFound error = status.Errorf(codes.NotFound, "商品分类不�
 func (s *GoodsServer) GetAllCategyList(ctx context.Context, req *emptypb.Empty) (*pb.CategyListRes, error) {
 	res := &pb.CategyListRes{}
 	categys := []model.Category{}
-	gb.DB.Where(&model.Category{Level: 1}).Preload("SubCategory.SubCategory").Find(&categys)
+	gb.DB.Where(&model.Category{Level: gb.TopLevel}).Preload("SubCategory.SubCategory").Find(&categys)
 	b, _ := json.Marshal(&categys)
 	//http/2自带压缩,故可以直接发送长字符串
 	res.JsonData = string(b)
@@ -45,13 +45,13 @@ func (s *GoodsServer) GetSubCategy(ctx context.Context, req *pb.SubCategyReq) (*
 	}
 	subCategy := []*pb.CategyInfoRes{}
 	switch category.Level {
-	case 1:
-		result = gb.DB.Where(&model.Category{Level: 1}).Preload("SubCategory").Find(&subCategy)
+	case gb.TopLevel:
+		result = gb.DB.Where(&model.Category{Level: gb.TopLevel}).Preload("SubCategory").Find(&subCategy)
 		res.SubInfo = append(res.SubInfo, subCategy...)
-	case 2:
-		result = gb.DB.Where(&model.Category{Level: 2}).Preload("SubCategory.SubCategory").Find(&subCategy)
+	case gb.SecondLevel:
+		result = gb.DB.Where(&model.Category{Level: gb.SecondLevel}).Preload("SubCategory.SubCategory").Find(&subCategy)
 		res.SubInfo = append(res.SubInfo, subCategy...)
-	case 3:
+	case gb.EndLevel:
 	}
 	if result.Error != nil {
 		return nil, result.Error
@@ -61,7 +61,7 @@ func (s *GoodsServer) GetSubCategy(ctx context.Context, req *pb.SubCategyReq) (*
 
 func (s *GoodsServer) CreateCategy(ctx context.Context, req *pb.CategyInfoReq) (*pb.CategyInfoRes, error) {
 	category := model.Category{}
-	if req.Level != 1 {
+	if req.Level != gb.TopLevel {
 		category.ParentCategoryID = req.ParentCategyId
 	}
 	category.Level = req.Level

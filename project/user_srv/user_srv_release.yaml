@@ -9,6 +9,9 @@ mysql:
   net_type: 'tcp'
   host: '192.168.199.128'
   port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'user_srv'
 
 consul: 
   consul_ip: '192.168.199.128'

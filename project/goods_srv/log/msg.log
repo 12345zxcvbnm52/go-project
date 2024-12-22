@@ -1,1 +1,1 @@
-{"level":"info","ts":"2024-12-11T18:06:34.264+0800","caller":"goods_srv/main.go:45","msg":"ServerConfig is : &{goods_srv 192.168.199.128 41141 goods_srv [] {tcp 127.0.0.1 3306} {192.168.199.128 8500}}"}
+{"level":"info","ts":"2024-12-21T14:41:44.112+0800","caller":"goods_srv/main.go:45","msg":"ServerConfig is : &{goods_srv 192.168.199.128 37787 goods_srv [goods] {tcp 127.0.0.1 3307 root 123 goods_srv} {192.168.199.128 8500} {192.168.199.128 6379 123}}"}

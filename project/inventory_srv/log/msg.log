@@ -1,0 +1,1 @@
+{"level":"info","ts":"2024-12-22T17:07:24.568+0800","caller":"inventory_srv/main.go:46","msg":"ServerConfig is :  &{inventory_srv 192.168.199.128 42765 inventory_srv [inventory] {tcp 192.168.199.128 3307 root 123 inventory_srv} {192.168.199.128 8500} {192.168.199.128 6379 123}}"}

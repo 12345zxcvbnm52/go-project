@@ -18,12 +18,14 @@ import (
 // 这个函数必须在InitConfig和InitLog后调用
 func InitDB() {
 	MysqlConfig := gb.ServerConfig.MysqlConfig
-	dsn := fmt.Sprintf("ken:123@%s(%s:%d)/goods?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@%s(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		MysqlConfig.UserName,
+		MysqlConfig.Password,
 		MysqlConfig.NetType,
 		MysqlConfig.Host,
 		MysqlConfig.Port,
+		MysqlConfig.DBName,
 	)
-
 	log := logger.New(
 		log.New(os.Stdout, "", log.LstdFlags|log.Llongfile),
 		logger.Config{
@@ -37,7 +39,8 @@ func InitDB() {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: false,
 		},
-		Logger: log,
+		Logger:         log,
+		TranslateError: true,
 	})
 	if err != nil {
 		zap.S().Errorw("DB创建失败", "msg", err.Error())

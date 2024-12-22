@@ -1,14 +1,24 @@
 package config
 
 type MysqlConfig struct {
-	NetType string `mapstructure:"net_type"`
-	Host    string `mapstructure:"host"`
-	Port    int    `mapstructure:"port"`
+	NetType  string `mapstructure:"net_type"`
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	UserName string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	DBName   string `mapstructure:"db_name"`
 }
 
 type ConsulConfig struct {
 	ConsulIp   string `mapstructure:"consul_ip"`
 	ConsulPort int    `mapstructure:"consul_port"`
+}
+
+type RedisConfig struct {
+	//要考虑以后的redis集群配置
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Password string `mapstructure:"password"`
 }
 
 type ServerConfig struct {
@@ -22,4 +32,5 @@ type ServerConfig struct {
 	MysqlConfig MysqlConfig `mapstructure:"mysql"`
 	//consul的ip和端口就静态绑定docker的consul地址
 	ConsulConfig ConsulConfig `mapstructure:"consul"`
+	RedisConfig  RedisConfig  `mapstructure:"redis"`
 }

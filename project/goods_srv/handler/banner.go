@@ -6,6 +6,7 @@ import (
 	"goods_srv/model"
 	pb "goods_srv/proto"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -35,23 +36,33 @@ func (s *GoodsServer) CreateBanner(ctx context.Context, req *pb.BannerInfoReq) (
 		Index: req.Index,
 		Image: req.Image,
 	}
-	result := gb.DB.Model(&model.Banner{}).Create(&banner)
-	if result.Error != nil {
-		return nil, result.Error
+	if err := banner.InsertOne(); err != nil {
+		zap.S().Errorw("一件商品banner插入失败", "msg", err.Error())
+		return nil, err
 	}
 	return &pb.BannerInfoRes{Id: banner.ID}, nil
 }
 
-//嘶,或许需要通过req的各项属性来查询更新?
-// func (s *GoodsServer) DeleteBanner(ctx context.Context, req *pb.DelBrandReq) (*emptypb.Empty, error) {
-// 	result := gb.DB.Delete(&model.Banner{}, req.Id)
-// 	if result.RowsAffected == 0 {
-// 		return nil, ErrBannerNotExists
-// 	}
-// 	return &emptypb.Empty{}, nil
-// }
+func (s *GoodsServer) DeleteBanner(ctx context.Context, req *pb.DelBrandReq) (*emptypb.Empty, error) {
+	banner := &model.Banner{}
+	banner.ID = req.Id
+	err := banner.DeleteOneById()
+	if err != nil {
+		zap.S().Errorw("一件商品banner删除失败", "msg", err.Error())
+		return nil, err
+	}
+	return &emptypb.Empty{}, nil
+}
 
-// 嘶,或许需要通过req的各项属性来查询更新?
 func (s *GoodsServer) UpdateBanner(ctx context.Context, req *pb.BannerInfoReq) (*emptypb.Empty, error) {
-	return nil, nil
+	banner := &model.Banner{}
+	banner.ID = req.Id
+	banner.Url = req.Url
+	banner.Image = req.Image
+	banner.Index = req.Index
+	if err := banner.UpdateOneById(); err != nil {
+		zap.S().Errorw("一件商品banner更改失败", "msg", err.Error())
+		return nil, err
+	}
+	return &emptypb.Empty{}, nil
 }

@@ -8,6 +8,23 @@ import (
 	"gorm.io/gorm"
 )
 
+// gorm给出的分页函数的最佳实践
+func Paginate(pageNum int, pageSize int) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if pageNum <= 0 {
+			pageNum = 1
+		}
+		switch {
+		case pageSize > 100:
+			pageSize = 100
+		case pageSize < 0:
+			pageSize = 10
+		}
+		offset := (pageNum - 1) * pageSize
+		return db.Offset(offset).Limit(pageSize)
+	}
+}
+
 type Model struct {
 	ID        int32          `gorm:"primarykey"`
 	CreatedAt time.Time      `json:"-"`
@@ -35,29 +52,29 @@ type Category struct {
 // 商品品牌
 type Brand struct {
 	Model
-	Name string `gorm:"type:varchar(50);not null"`
-	Logo string `gorm:"type:varchar(200);default:'';not null"`
+	Name string `gorm:"type:varchar(50);not null" json:"name"`
+	Logo string `gorm:"type:varchar(200);default:'';not null" json:"logo"`
 }
 
 // 多对多建立的连接表
 // 一个品牌旗下有多个商品类型,一个商品类型也能来自多个品牌
 type CategoryWithBrand struct {
 	Model
-	CategoryID int32 `gorm:"type:int;index:idx_category_brand,unique"`
-	Category   Category
-	BrandID    int32 `gorm:"type:int;index:idx_category_brand,unique"`
-	Brand      Brand
+	CategoryID int32    `gorm:"type:int;index:idx_category_brand,unique" json:"-"`
+	Category   Category `json:"category"`
+	BrandID    int32    `gorm:"type:int;index:idx_category_brand,unique"`
+	Brand      Brand    `json:"brand"`
 }
 
 // 滑动窗口
 type Banner struct {
 	Model
 	//放在窗口上的预览图片
-	Image string `gorm:"type:varchar(200);not null"`
+	Image string `gorm:"type:varchar(200);not null" json:"image"`
 	//点击窗口跳转到对应商品售处
-	Url string `gorm:"type:varchar(200);not null"`
+	Url string `gorm:"type:varchar(200);not null" json:"url"`
 	//该预览窗口的下标位置
-	Index int32 `gorm:"type:int;default:1;not null"`
+	Index int32 `gorm:"type:int;default:1;not null" json:"index"`
 }
 
 type GormList []string

@@ -1,0 +1,1 @@
+{"level":"info","ts":"2024-12-21T14:43:54.113+0800","caller":"initialize/init.go:28","msg":"ServerConfig is :  &{{goods_srv 192.168.199.128 8500} {192.168.199.128 8021} goods_web 0.0.0.0 8080  [] 1.0 {goods_srv 37787 192.168.199.128 [goods]} kensame}"}

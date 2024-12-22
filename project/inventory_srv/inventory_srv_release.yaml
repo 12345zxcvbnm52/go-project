@@ -1,0 +1,23 @@
+#服务注册参数
+name: 'inventory_srv'
+id: 'inventory_srv'
+tags: 
+  - 'inventory'
+
+#这里若使用具体ip则需要关闭mysql的保护模式
+mysql: 
+  net_type: 'tcp'
+  host: '192.168.199.128'
+  port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'inventory_srv'
+
+consul: 
+  consul_ip: '192.168.199.128'
+  consul_port: 8500
+
+redis: 
+  host: '192.168.199.128'
+  port: 6379
+  password: '123'
