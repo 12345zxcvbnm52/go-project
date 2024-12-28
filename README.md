@@ -14,6 +14,9 @@ im聊天室,还没开始写
 # rockmq
 rocketmq的docker环境搭建,还未使用
 # transfer
+新:project:0.2.x已移除,后续将引入canal或者自己修改transfer
 go-mysql-transfer,用于实现缓存一致性,并未找到方法解决如何主动同步缓存和缓存key的限时
 # redis
 搭建redis集群
+# elasticsearch
+用于商品,用户的搜索
