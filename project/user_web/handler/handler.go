@@ -32,7 +32,19 @@ func RemoveStructPrefix(msg map[string]string) map[string]string {
 	return res
 }
 
-func ErrorHandle(err error, c *gin.Context) {
+func ValidatorErrorHandle(c *gin.Context, err error) {
+	errs, ok := err.(validator.ValidationErrors)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"msg": err.Error(),
+		})
+	}
+	c.JSON(http.StatusBadRequest, gin.H{
+		"msg": RemoveStructPrefix(errs.Translate(gb.Translator)),
+	})
+}
+
+func RpcErrorHandle(c *gin.Context, err error) {
 	if e, ok := status.FromError(err); ok {
 		switch e.Code() {
 		case codes.NotFound:
@@ -68,20 +80,12 @@ func UserRegister(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	client, _ := gb.RpcPool.Value()
-	cc := pb.NewUserClient(client)
+	defer client.Close()
+	cc := pb.NewUserClient(client.Value())
 
-	u := &form.UserWriteInfo{}
+	u := &form.UserWriteForm{}
 	if err := c.ShouldBind(u); err != nil {
-		errs, ok := err.(validator.ValidationErrors)
-		if ok {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": RemoveStructPrefix(errs.Translate(gb.Translator)),
-			})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"msg": err.Error(),
-			})
-		}
+		ValidatorErrorHandle(c, err)
 		c.Abort()
 		return
 	}
@@ -95,7 +99,7 @@ func UserRegister(c *gin.Context) {
 	})
 	if err != nil {
 		zap.S().Errorw("微服务调用失败", "msg", err.Error())
-		ErrorHandle(err, c)
+		RpcErrorHandle(c, err)
 		c.Abort()
 		return
 	}
@@ -123,20 +127,11 @@ func UserLogin(c *gin.Context) {
 	defer cancel()
 	client, _ := gb.RpcPool.Value()
 	defer client.Close()
-	cc := pb.NewUserClient(client)
+	cc := pb.NewUserClient(client.Value())
 
-	u := &form.UserLogin{}
+	u := &form.UserLoginForm{}
 	if err := c.ShouldBind(u); err != nil {
-		errs, ok := err.(validator.ValidationErrors)
-		if ok {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": RemoveStructPrefix(errs.Translate(gb.Translator)),
-			})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"msg": err.Error(),
-			})
-		}
+		ValidatorErrorHandle(c, err)
 		c.Abort()
 		return
 	}
@@ -149,7 +144,7 @@ func UserLogin(c *gin.Context) {
 
 	if err != nil {
 		zap.S().Errorw("微服务调用失败", "msg", err.Error())
-		ErrorHandle(err, c)
+		RpcErrorHandle(c, err)
 		c.Abort()
 		return
 	}
@@ -187,33 +182,21 @@ func UserLogin(c *gin.Context) {
 func UserDelete(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	client, err := gb.RpcPool.Value()
-	if err != nil {
-		panic(err)
-	}
+	client, _ := gb.RpcPool.Value()
 	defer client.Close()
-	cc := pb.NewUserClient(client)
+	cc := pb.NewUserClient(client.Value())
 
-	u := &form.UserDelete{}
+	u := &form.UserDeleteForm{}
 	if err := c.ShouldBind(u); err != nil {
-		errs, ok := err.(validator.ValidationErrors)
-		if ok {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": RemoveStructPrefix(errs.Translate(gb.Translator)),
-			})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"msg": err.Error(),
-			})
-		}
+		ValidatorErrorHandle(c, err)
 		c.Abort()
 		return
 	}
-	_, err = cc.DeleteUser(ctx, &pb.DelUserReq{Id: u.ID})
+	_, err := cc.DeleteUser(ctx, &pb.DelUserReq{Id: u.ID})
 	if err != nil {
 		//删除逻辑应当严谨,这里只是测试用
 		zap.S().Errorw("用户删除失败", "msg", err.Error())
-		ErrorHandle(err, c)
+		RpcErrorHandle(c, err)
 		c.Abort()
 		return
 	} else {

@@ -9,6 +9,7 @@ func init() {
 	InitLog()
 	InitConfig()
 	InitDB()
+	InitEs()
 	//InitConsul()
 	gb.DB.AutoMigrate(&model.Category{}, &model.Goods{}, &model.Brand{}, &model.CategoryWithBrand{}, &model.Banner{})
 

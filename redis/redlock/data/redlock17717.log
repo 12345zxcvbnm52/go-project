@@ -1,0 +1,147 @@
+1:C 23 Dec 2024 04:57:34.899 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 23 Dec 2024 04:57:34.899 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 23 Dec 2024 04:57:34.899 # Configuration loaded
+1:M 23 Dec 2024 04:57:34.902 * monotonic clock: POSIX clock_gettime
+1:M 23 Dec 2024 04:57:34.910 * No cluster configuration found, I'm b35037cc480eeba691216b37d211ea1568622989
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in cluster mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 23 Dec 2024 04:57:34.915 # Server initialized
+1:M 23 Dec 2024 04:57:34.915 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 23 Dec 2024 04:57:34.927 * Creating AOF base file appendonly17717.aof.1.base.rdb on server start
+1:M 23 Dec 2024 04:57:34.935 * Creating AOF incr file appendonly17717.aof.1.incr.aof on server start
+1:M 23 Dec 2024 04:57:34.935 * Ready to accept connections
+1:C 23 Dec 2024 05:00:52.698 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 23 Dec 2024 05:00:52.698 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 23 Dec 2024 05:00:52.698 # Configuration loaded
+1:M 23 Dec 2024 05:00:52.701 * monotonic clock: POSIX clock_gettime
+1:M 23 Dec 2024 05:00:52.724 * Node configuration loaded, I'm b35037cc480eeba691216b37d211ea1568622989
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in cluster mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 23 Dec 2024 05:00:52.731 # Server initialized
+1:M 23 Dec 2024 05:00:52.731 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 23 Dec 2024 05:00:52.735 * Reading RDB base file on AOF loading...
+1:M 23 Dec 2024 05:00:52.735 * Loading RDB produced by version 7.0.15
+1:M 23 Dec 2024 05:00:52.735 * RDB age 198 seconds
+1:M 23 Dec 2024 05:00:52.735 * RDB memory usage when created 1.51 Mb
+1:M 23 Dec 2024 05:00:52.735 * RDB is base AOF
+1:M 23 Dec 2024 05:00:52.735 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 23 Dec 2024 05:00:52.735 * DB loaded from base file appendonly17717.aof.1.base.rdb: 0.000 seconds
+1:M 23 Dec 2024 05:00:52.735 * DB loaded from append only file: 0.000 seconds
+1:M 23 Dec 2024 05:00:52.735 * Opening AOF incr file appendonly17717.aof.1.incr.aof on server start
+1:M 23 Dec 2024 05:00:52.735 * Ready to accept connections
+1:M 23 Dec 2024 05:02:19.307 # configEpoch set to 3 via CLUSTER SET-CONFIG-EPOCH
+1:C 23 Dec 2024 05:04:32.270 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 23 Dec 2024 05:04:32.270 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 23 Dec 2024 05:04:32.270 # Configuration loaded
+1:M 23 Dec 2024 05:04:32.270 * monotonic clock: POSIX clock_gettime
+1:M 23 Dec 2024 05:04:32.271 * Node configuration loaded, I'm b35037cc480eeba691216b37d211ea1568622989
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in cluster mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 23 Dec 2024 05:04:32.272 # Server initialized
+1:M 23 Dec 2024 05:04:32.272 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 23 Dec 2024 05:04:32.273 * Reading RDB base file on AOF loading...
+1:M 23 Dec 2024 05:04:32.273 * Loading RDB produced by version 7.0.15
+1:M 23 Dec 2024 05:04:32.273 * RDB age 418 seconds
+1:M 23 Dec 2024 05:04:32.273 * RDB memory usage when created 1.51 Mb
+1:M 23 Dec 2024 05:04:32.273 * RDB is base AOF
+1:M 23 Dec 2024 05:04:32.273 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 23 Dec 2024 05:04:32.273 * DB loaded from base file appendonly17717.aof.1.base.rdb: 0.000 seconds
+1:M 23 Dec 2024 05:04:32.273 * DB loaded from append only file: 0.000 seconds
+1:M 23 Dec 2024 05:04:32.273 * Opening AOF incr file appendonly17717.aof.1.incr.aof on server start
+1:M 23 Dec 2024 05:04:32.273 * Ready to accept connections
+1:C 23 Dec 2024 05:18:15.577 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 23 Dec 2024 05:18:15.577 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 23 Dec 2024 05:18:15.577 # Configuration loaded
+1:M 23 Dec 2024 05:18:15.577 * monotonic clock: POSIX clock_gettime
+1:M 23 Dec 2024 05:18:15.579 * Node configuration loaded, I'm b35037cc480eeba691216b37d211ea1568622989
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in cluster mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 17717
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 23 Dec 2024 05:18:15.582 # Server initialized
+1:M 23 Dec 2024 05:18:15.582 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 23 Dec 2024 05:18:15.583 * Reading RDB base file on AOF loading...
+1:M 23 Dec 2024 05:18:15.583 * Loading RDB produced by version 7.0.15
+1:M 23 Dec 2024 05:18:15.583 * RDB age 1241 seconds
+1:M 23 Dec 2024 05:18:15.583 * RDB memory usage when created 1.51 Mb
+1:M 23 Dec 2024 05:18:15.583 * RDB is base AOF
+1:M 23 Dec 2024 05:18:15.583 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 23 Dec 2024 05:18:15.583 * DB loaded from base file appendonly17717.aof.1.base.rdb: 0.001 seconds
+1:M 23 Dec 2024 05:18:15.584 * DB loaded from append only file: 0.001 seconds
+1:M 23 Dec 2024 05:18:15.584 * Opening AOF incr file appendonly17717.aof.1.incr.aof on server start
+1:M 23 Dec 2024 05:18:15.584 * Ready to accept connections
+1:M 23 Dec 2024 05:18:43.222 # IP address for this node updated to 172.17.0.7
+1:M 23 Dec 2024 05:18:43.222 # Address updated for node 0d2422efe683a6a18c8540d0cd26c1b194008e5c, now 172.17.0.1:17715
+1:M 23 Dec 2024 05:18:43.370 # Cluster state changed: ok
+1:M 23 Dec 2024 05:23:46.278 * 10 changes in 300 seconds. Saving...
+1:M 23 Dec 2024 05:23:46.279 * Background saving started by pid 20
+20:C 23 Dec 2024 05:23:46.282 * DB saved on disk
+20:C 23 Dec 2024 05:23:46.284 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 23 Dec 2024 05:23:46.380 * Background saving terminated with success
+1:M 23 Dec 2024 05:28:47.015 * 10 changes in 300 seconds. Saving...
+1:M 23 Dec 2024 05:28:47.015 * Background saving started by pid 21
+21:C 23 Dec 2024 05:28:47.028 * DB saved on disk
+21:C 23 Dec 2024 05:28:47.029 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 23 Dec 2024 05:28:47.115 * Background saving terminated with success

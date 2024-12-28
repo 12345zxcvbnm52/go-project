@@ -21,15 +21,15 @@ type GoodsClient interface {
 	// 商品服务
 	GetGoodList(ctx context.Context, in *GoodsFilterReq, opts ...grpc.CallOption) (*GoodsListRes, error)
 	// 用于通过id数组得到所有商品信息,常用于从订单中获得所有商品信息,
-	GetGoodsListById(ctx context.Context, in *BatchGoodsByIdReq, opts ...grpc.CallOption) (*GoodsListRes, error)
+	GetGoodsListById(ctx context.Context, in *GoodsIdsReq, opts ...grpc.CallOption) (*GoodsListRes, error)
+	GetGoodsDetail(ctx context.Context, in *GoodsInfoReq, opts ...grpc.CallOption) (*GoodsInfoRes, error)
 	// 增删改
 	CreateGoods(ctx context.Context, in *WriteGoodsInfoReq, opts ...grpc.CallOption) (*GoodsInfoRes, error)
 	DeleteGoods(ctx context.Context, in *DelGoodsReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdeateGoods(ctx context.Context, in *WriteGoodsInfoReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetGoodsDetail(ctx context.Context, in *GoodsInfoReq, opts ...grpc.CallOption) (*GoodsInfoRes, error)
 	// 商品类型服务
-	GetAllCategyList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategyListRes, error)
-	GetSubCategy(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error)
+	GetCategyList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategyListRes, error)
+	GetCategy(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error)
 	CreateCategy(ctx context.Context, in *CategyInfoReq, opts ...grpc.CallOption) (*CategyInfoRes, error)
 	DeleteCategy(ctx context.Context, in *DelCategyReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateCategy(ctx context.Context, in *CategyInfoReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -69,9 +69,18 @@ func (c *goodsClient) GetGoodList(ctx context.Context, in *GoodsFilterReq, opts 
 	return out, nil
 }
 
-func (c *goodsClient) GetGoodsListById(ctx context.Context, in *BatchGoodsByIdReq, opts ...grpc.CallOption) (*GoodsListRes, error) {
+func (c *goodsClient) GetGoodsListById(ctx context.Context, in *GoodsIdsReq, opts ...grpc.CallOption) (*GoodsListRes, error) {
 	out := new(GoodsListRes)
 	err := c.cc.Invoke(ctx, "/Goods/GetGoodsListById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *goodsClient) GetGoodsDetail(ctx context.Context, in *GoodsInfoReq, opts ...grpc.CallOption) (*GoodsInfoRes, error) {
+	out := new(GoodsInfoRes)
+	err := c.cc.Invoke(ctx, "/Goods/GetGoodsDetail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,27 +114,18 @@ func (c *goodsClient) UpdeateGoods(ctx context.Context, in *WriteGoodsInfoReq, o
 	return out, nil
 }
 
-func (c *goodsClient) GetGoodsDetail(ctx context.Context, in *GoodsInfoReq, opts ...grpc.CallOption) (*GoodsInfoRes, error) {
-	out := new(GoodsInfoRes)
-	err := c.cc.Invoke(ctx, "/Goods/GetGoodsDetail", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *goodsClient) GetAllCategyList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategyListRes, error) {
+func (c *goodsClient) GetCategyList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategyListRes, error) {
 	out := new(CategyListRes)
-	err := c.cc.Invoke(ctx, "/Goods/GetAllCategyList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Goods/GetCategyList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goodsClient) GetSubCategy(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error) {
+func (c *goodsClient) GetCategy(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error) {
 	out := new(SubCategyListRes)
-	err := c.cc.Invoke(ctx, "/Goods/GetSubCategy", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Goods/GetCategy", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -283,15 +283,15 @@ type GoodsServer interface {
 	// 商品服务
 	GetGoodList(context.Context, *GoodsFilterReq) (*GoodsListRes, error)
 	// 用于通过id数组得到所有商品信息,常用于从订单中获得所有商品信息,
-	GetGoodsListById(context.Context, *BatchGoodsByIdReq) (*GoodsListRes, error)
+	GetGoodsListById(context.Context, *GoodsIdsReq) (*GoodsListRes, error)
+	GetGoodsDetail(context.Context, *GoodsInfoReq) (*GoodsInfoRes, error)
 	// 增删改
 	CreateGoods(context.Context, *WriteGoodsInfoReq) (*GoodsInfoRes, error)
 	DeleteGoods(context.Context, *DelGoodsReq) (*emptypb.Empty, error)
 	UpdeateGoods(context.Context, *WriteGoodsInfoReq) (*emptypb.Empty, error)
-	GetGoodsDetail(context.Context, *GoodsInfoReq) (*GoodsInfoRes, error)
 	// 商品类型服务
-	GetAllCategyList(context.Context, *emptypb.Empty) (*CategyListRes, error)
-	GetSubCategy(context.Context, *SubCategyReq) (*SubCategyListRes, error)
+	GetCategyList(context.Context, *emptypb.Empty) (*CategyListRes, error)
+	GetCategy(context.Context, *SubCategyReq) (*SubCategyListRes, error)
 	CreateCategy(context.Context, *CategyInfoReq) (*CategyInfoRes, error)
 	DeleteCategy(context.Context, *DelCategyReq) (*emptypb.Empty, error)
 	UpdateCategy(context.Context, *CategyInfoReq) (*emptypb.Empty, error)
@@ -322,8 +322,11 @@ type UnimplementedGoodsServer struct {
 func (UnimplementedGoodsServer) GetGoodList(context.Context, *GoodsFilterReq) (*GoodsListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGoodList not implemented")
 }
-func (UnimplementedGoodsServer) GetGoodsListById(context.Context, *BatchGoodsByIdReq) (*GoodsListRes, error) {
+func (UnimplementedGoodsServer) GetGoodsListById(context.Context, *GoodsIdsReq) (*GoodsListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGoodsListById not implemented")
+}
+func (UnimplementedGoodsServer) GetGoodsDetail(context.Context, *GoodsInfoReq) (*GoodsInfoRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGoodsDetail not implemented")
 }
 func (UnimplementedGoodsServer) CreateGoods(context.Context, *WriteGoodsInfoReq) (*GoodsInfoRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGoods not implemented")
@@ -334,14 +337,11 @@ func (UnimplementedGoodsServer) DeleteGoods(context.Context, *DelGoodsReq) (*emp
 func (UnimplementedGoodsServer) UpdeateGoods(context.Context, *WriteGoodsInfoReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdeateGoods not implemented")
 }
-func (UnimplementedGoodsServer) GetGoodsDetail(context.Context, *GoodsInfoReq) (*GoodsInfoRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetGoodsDetail not implemented")
+func (UnimplementedGoodsServer) GetCategyList(context.Context, *emptypb.Empty) (*CategyListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategyList not implemented")
 }
-func (UnimplementedGoodsServer) GetAllCategyList(context.Context, *emptypb.Empty) (*CategyListRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllCategyList not implemented")
-}
-func (UnimplementedGoodsServer) GetSubCategy(context.Context, *SubCategyReq) (*SubCategyListRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSubCategy not implemented")
+func (UnimplementedGoodsServer) GetCategy(context.Context, *SubCategyReq) (*SubCategyListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategy not implemented")
 }
 func (UnimplementedGoodsServer) CreateCategy(context.Context, *CategyInfoReq) (*CategyInfoRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCategy not implemented")
@@ -423,7 +423,7 @@ func _Goods_GetGoodList_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Goods_GetGoodsListById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchGoodsByIdReq)
+	in := new(GoodsIdsReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -435,7 +435,25 @@ func _Goods_GetGoodsListById_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/Goods/GetGoodsListById",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsServer).GetGoodsListById(ctx, req.(*BatchGoodsByIdReq))
+		return srv.(GoodsServer).GetGoodsListById(ctx, req.(*GoodsIdsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Goods_GetGoodsDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoodsInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoodsServer).GetGoodsDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Goods/GetGoodsDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoodsServer).GetGoodsDetail(ctx, req.(*GoodsInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -494,56 +512,38 @@ func _Goods_UpdeateGoods_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Goods_GetGoodsDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GoodsInfoReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoodsServer).GetGoodsDetail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/Goods/GetGoodsDetail",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsServer).GetGoodsDetail(ctx, req.(*GoodsInfoReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Goods_GetAllCategyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Goods_GetCategyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoodsServer).GetAllCategyList(ctx, in)
+		return srv.(GoodsServer).GetCategyList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Goods/GetAllCategyList",
+		FullMethod: "/Goods/GetCategyList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsServer).GetAllCategyList(ctx, req.(*emptypb.Empty))
+		return srv.(GoodsServer).GetCategyList(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Goods_GetSubCategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Goods_GetCategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SubCategyReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoodsServer).GetSubCategy(ctx, in)
+		return srv.(GoodsServer).GetCategy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Goods/GetSubCategy",
+		FullMethod: "/Goods/GetCategy",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsServer).GetSubCategy(ctx, req.(*SubCategyReq))
+		return srv.(GoodsServer).GetCategy(ctx, req.(*SubCategyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -849,6 +849,10 @@ var _Goods_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Goods_GetGoodsListById_Handler,
 		},
 		{
+			MethodName: "GetGoodsDetail",
+			Handler:    _Goods_GetGoodsDetail_Handler,
+		},
+		{
 			MethodName: "CreateGoods",
 			Handler:    _Goods_CreateGoods_Handler,
 		},
@@ -861,16 +865,12 @@ var _Goods_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Goods_UpdeateGoods_Handler,
 		},
 		{
-			MethodName: "GetGoodsDetail",
-			Handler:    _Goods_GetGoodsDetail_Handler,
+			MethodName: "GetCategyList",
+			Handler:    _Goods_GetCategyList_Handler,
 		},
 		{
-			MethodName: "GetAllCategyList",
-			Handler:    _Goods_GetAllCategyList_Handler,
-		},
-		{
-			MethodName: "GetSubCategy",
-			Handler:    _Goods_GetSubCategy_Handler,
+			MethodName: "GetCategy",
+			Handler:    _Goods_GetCategy_Handler,
 		},
 		{
 			MethodName: "CreateCategy",

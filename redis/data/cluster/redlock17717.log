@@ -1,0 +1,46 @@
+1:C 23 Dec 2024 04:29:03.832 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 23 Dec 2024 04:29:03.832 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 23 Dec 2024 04:29:03.832 # Configuration loaded
+1:M 23 Dec 2024 04:29:03.833 * monotonic clock: POSIX clock_gettime
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 23 Dec 2024 04:29:03.834 # Server initialized
+1:M 23 Dec 2024 04:29:03.834 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 23 Dec 2024 04:29:03.835 * Reading RDB base file on AOF loading...
+1:M 23 Dec 2024 04:29:03.836 * Loading RDB produced by version 7.0.15
+1:M 23 Dec 2024 04:29:03.836 * RDB age 0 seconds
+1:M 23 Dec 2024 04:29:03.837 * RDB memory usage when created 0.82 Mb
+1:M 23 Dec 2024 04:29:03.837 * RDB is base AOF
+1:M 23 Dec 2024 04:29:03.837 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 23 Dec 2024 04:29:03.837 * DB loaded from base file appendonly17717.aof.1.base.rdb: 0.002 seconds
+1:M 23 Dec 2024 04:29:03.838 * DB loaded from append only file: 0.002 seconds
+1:M 23 Dec 2024 04:29:03.838 * Opening AOF incr file appendonly17717.aof.1.incr.aof on server start
+1:M 23 Dec 2024 04:29:03.838 * Ready to accept connections
+1:M 23 Dec 2024 04:34:04.030 * 10 changes in 300 seconds. Saving...
+1:M 23 Dec 2024 04:34:04.030 * Background saving started by pid 19
+19:C 23 Dec 2024 04:34:04.033 * DB saved on disk
+19:C 23 Dec 2024 04:34:04.034 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 23 Dec 2024 04:34:04.131 * Background saving terminated with success
+1:signal-handler (1734929687) Received SIGTERM scheduling shutdown...
+1:M 23 Dec 2024 04:54:47.509 # User requested shutdown...
+1:M 23 Dec 2024 04:54:47.509 * Calling fsync() on the AOF file.
+1:M 23 Dec 2024 04:54:47.510 * Saving the final RDB snapshot before exiting.
+1:M 23 Dec 2024 04:54:47.511 # Error moving temp DB file temp-1.rdb on the final destination dump17717.rdb (in server root dir /data/single): No such file or directory
+1:M 23 Dec 2024 04:54:47.511 # Error trying to save the DB, can't exit.
+1:M 23 Dec 2024 04:54:47.511 # Errors trying to shut down the server. Check the logs for more information.

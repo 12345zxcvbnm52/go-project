@@ -10,4 +10,5 @@ func InitRpcPool() {
 	util.DefaultRpcConnOpt.ConsulPort = gb.ServerConfig.ConsulConfig.ConsulPort
 	util.DefaultRpcConnOpt.ServerName = gb.ServerConfig.ConsulConfig.Name
 	gb.RpcPool = util.NewDefaultGrpcPool()
+
 }

@@ -62,6 +62,9 @@ func (u *User) FindByOpt(opt *FindOption) (*Result, error) {
 
 func (u *User) FindByIds(ids ...int32) (*Result, error) {
 	res := []*User{}
+	if len(ids) == 0 {
+		return nil, ErrNotFound
+	}
 	LocDB := gb.DB.Where("id in (?)", ids)
 	r := LocDB.Find(&res)
 	if r.Error != nil {

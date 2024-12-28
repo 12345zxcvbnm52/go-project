@@ -5,24 +5,12 @@ import (
 	"fmt"
 	"time"
 
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/backoff"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/keepalive"
 )
-
-func init() {
-	DefaultRpcConnOpt = RpcConnOptions{
-		DialTimeout:        5 * time.Second,
-		BackoffMaxTry:      3 * time.Second,
-		KeepAliveCheck:     10 * time.Second,
-		KeepAliveTimeout:   3 * time.Second,
-		initWindowSize:     1 << 28,
-		initConnWindowSize: 1 << 28,
-		maxSendSize:        1 << 28,
-		maxRecvSize:        1 << 28,
-	}
-}
 
 // 没想到一个好的实现能够充分利用grpc的多路复用,就暂时不写了
 type Pooler interface {
@@ -42,7 +30,6 @@ func (p *Pool) Value() (*grpc.ClientConn, error) {
 func NewDefaultGrpcPool() Pooler {
 	pool := &Pool{}
 	pool.opt = new(RpcConnOptions)
-	fmt.Println(DefaultRpcConnOpt)
 	pool.opt.maxRecvSize = DefaultRpcConnOpt.maxRecvSize
 	pool.opt.maxSendSize = DefaultRpcConnOpt.maxSendSize
 	pool.opt.initConnWindowSize = DefaultRpcConnOpt.initConnWindowSize
@@ -55,36 +42,8 @@ func NewDefaultGrpcPool() Pooler {
 	pool.opt.ConsulPort = DefaultRpcConnOpt.ConsulPort
 	pool.opt.ServerName = DefaultRpcConnOpt.ServerName
 	pool.invoke = DefaultDial
-	return pool
-}
-
-func NewGrpcPool(opt *RpcConnOptions) Pooler {
-	if opt.ConsulAddr == "" {
-		opt.ConsulAddr = DefaultRpcConnOpt.ConsulAddr
-	}
-	if opt.ConsulPort == 0 {
-		opt.ConsulPort = DefaultRpcConnOpt.ConsulPort
-	}
-	if opt.ServerName == "" {
-		opt.ServerName = DefaultRpcConnOpt.ServerName
-	}
-	if opt.BackoffMaxTry == 0 {
-		opt.BackoffMaxTry = DefaultRpcConnOpt.BackoffMaxTry
-	}
-	if opt.DialTimeout == 0 {
-		opt.DialTimeout = DefaultRpcConnOpt.DialTimeout
-	}
-	opt.maxRecvSize = DefaultRpcConnOpt.maxRecvSize
-	opt.maxSendSize = DefaultRpcConnOpt.maxSendSize
-	opt.initConnWindowSize = DefaultRpcConnOpt.initConnWindowSize
-	opt.initWindowSize = DefaultRpcConnOpt.initWindowSize
-	if opt.KeepAliveCheck == 0 {
-		opt.KeepAliveCheck = DefaultRpcConnOpt.KeepAliveCheck
-	}
-	if opt.KeepAliveTimeout == 0 {
-		opt.KeepAliveTimeout = DefaultRpcConnOpt.KeepAliveCheck
-	}
-	pool := &Pool{opt: opt, invoke: DefaultDial}
+	fmt.Println(pool.opt)
+	zap.S().Infow("pool配置信息", "msg", pool.opt)
 	return pool
 }
 
@@ -109,7 +68,16 @@ type RpcConnOptions struct {
 	maxRecvSize int32
 }
 
-var DefaultRpcConnOpt RpcConnOptions
+var DefaultRpcConnOpt RpcConnOptions = RpcConnOptions{
+	DialTimeout:        5 * time.Second,
+	BackoffMaxTry:      3 * time.Second,
+	KeepAliveCheck:     10 * time.Second,
+	KeepAliveTimeout:   3 * time.Second,
+	initWindowSize:     1 << 28,
+	initConnWindowSize: 1 << 28,
+	maxSendSize:        1 << 28,
+	maxRecvSize:        1 << 28,
+}
 
 func DefaultDial(opt *RpcConnOptions) (*grpc.ClientConn, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), opt.DialTimeout)

@@ -12,8 +12,9 @@ func init() {
 	//consul和router也具有先后顺序
 	InitLog()
 	InitConfig()
-	InitConsul()
 	InitRouter()
+	InitConsul()
+
 	err := InitTranslator("zh")
 	if err != nil {
 		zap.S().Errorw("无法获取中文翻译器,尝试获取英文翻译器", "msg", err.Error())
@@ -24,6 +25,6 @@ func init() {
 		}
 	}
 	InitValidator()
-
+	InitRpcPool()
 	zap.S().Infoln("ServerConfig is : ", gb.ServerConfig)
 }

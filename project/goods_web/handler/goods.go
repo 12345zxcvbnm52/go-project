@@ -2,8 +2,9 @@ package handler
 
 import (
 	"context"
+	"goods_web/form"
+	gb "goods_web/global"
 	pb "goods_web/proto"
-	"goods_web/util"
 	"net/http"
 	"strconv"
 	"time"
@@ -12,14 +13,16 @@ import (
 	"go.uber.org/zap"
 )
 
-var RpcPool util.Pooler = &util.Pool{}
-
+// 根据条件查找对应的商品
 func GetGoodsList(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	client, err := RpcPool.Value()
+	client, err := gb.RpcPool.Value()
 	if err != nil {
-		panic(err)
+		zap.S().Errorw("池内获取的连接不可用", "msg", err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{})
+		c.Abort()
+		return
 	}
 	defer client.Close()
 	cc := pb.NewGoodsClient(client)
@@ -50,7 +53,7 @@ func GetGoodsList(c *gin.Context) {
 	PagesNum := c.DefaultQuery("pn", "0")
 	pn, _ := strconv.Atoi(PagesNum)
 	fliter.PagesNum = int32(pn)
-	if cid := c.DefaultQuery("cl", "0"); cid != "0" {
+	if cid := c.DefaultQuery("cid", "0"); cid != "0" {
 		cid, _ := strconv.Atoi(cid)
 		fliter.CategyId = int32(cid)
 	}
@@ -61,15 +64,59 @@ func GetGoodsList(c *gin.Context) {
 	fliter.KeyWords = c.DefaultQuery("kw", "")
 	res, err := cc.GetGoodList(ctx, &fliter)
 	if err != nil {
-		zap.S().Errorw("微服务调用失败")
-		c.JSON(http.StatusBadRequest, gin.H{
-			"错误信息": err.Error(),
-		})
+		RpcErrorHandle(c, err)
 		c.Abort()
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"total": res.Total,
 		"data":  res.Data,
+	})
+}
+
+func CreateGoods(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	client, err := gb.RpcPool.Value()
+	if err != nil {
+		zap.S().Errorw("池内获取的连接不可用", "msg", err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{})
+		c.Abort()
+		return
+	}
+	defer client.Close()
+	cc := pb.NewGoodsClient(client)
+
+	u := &form.GoodsWriteForm{}
+	if err := c.BindJSON(u); err != nil {
+		ValidatorErrorHandle(c, err)
+		return
+	}
+
+	req := &pb.WriteGoodsInfoReq{
+		Name:        u.Name,
+		GoodsSign:   u.GoodsSign,
+		GoodsBrief:  u.GoodsBrief,
+		MarketPrice: u.MarketPrice,
+		SalePrice:   u.SalePrice,
+		Images:      u.Images,
+		FirstImage:  u.FirstImage,
+		DescImages:  u.DescImages,
+		SoldNum:     0,
+		ClickNum:    0,
+		FavorNum:    0,
+		TransFree:   u.TransFree,
+		CategyId:    u.CategoryID,
+		BrandId:     u.BrandID,
+	}
+	res, err := cc.CreateGoods(ctx, req)
+	if err != nil {
+		RpcErrorHandle(c, err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"商品id": res.Id,
 	})
 }

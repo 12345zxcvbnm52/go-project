@@ -1,13 +1,13 @@
 package form
 
 // 这个对应proto里的UserPasswordReq
-type UserLogin struct {
+type UserLoginForm struct {
 	Password string `json:"password" form:"password" binding:"required"`
 	Id       uint32 `json:"id,omitempty" form:"id"`
 	UserName string `json:"username" form:"username" binding:"required,mobile"`
 }
 
-type UserWriteInfo struct {
+type UserWriteForm struct {
 	UserName string `json:"userName,omitempty" binding:"username"`
 	Password string `json:"password" binding:"required,password"`
 	Mobile   string `json:"mobile" binding:"required,mobile"`
@@ -17,6 +17,6 @@ type UserWriteInfo struct {
 	Role     int32  `json:"Role,omitempty"`
 }
 
-type UserDelete struct {
+type UserDeleteForm struct {
 	ID uint32 `json:"id" binding:"required"`
 }

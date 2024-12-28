@@ -3,6 +3,7 @@ package initialize
 import (
 	"fmt"
 	gb "inventory_srv/global"
+	"inventory_srv/util"
 	"net"
 	"runtime"
 	"time"
@@ -54,4 +55,7 @@ func InitRedis() {
 		//OnConnect: ,
 	}
 	gb.RedisConn = redis.NewClient(DefaultRedisOpts)
+	gb.RedLock = new(util.RedLock)
+	gb.RedLock.SetAddr(gb.ServerConfig.RedLockAddr...)
+	gb.RedLock.SetPassword(gb.ServerConfig.RedLockPassword)
 }

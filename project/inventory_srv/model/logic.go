@@ -64,6 +64,9 @@ func (u *Inventory) FindOneByGoodsId() error {
 
 func (u *Inventory) FindByGoodsIds(Ids ...int32) (*Result, error) {
 	invt := []*Inventory{}
+	if len(Ids) == 0 {
+		return nil, ErrNotFound
+	}
 	res := gb.DB.Where("goods_id in (?)", Ids).Find(&invt)
 	if res.Error != nil {
 		return nil, ErrInternalWrong

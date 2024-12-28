@@ -12,16 +12,17 @@ service Goods{
 //商品服务
     rpc GetGoodList(GoodsFilterReq) returns(GoodsListRes);
     //用于通过id数组得到所有商品信息,常用于从订单中获得所有商品信息,
-    rpc GetGoodsListById(BatchGoodsByIdReq)returns(GoodsListRes);
+    rpc GetGoodsListById(GoodsIdsReq)returns(GoodsListRes);
+    rpc GetGoodsDetail(GoodsInfoReq)returns(GoodsInfoRes);
     //增删改
     rpc CreateGoods(WriteGoodsInfoReq)returns(GoodsInfoRes);
     rpc DeleteGoods(DelGoodsReq) returns(google.protobuf.Empty);
     rpc UpdeateGoods(WriteGoodsInfoReq)returns(google.protobuf.Empty);
-    rpc GetGoodsDetail(GoodsInfoReq)returns(GoodsInfoRes);
+
 
 //商品类型服务
-    rpc GetAllCategyList(google.protobuf.Empty)returns(CategyListRes);
-    rpc GetSubCategy(SubCategyReq)returns(SubCategyListRes);
+    rpc GetCategyList(google.protobuf.Empty)returns(CategyListRes);
+    rpc GetCategy(SubCategyReq)returns(SubCategyListRes);
     rpc CreateCategy(CategyInfoReq)returns(CategyInfoRes);
     rpc DeleteCategy(DelCategyReq)returns(google.protobuf.Empty);
     rpc UpdateCategy(CategyInfoReq)returns(google.protobuf.Empty);
@@ -101,6 +102,13 @@ message SubCategyListRes{
     //既把Sub目录返回,也把Sub的Sub目录返回
     CategyInfoRes selfInfo = 2;
     repeated CategyInfoRes subInfo = 3;
+}
+
+//
+message BatchCategyInfoReq{
+    repeated int32 goodsId = 1;
+    int32 goodsNums = 2;
+    int32 brandNums = 3;
 }
 
 
@@ -202,10 +210,6 @@ message DelBrandReq{
 
 
 
-//通过id批量得到商品,这里主要是一个订单会有多个商品,业务上要把订单的所有信息得到,
-message BatchGoodsByIdReq{
-    repeated int32 id = 1;
-}
 
 //请求删除指定商品
 message DelGoodsReq{
@@ -223,38 +227,40 @@ message GoodsInfoReq{
     int32 id = 1;
 }
 
+message GoodsIdsReq{
+    repeated int32 id = 1;
+}
+
 //请求创建/或创建商品
 message WriteGoodsInfoReq{
     int32 id = 1;
     string name = 2;
     string goodsSign = 3;
-    //商品库存,库存会作为另一个微服务,
-    int32 stocks = 4;
-    int32 soldNum = 5;
-    int32 favorNum = 6;
-    string goodsBrief = 7;
-    string goodsDesc = 8;
-     bool transFree = 9;
-    repeated string images = 10;
-    repeated string dsecImages = 11;
-    string firstImage = 12;
-     bool isHot = 13;
-    bool onSale = 14;
-    int32 categyId = 15;
-    int32 brandId = 16;
+    string goodsBrief = 4;
+    bool transFree = 5;
+    repeated string images = 6;
+    repeated string descImages = 7;
+    string firstImage = 8;
+    bool onSale = 9;
+    int32 categyId = 10;
+    int32 brandId = 11;
+    float MarketPrice = 12;
+    float SalePrice = 13;
+    //int32 clickNum = 20;
+    //bool isHot = 13;
+    //bool isNew = 17;
+    //int32 soldNum = 5;
+    //int32 favorNum = 6;
 }
 
-//这里看着像是减价,但是我觉得可以改为修改商品信息
-message GoodsReduceReq{
-    int32 goodsId = 1;
-    int32 nums = 2;
+message GoodsStatusReq{
+    bool isHot = 13;
+    bool isNew = 17;
 }
 
-//
-message BatchCategyInfoReq{
-    repeated int32 goodsId = 1;
-    int32 goodsNums = 2;
-    int32 brandNums = 3;
+//这里开api用于增加喜爱量,点击量,售卖量
+message GoodsReq{
+
 }
 
 //请求并过滤商品信息
@@ -270,6 +276,7 @@ message GoodsFilterReq{
     int32 pageSize = 8;
     string keyWords = 9;
     int32 brand = 10;
+    int32 id = 11;
 }
 
 //返回具体商品信息
@@ -284,15 +291,13 @@ message GoodsInfoRes{
     float MarketPrice = 8;
     float SalePrice = 9;
     string goodsBrief = 10;
-    string goodsDesc = 11;
     bool transFree = 12;
     repeated string images = 13;
-    repeated string dsecImages = 14;
+    repeated string descImages = 14;
     string firstImage = 15;
     bool isNew = 16;
     bool isHot = 17;
     bool onSale = 18;
-    int64 addTime = 19;
     //这里还把该商品目录的简明信息拿到了
     CategyBriefInfoRes categy = 20;
     BrandInfoRes brand = 21; 

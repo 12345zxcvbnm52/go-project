@@ -37,4 +37,5 @@ func InitConsul() {
 		panic(err)
 	}
 	FindGoodsServer()
+
 }

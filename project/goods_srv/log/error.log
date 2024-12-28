@@ -1,0 +1,6 @@
+{"level":"error","ts":"2024-12-27T20:52:14.239+0800","caller":"model/goods_logic.go:127","msg":"err","msg":[]}
+{"level":"error","ts":"2024-12-27T20:52:21.117+0800","caller":"model/goods_logic.go:127","msg":"err","msg":[]}
+{"level":"error","ts":"2024-12-27T20:52:22.250+0800","caller":"model/goods_logic.go:127","msg":"err","msg":[]}
+{"level":"error","ts":"2024-12-27T20:53:00.324+0800","caller":"model/goods_logic.go:127","msg":"err","msg":[]}
+{"level":"error","ts":"2024-12-27T20:53:22.044+0800","caller":"model/goods_logic.go:127","msg":"err","msg":[523,524,530,532,540]}
+{"level":"error","ts":"2024-12-27T20:53:36.602+0800","caller":"model/goods_logic.go:127","msg":"err","msg":[566,519,586]}

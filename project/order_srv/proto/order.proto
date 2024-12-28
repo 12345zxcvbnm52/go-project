@@ -1,0 +1,121 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+option go_package=".;proto";
+
+service Order{
+    //获得用户购物车信息
+    rpc GetCartInfoList(UserInfoReq)returns(CartItemListRes);
+    //为购物车添加商品
+    rpc CreateCartItem(CartItemInfoReq)returns(CartItemInfoRes);
+    //修改购物车的一条记录
+    rpc UpdateCartItem(WriteCartItemReq)returns(google.protobuf.Empty);
+    rpc DeleteCartItem(DelCartItemReq)returns(google.protobuf.Empty);
+    
+    rpc CreateOrder(OrderInfoReq)returns(OrderInfoRes);
+    rpc GetOrderList(OrderFliterReq)returns(OrderListRes);
+    rpc GetOrderInfo(OrderInfoReq)returns(OrderDetailRes);
+    rpc UpdateOrder(WriteOrderReq)returns(google.protobuf.Empty);
+}
+
+message UserInfoReq{
+    uint32 userId = 1;
+    int32 pagesNum = 2;
+    int32 pageSize = 3;
+}
+
+message CartItemInfoReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    int32 goodsId = 3;
+}
+
+message CartItemInfoRes{
+    uint32 id = 1;
+    uint32 userId = 2;
+    int32 goodsId = 3;
+    int32 goodsNum = 4;
+    bool selected = 5;
+}
+
+message WriteCartItemReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    int32 goodsId = 3;
+    int32 goodsNum = 4;
+    bool selected = 5;
+}
+
+message CartItemListRes{
+    int64 total = 1;
+    repeated CartItemInfoRes data = 2;
+}
+
+message DelCartItemReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    int32 goodsId = 3;
+}
+
+message OrderInfoReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string address = 3;
+    string signerName = 4;
+    string signerMobile = 5;
+    string message = 6;
+}
+
+message OrderInfoRes{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string orderSign = 3;
+    string payWay = 4;
+    int32 status = 5;
+    string address = 6;
+    float cost = 7;
+    string signerName = 8;
+    string signerMobile = 9;
+    string message = 10;
+}
+
+//将一些详细信息放入其中
+message OrderDetailRes{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string orderSign = 3;
+    string payWay = 4;
+    int32 status = 5;
+    string address = 6;
+    float cost = 7;
+    string signerName = 8;
+    string signerMobile = 9;
+    string message = 10;
+    repeated OrderItemRes items = 11;
+}
+
+message OrderItemRes{
+    uint32 id = 1;
+    uint32 orderId = 2;
+    int32 goodsId = 3;
+    int32 goodsNum = 4;
+    string goodsName = 5;
+    string goodsImages = 6;
+    float goodsPrice = 7;
+}
+
+message OrderFliterReq{
+    uint32 userId = 1;
+    int32 pagesNum = 2;
+    int32 pageSize = 3;
+}
+
+message OrderListRes{
+    int64 total = 1;
+    repeated OrderInfoRes data = 2;
+}
+
+message WriteOrderReq{
+    uint32 id = 1;
+    string orderSign = 2;
+    int32 status = 3;
+}

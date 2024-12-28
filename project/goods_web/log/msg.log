@@ -1,1 +1,6 @@
-{"level":"info","ts":"2024-12-21T14:43:54.113+0800","caller":"initialize/init.go:28","msg":"ServerConfig is :  &{{goods_srv 192.168.199.128 8500} {192.168.199.128 8021} goods_web 0.0.0.0 8080  [] 1.0 {goods_srv 37787 192.168.199.128 [goods]} kensame}"}
+{"level":"info","ts":"2024-12-27T20:52:12.362+0800","caller":"util/grpc_pool.go:46","msg":"pool配置信息","msg":{"ConsulAddr":"192.168.199.128","ConsulPort":8500,"ServerName":"goods_srv","DialTimeout":5000000000,"BackoffMaxTry":3000000000,"KeepAliveCheck":10000000000,"KeepAliveTimeout":10000000000}}
+{"level":"info","ts":"2024-12-27T20:52:12.363+0800","caller":"initialize/init.go:29","msg":"ServerConfig is :  &{{goods_srv 192.168.199.128 8500} {192.168.199.128 8021} goods_web 0.0.0.0 8080  [] 1.0 {goods_srv 42681 192.168.199.128 [goods]} kensame}"}
+{"level":"error","ts":"2024-12-27T20:52:14.239+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
+{"level":"error","ts":"2024-12-27T20:52:21.118+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
+{"level":"error","ts":"2024-12-27T20:52:22.250+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
+{"level":"error","ts":"2024-12-27T20:53:00.324+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}

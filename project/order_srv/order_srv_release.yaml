@@ -1,0 +1,21 @@
+#服务注册参数
+name: 'order_srv'
+id: 'order_srv'
+tags: 
+  - 'order'
+
+#这里若使用具体ip则需要关闭mysql的保护模式
+mysql: 
+  net_type: 'tcp'
+  host: '192.168.199.128'
+  port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'order_srv'
+
+consul: 
+  consul_ip: '192.168.199.128'
+  consul_port: 8500
+
+goods_srv_name: 'goods_srv'
+inventory_srv_name: 'inventory_srv'

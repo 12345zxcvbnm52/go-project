@@ -1,0 +1,7 @@
+1:signal-handler (1734929687) Received SIGTERM scheduling shutdown...
+1:M 23 Dec 2024 04:54:47.509 # User requested shutdown...
+1:M 23 Dec 2024 04:54:47.509 * Calling fsync() on the AOF file.
+1:M 23 Dec 2024 04:54:47.509 * Saving the final RDB snapshot before exiting.
+1:M 23 Dec 2024 04:54:47.511 # Error moving temp DB file temp-1.rdb on the final destination dump17717.rdb (in server root dir /data/single): No such file or directory
+1:M 23 Dec 2024 04:54:47.511 # Error trying to save the DB, can't exit.
+1:M 23 Dec 2024 04:54:47.511 # Errors trying to shut down the server. Check the logs for more information.

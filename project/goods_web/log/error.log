@@ -1,0 +1,4 @@
+{"level":"error","ts":"2024-12-27T20:52:14.239+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
+{"level":"error","ts":"2024-12-27T20:52:21.118+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
+{"level":"error","ts":"2024-12-27T20:52:22.250+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
+{"level":"error","ts":"2024-12-27T20:53:00.324+0800","caller":"handler/goods.go:64","msg":"微服务调用失败","msg":"rpc error: code = NotFound desc = 不存在对应的商品"}
