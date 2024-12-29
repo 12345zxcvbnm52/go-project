@@ -4,6 +4,9 @@ id: 'order_srv'
 tags: 
   - 'order'
 
+goods_srv_name: 'goods_srv'
+inventory_srv_name: 'inventory_srv'
+
 #这里若使用具体ip则需要关闭mysql的保护模式
 mysql: 
   net_type: 'tcp'
@@ -17,5 +20,7 @@ consul:
   consul_ip: '192.168.199.128'
   consul_port: 8500
 
-goods_srv_name: 'goods_srv'
-inventory_srv_name: 'inventory_srv'
+
+rockmq: 
+  host: '192.168.199.128'
+  port: '9876'

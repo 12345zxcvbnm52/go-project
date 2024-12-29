@@ -23,10 +23,10 @@ var (
 )
 
 // gorm给出的分页函数的最佳实践
-func Paginate(pageNum int, pageSize int) func(db *gorm.DB) *gorm.DB {
+func Paginate(pagesNum int, pageSize int) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		if pageNum <= 0 {
-			pageNum = 1
+		if pagesNum <= 0 {
+			pagesNum = 1
 		}
 		switch {
 		case pageSize > 100:
@@ -34,13 +34,13 @@ func Paginate(pageNum int, pageSize int) func(db *gorm.DB) *gorm.DB {
 		case pageSize < 0:
 			pageSize = 10
 		}
-		offset := (pageNum - 1) * pageSize
+		offset := (pagesNum - 1) * pageSize
 		return db.Offset(offset).Limit(pageSize)
 	}
 }
 
 type Model struct {
-	ID        int32          `gorm:"primarykey"`
+	ID        uint32         `gorm:"primarykey"`
 	CreatedAt time.Time      `json:"-"`
 	UpdatedAt time.Time      `json:"-"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
@@ -55,7 +55,7 @@ type Category struct {
 	//是否可以在窗口上显示
 	OnTab bool `gorm:"default:false;not null" json:"on_tab"`
 	//自引用的从表外键
-	ParentCategoryID int32 `json:"-"`
+	ParentCategoryID uint32 `json:"-"`
 	//父层级商品类型,自引用的主表结构体字段
 	ParentCategory *Category `json:"parent_category" gorm:"foreignKey:ParentCategoryID"`
 	//装所有子商品分类,
@@ -74,9 +74,9 @@ type Brand struct {
 // 一个品牌旗下有多个商品类型,一个商品类型也能来自多个品牌
 type CategoryWithBrand struct {
 	Model
-	CategoryID int32    `gorm:"type:int;index:idx_category_brand,unique" json:"-"`
+	CategoryID uint32   `gorm:"type:int;index:idx_category_brand,unique" json:"-"`
 	Category   Category `json:"category"`
-	BrandID    int32    `gorm:"type:int;index:idx_category_brand,unique"`
+	BrandID    uint32   `gorm:"type:int;index:idx_category_brand,unique"`
 	Brand      Brand    `json:"brand"`
 }
 
@@ -106,10 +106,10 @@ func (g GormList) Value() (driver.Value, error) {
 type Goods struct {
 	Model
 	//这里自动生成绑定目录的外键,即商品必须要有目录
-	CategoryID int32 `gorm:"type:int;not null"`
+	CategoryID uint32 `gorm:"type:int;not null"`
 	Category   Category
 	//这里自动生成绑定品牌的外键,即商品必须要有品牌
-	BrandID int32 `gorm:"type:int;not null"`
+	BrandID uint32 `gorm:"type:int;not null"`
 	Brand   Brand
 	//是否上架了
 	OnSale bool
@@ -143,9 +143,9 @@ type Goods struct {
 }
 
 type EsGoods struct {
-	ID          int32   `json:"id"`
-	CategoryID  int32   `json:"category_id"`
-	BrandID     int32   `json:"brand_id"`
+	ID          uint32  `json:"id"`
+	CategoryID  uint32  `json:"category_id"`
+	BrandID     uint32  `json:"brand_id"`
 	OnSale      bool    `json:"on_sale"`
 	TransFree   bool    `json:"trans_free"`
 	IsHot       bool    `json:"is_hot"`

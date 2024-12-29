@@ -14,6 +14,7 @@ var (
 	ErrDuplicated      = status.Error(codes.AlreadyExists, "欲创建的库存已存在")
 	ErrInvalidArgument = status.Error(codes.InvalidArgument, "修改库存失败,错误的参数")
 	ErrBadRequest      = status.Error(codes.Aborted, "因未知原因操作失败")
+	ErrLackInventory   = status.Error(codes.ResourceExhausted, "缺少库存")
 )
 
 type Result struct {
@@ -30,8 +31,7 @@ type Result struct {
 // }
 
 func (u *Inventory) InsertOne() error {
-	res := gb.DB.Create(u)
-	if res.Error != nil {
+	if res := gb.DB.Create(u); res.Error != nil {
 		if res.Error == gorm.ErrDuplicatedKey {
 			return ErrDuplicated
 		}
@@ -52,17 +52,16 @@ func (u *Inventory) UpdateOneByGoodsId() error {
 }
 
 func (u *Inventory) FindOneByGoodsId() error {
-	res := gb.DB.Model(u).Where("goods_id = ?", u.GoodsId).Find(u)
-	if res.Error != nil {
+	if res := gb.DB.Model(u).Where("goods_id = ?", u.GoodsId).First(u); res.Error != nil {
+		if res.RowsAffected == 0 {
+			return ErrNotFound
+		}
 		return ErrInternalWrong
-	}
-	if res.RowsAffected == 0 {
-		return ErrNotFound
 	}
 	return nil
 }
 
-func (u *Inventory) FindByGoodsIds(Ids ...int32) (*Result, error) {
+func (u *Inventory) FindByGoodsIds(Ids ...uint32) (*Result, error) {
 	invt := []*Inventory{}
 	if len(Ids) == 0 {
 		return nil, ErrNotFound

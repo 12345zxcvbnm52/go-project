@@ -57,42 +57,42 @@ message CategyListRes{
 
 //商品目录信息类
 message CategyInfoReq{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
-    int32 parentCategyId = 3;
+    uint32 parentCategyId = 3;
     int32 level = 4;
     bool OnTable = 5;
 }
 
 //返回商品目录信息
 message CategyInfoRes{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
-    int32 parentCategyId = 3;
+    uint32 parentCategyId = 3;
     int32 level = 4;
     bool OnTable = 5;
 }
 
 //指定删除目录
 message DelCategyReq{
-    int32 id = 1;
+    uint32 id = 1;
 }
 
 //暂时没有用到
 message CategyFliterReq{
-    int32 id = 1;
+    uint32 id = 1;
     bool OnTable = 2;
 }
 
 //暂时没有用到
 message QueryCategyRes{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
 }
 
 //请求对应商品目录的子目录
 message SubCategyReq{
-    int32 id = 1;
+    uint32 id = 1;
     int32 level = 2;
 }
 
@@ -106,7 +106,7 @@ message SubCategyListRes{
 
 //
 message BatchCategyInfoReq{
-    repeated int32 goodsId = 1;
+    repeated uint32 goodsId = 1;
     int32 goodsNums = 2;
     int32 brandNums = 3;
 }
@@ -129,9 +129,9 @@ message CategyFilterReq{
 
 //请求获得商品品牌与商品目录
 message CategyBrandInfoReq{
-    int32 id = 1;
-    int32 categyId = 2;
-    int32 brandId = 3;
+    uint32 id = 1;
+    uint32 categyId = 2;
+    uint32 brandId = 3;
 }
 
 //
@@ -142,7 +142,7 @@ message CategyBrandListRes{
 
 //返回获得商品品牌与商品目录?
 message CategyBrandInfoRes{
-    int32 id = 1;
+    uint32 id = 1;
     BrandInfoRes brandInfo = 2;
     CategyInfoRes CategyInfo = 3;
 }
@@ -165,7 +165,7 @@ message BannerListRes{
 
 //请求滑动窗口的商品
 message BannerInfoReq{
-    int32 id = 1;
+    uint32 id = 1;
     int32 index = 2;
     string image = 3;
     string url = 4;
@@ -173,7 +173,7 @@ message BannerInfoReq{
 
 //返回滑动窗口的商品的信息
 message BannerInfoRes{
-    int32 id = 1;
+    uint32 id = 1;
     int32 index = 2;
     string image = 3;
     string url = 4;
@@ -181,14 +181,14 @@ message BannerInfoRes{
 
 //请求商品品牌
 message BrandInfoReq{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
     string logo = 3;
 }
 
 //返回品牌信息
 message BrandInfoRes{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
     string logo = 3;
 }
@@ -201,7 +201,7 @@ message BrandListRes{
 
 //请求删除一个指定的品牌
 message DelBrandReq{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
 }
 
@@ -213,27 +213,27 @@ message DelBrandReq{
 
 //请求删除指定商品
 message DelGoodsReq{
-    int32 id = 1;
+    uint32 id = 1;
 }
 
 //返回商品简明信息
 message CategyBriefInfoRes{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
 }
 
 //请求具体商品信息
 message GoodsInfoReq{
-    int32 id = 1;
+    uint32 id = 1;
 }
 
 message GoodsIdsReq{
-    repeated int32 id = 1;
+    repeated uint32 id = 1;
 }
 
 //请求创建/或创建商品
 message WriteGoodsInfoReq{
-    int32 id = 1;
+    uint32 id = 1;
     string name = 2;
     string goodsSign = 3;
     string goodsBrief = 4;
@@ -242,8 +242,8 @@ message WriteGoodsInfoReq{
     repeated string descImages = 7;
     string firstImage = 8;
     bool onSale = 9;
-    int32 categyId = 10;
-    int32 brandId = 11;
+    uint32 categyId = 10;
+    uint32 brandId = 11;
     float MarketPrice = 12;
     float SalePrice = 13;
     //int32 clickNum = 20;
@@ -262,18 +262,18 @@ message GoodsFilterReq{
     bool isNew = 4;
     bool onTable = 5;
     //确定点击的目录是哪一级,会递归显示下一层(或者说下几层)目录
-    int32 categyId = 6;
+    uint32 categyId = 6;
     int32 pagesNum = 7;
     int32 pageSize = 8;
     string keyWords = 9;
-    int32 brand = 10;
-    int32 id = 11;
+    uint32 brandId = 10;
+    uint32 id = 11;
 }
 
 //返回具体商品信息
 message GoodsInfoRes{
-    int32 id = 1;
-    int32 categyId = 2;
+    uint32 id = 1;
+    uint32 categyId = 2;
     string name = 3;
     string goodsSign = 4;
     int32 clickNum = 5;

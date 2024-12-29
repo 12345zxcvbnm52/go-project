@@ -56,7 +56,7 @@ func (s *GoodsServer) GetGoodList(ctx context.Context, req *pb.GoodsFilterReq) (
 		OnTable:  req.OnTable,
 		PagesNum: req.PagesNum,
 		KeyWords: req.KeyWords,
-		Brand:    req.Brand,
+		BrandId:  req.BrandId,
 	})
 	if err != nil {
 		return nil, err

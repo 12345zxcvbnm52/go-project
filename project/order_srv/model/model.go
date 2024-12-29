@@ -9,14 +9,25 @@ import (
 )
 
 var (
-	ErrOrderNotFound   = status.Error(codes.NotFound, "未找到对应的库存信息")
-	ErrOrderDuplicated = status.Error(codes.AlreadyExists, "欲创建的库存已存在")
-	ErrCartNotFound    = status.Error(codes.NotFound, "未找到对应的库存信息")
-	ErrInternalWrong   = status.Error(codes.Internal, "服务器内部未知的错误,请稍后尝试")
-	ErrCartDuplicated  = status.Error(codes.AlreadyExists, "欲创建的库存已存在")
-	ErrInvalidArgument = status.Error(codes.InvalidArgument, "修改库存失败,错误的参数")
 	ErrBadRequest      = status.Error(codes.Aborted, "因未知原因操作失败")
-	ErrCartNoSelected  = status.Error(codes.InvalidArgument, " 购物车内没有选中的商品")
+	ErrInternalWrong   = status.Error(codes.Internal, "服务器内部未知的错误,请稍后尝试")
+	ErrInvalidArgument = status.Error(codes.InvalidArgument, "修改库存失败,错误的参数")
+
+	ErrOrderNotFound   = status.Error(codes.NotFound, "未找到对应的订单信息")
+	ErrOrderDuplicated = status.Error(codes.AlreadyExists, "欲创建的订单已存在")
+
+	ErrCartNotFound = status.Error(codes.NotFound, "购物车无对应的商品")
+	//这个Err似乎只能在内部使用?
+	ErrCartNoItems          = status.Error(codes.NotFound, "购物车内是空的")
+	ErrCartDuplicated       = status.Error(codes.AlreadyExists, "欲创建的已存在")
+	ErrCartNoSelected       = status.Error(codes.InvalidArgument, " 购物车内没有选中的商品")
+	ErrOrderGoodsNotFound   = status.Error(codes.NotFound, "未找到对应的订单内商品信息")
+	ErrOrderGoodsDuplicated = status.Error(codes.AlreadyExists, "欲创建的订单内商品信息已存在")
+	ErrOrderFailedCreate    = status.Error(codes.Aborted, "订单因未知原因创建失败")
+	ErrBadGoodsClient       = status.Error(codes.Internal, "商品服务连接失败")
+	ErrBadInventoryClient   = status.Error(codes.Internal, "库存服务连接失败")
+
+	ErrBadRockMq = status.Error(codes.Internal, "消息队列操作失败")
 )
 
 type Model struct {
@@ -36,7 +47,7 @@ type Cart struct {
 	//购物车所属的用户
 	UserId uint32 `gorm:"type:uint;index;not null"`
 	//购物车内有的商品
-	GoodsId int32 `gorm:"type:int;index;not null"`
+	GoodsId uint32 `gorm:"type:int;index;not null"`
 	//商品要购买的数量
 	GoodsNums int32 `gorm:"type:int;not null"`
 	//商品是否选中
@@ -95,7 +106,7 @@ type Order struct {
 type OrderGoods struct {
 	Model
 	OrderId    uint32  `gorm:"type:uint;index;not null"`
-	GoodsId    int32   `gorm:"type:int;index;not null"`
+	GoodsId    uint32  `gorm:"type:int;index;not null"`
 	GoodsName  string  `gorm:"type:varchar(100);index;not null"`
 	GoodsImage string  `gorm:"type:varchar(200);not null"`
 	GoodsPrice float32 `gorm:"not null"`

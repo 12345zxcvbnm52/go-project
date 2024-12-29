@@ -13,6 +13,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/apache/rocketmq-client-go/v2"
+	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health"
@@ -46,6 +48,19 @@ func main() {
 	zap.S().Infoln("ServerConfig is : ", gb.ServerConfig)
 	sign := make(chan os.Signal, 1)
 	signal.Notify(sign, syscall.SIGTERM, syscall.SIGINT)
+
+	// 监听库存归还topic,不允许主协程关闭
+	c, _ := rocketmq.NewPushConsumer(
+		consumer.WithNameServer([]string{fmt.Sprintf("%s:%d", gb.ServerConfig.RockMqConfig.Host, gb.ServerConfig.RedisConfig.Port)}),
+		consumer.WithGroupName("gin"),
+	)
+	if err := c.Subscribe("order_reback", consumer.MessageSelector{}, handler.AutoReback); err != nil {
+		zap.S().Errorw("消息队列Comsumer读取消息失败", "msg", err.Error())
+	}
+	if err := c.Start(); err != nil {
+		zap.S().Errorw("消息队列Comsumer启动失败", "msg", err.Error())
+	}
+
 	<-sign
 	gb.ConsulClient.Agent().ServiceDeregister(gb.ServerConfig.Name)
 

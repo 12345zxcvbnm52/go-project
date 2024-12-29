@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderClient interface {
 	// 获得用户购物车信息
-	GetCartInfoList(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*CartItemListRes, error)
+	GetUserCartItems(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*CartItemListRes, error)
 	// 为购物车添加商品
 	CreateCartItem(ctx context.Context, in *CartItemInfoReq, opts ...grpc.CallOption) (*CartItemInfoRes, error)
 	// 修改购物车的一条记录
@@ -39,9 +39,9 @@ func NewOrderClient(cc grpc.ClientConnInterface) OrderClient {
 	return &orderClient{cc}
 }
 
-func (c *orderClient) GetCartInfoList(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*CartItemListRes, error) {
+func (c *orderClient) GetUserCartItems(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*CartItemListRes, error) {
 	out := new(CartItemListRes)
-	err := c.cc.Invoke(ctx, "/Order/GetCartInfoList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Order/GetUserCartItems", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (c *orderClient) UpdateOrder(ctx context.Context, in *WriteOrderReq, opts .
 // for forward compatibility
 type OrderServer interface {
 	// 获得用户购物车信息
-	GetCartInfoList(context.Context, *UserInfoReq) (*CartItemListRes, error)
+	GetUserCartItems(context.Context, *UserInfoReq) (*CartItemListRes, error)
 	// 为购物车添加商品
 	CreateCartItem(context.Context, *CartItemInfoReq) (*CartItemInfoRes, error)
 	// 修改购物车的一条记录
@@ -133,8 +133,8 @@ type OrderServer interface {
 type UnimplementedOrderServer struct {
 }
 
-func (UnimplementedOrderServer) GetCartInfoList(context.Context, *UserInfoReq) (*CartItemListRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCartInfoList not implemented")
+func (UnimplementedOrderServer) GetUserCartItems(context.Context, *UserInfoReq) (*CartItemListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserCartItems not implemented")
 }
 func (UnimplementedOrderServer) CreateCartItem(context.Context, *CartItemInfoReq) (*CartItemInfoRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCartItem not implemented")
@@ -170,20 +170,20 @@ func RegisterOrderServer(s *grpc.Server, srv OrderServer) {
 	s.RegisterService(&_Order_serviceDesc, srv)
 }
 
-func _Order_GetCartInfoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_GetUserCartItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserInfoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServer).GetCartInfoList(ctx, in)
+		return srv.(OrderServer).GetUserCartItems(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Order/GetCartInfoList",
+		FullMethod: "/Order/GetUserCartItems",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServer).GetCartInfoList(ctx, req.(*UserInfoReq))
+		return srv.(OrderServer).GetUserCartItems(ctx, req.(*UserInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -319,8 +319,8 @@ var _Order_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*OrderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetCartInfoList",
-			Handler:    _Order_GetCartInfoList_Handler,
+			MethodName: "GetUserCartItems",
+			Handler:    _Order_GetUserCartItems_Handler,
 		},
 		{
 			MethodName: "CreateCartItem",

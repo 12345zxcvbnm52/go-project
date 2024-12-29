@@ -19,11 +19,11 @@ type FindOption struct {
 	OnTable  bool
 	// 确定点击的目录是哪一级,会递归显示下一层(或者说下几层)目录
 	//如果位最底层则忽视
-	CategyId int32
+	CategyId uint32
 	PagesNum int32
 	PageSize int32
 	KeyWords string
-	Brand    int32
+	BrandId  uint32
 }
 
 type Result struct {
@@ -45,8 +45,8 @@ func (u *Goods) FindByOpt(opt *FindOption) (*Result, error) {
 		esQuery = esQuery.Filter(es.NewRangeQuery("sale_price").Gte(opt.MinPrice))
 
 	}
-	if opt.Brand > 0 {
-		esQuery = esQuery.Filter(es.NewTermQuery("brand_id", opt.Brand))
+	if opt.BrandId > 0 {
+		esQuery = esQuery.Filter(es.NewTermQuery("brand_id", opt.BrandId))
 
 	}
 	if opt.IsHot {
@@ -109,10 +109,10 @@ func (u *Goods) FindByOpt(opt *FindOption) (*Result, error) {
 		zap.S().Errorw("es按条件查询失败", "msg", err.Error())
 		return nil, ErrInternalWrong
 	}
-	ids := []int32{}
+	ids := []uint32{}
 	for _, v := range result.Hits.Hits {
 		i, _ := strconv.Atoi(v.Id)
-		ids = append(ids, int32(i))
+		ids = append(ids, uint32(i))
 	}
 	res, err := u.FindByIds(ids...)
 	if err != nil {
@@ -124,7 +124,7 @@ func (u *Goods) FindByOpt(opt *FindOption) (*Result, error) {
 	}, nil
 }
 
-func (u *Goods) FindByIds(Id ...int32) (*Result, error) {
+func (u *Goods) FindByIds(Id ...uint32) (*Result, error) {
 	zap.S().Errorw("err", "msg", Id)
 	data := []*Goods{}
 	if len(Id) == 0 {

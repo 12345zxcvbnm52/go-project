@@ -4,7 +4,7 @@ option go_package=".;proto";
 
 service Order{
     //获得用户购物车信息
-    rpc GetCartInfoList(UserInfoReq)returns(CartItemListRes);
+    rpc GetUserCartItems(UserInfoReq)returns(CartItemListRes);
     //为购物车添加商品
     rpc CreateCartItem(CartItemInfoReq)returns(CartItemInfoRes);
     //修改购物车的一条记录
@@ -26,13 +26,13 @@ message UserInfoReq{
 message CartItemInfoReq{
     uint32 id = 1;
     uint32 userId = 2;
-    int32 goodsId = 3;
+    uint32 goodsId = 3;
 }
 
 message CartItemInfoRes{
     uint32 id = 1;
     uint32 userId = 2;
-    int32 goodsId = 3;
+    uint32 goodsId = 3;
     int32 goodsNum = 4;
     bool selected = 5;
 }
@@ -40,7 +40,7 @@ message CartItemInfoRes{
 message WriteCartItemReq{
     uint32 id = 1;
     uint32 userId = 2;
-    int32 goodsId = 3;
+    uint32 goodsId = 3;
     int32 goodsNum = 4;
     bool selected = 5;
 }
@@ -53,7 +53,7 @@ message CartItemListRes{
 message DelCartItemReq{
     uint32 id = 1;
     uint32 userId = 2;
-    int32 goodsId = 3;
+    uint32 goodsId = 3;
 }
 
 message OrderInfoReq{
@@ -96,7 +96,7 @@ message OrderDetailRes{
 message OrderItemRes{
     uint32 id = 1;
     uint32 orderId = 2;
-    int32 goodsId = 3;
+    uint32 goodsId = 3;
     int32 goodsNum = 4;
     string goodsName = 5;
     string goodsImages = 6;
