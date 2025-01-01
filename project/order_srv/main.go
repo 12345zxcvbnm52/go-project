@@ -6,13 +6,14 @@ import (
 	"net"
 	gb "order_srv/global"
 	"order_srv/handler"
-	_ "order_srv/initialize"
 	initialize "order_srv/initialize"
 	pb "order_srv/proto"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/apache/rocketmq-client-go/v2"
+	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health"
@@ -44,9 +45,25 @@ func main() {
 	}()
 	initialize.InitConsul()
 	zap.S().Infoln("ServerConfig is : ", gb.ServerConfig)
+
+	//启动阶段出错直接就panic
+	p, err := rocketmq.NewPushConsumer(
+		consumer.WithNameServer([]string{fmt.Sprintf("%s:%d", gb.ServerConfig.RockMq.Host, gb.ServerConfig.RockMq.Port)}),
+		consumer.WithGroupName("comsumer-"+gb.ServerConfig.Name),
+	)
+	if err != nil {
+		panic(err)
+	}
+	if err = p.Subscribe(gb.ServerConfig.RockMq.TimeoutTopic, consumer.MessageSelector{}, handler.OrderTimeout); err != nil {
+		panic(err)
+	}
+	if err = p.Start(); err != nil {
+		panic(err)
+	}
+
 	sign := make(chan os.Signal, 1)
 	signal.Notify(sign, syscall.SIGTERM, syscall.SIGINT)
 	<-sign
+	p.Shutdown()
 	gb.ConsulClient.Agent().ServiceDeregister(gb.ServerConfig.Name)
-
 }

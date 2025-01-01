@@ -21,13 +21,14 @@ redis:
   host: '192.168.199.128'
   port: 6379
   password: '123'
-
 redlock:
+  redlock_addr:
   - '192.168.199.128:17715'
   - '192.168.199.128:17716'
   - '192.168.199.128:17717'
-redlock_pass: '123'
+  redlock_pass: '123'
 
 rocketmq: 
   host: '192.168.199.128'
-  post: 9876
+  port: 9876
+  reback_topic: 'order-reback'

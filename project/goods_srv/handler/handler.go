@@ -1,13 +1,7 @@
 package handler
 
 import (
-	"errors"
-
 	"gorm.io/gorm"
-)
-
-var (
-	ErrBannerNotExists = errors.New("选择的轮播图不存在")
 )
 
 // gorm给出的分页函数的最佳实践

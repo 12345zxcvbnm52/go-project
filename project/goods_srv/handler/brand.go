@@ -2,50 +2,62 @@ package handler
 
 import (
 	"context"
-	"errors"
-	gb "goods_srv/global"
 	"goods_srv/model"
 	pb "goods_srv/proto"
+
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-var (
-	ErrBrandAlreadExists = errors.New("选择的品牌已存在")
-)
+func BrandToBrandInfoRes(brand *model.Brand) *pb.BrandInfoRes {
+	return &pb.BrandInfoRes{
+		Name: brand.Name,
+		Logo: brand.Logo,
+		Id:   brand.ID,
+	}
+}
 
 // 品牌服务
 func (s *GoodsServer) GetBrandList(ctx context.Context, req *pb.BrandFilterReq) (*pb.BrandListRes, error) {
-	res := &pb.BrandListRes{}
-	brands := []model.Brand{}
-
-	result := gb.DB.Scopes(Paginate(int(req.PagesNum), int(req.PageSize))).Find(brands)
-	if result.Error != nil {
-		return nil, result.Error
+	logic := &model.Brand{}
+	res, err := logic.FindByOpt(&model.BrandFindOption{PagesNum: req.PagesNum, PageSize: req.PageSize})
+	if err != nil {
+		return nil, err
 	}
-	gb.DB.Model(&model.Brand{}).Count(&res.Total)
-	for _, brand := range brands {
-		res.Data = append(res.Data, &pb.BrandInfoRes{
-			Id:   brand.ID,
-			Logo: brand.Logo,
-			Name: brand.Name,
-		})
+	r := &pb.BrandListRes{}
+	for _, brand := range res.Data {
+		r.Data = append(r.Data, BrandToBrandInfoRes(brand))
 	}
-	return res, nil
+	r.Total = res.Total
+	return r, nil
 }
 
 func (s *GoodsServer) CreateBrand(ctx context.Context, req *pb.BrandInfoReq) (*pb.BrandInfoRes, error) {
-	result := gb.DB.Where("Name=?", req.Name).Find(&model.Brand{})
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	if result.RowsAffected > 0 {
-		return nil, ErrBrandAlreadExists
-	}
-	gb.DB.Model(&model.Brand{}).Create(&model.Brand{
+	brand := &model.Brand{
 		Name: req.Name,
 		Logo: req.Logo,
-	})
-	return &pb.BrandInfoRes{Id: req.Id}, nil
+	}
+	if err := brand.InsertOne(); err != nil {
+		return nil, err
+	}
+	return &pb.BrandInfoRes{Id: brand.ID}, nil
 }
 
-// func (s *GoodsServer) DeleteBrand(context.Context, *pb.DelBrandReq) (*emptypb.Empty, error)    {}
-// func (s *GoodsServer) UpdateBrand(context.Context, *pb.BrandInfoReq) (*emptypb.Empty, error)   {}
+func (s *GoodsServer) DeleteBrand(ctx context.Context, req *pb.DelBrandReq) (*emptypb.Empty, error) {
+	brand := &model.Brand{}
+	brand.ID = req.Id
+	if err := brand.DeleteOneById(); err != nil {
+		return nil, err
+	}
+	return &emptypb.Empty{}, nil
+}
+
+func (s *GoodsServer) UpdateBrand(ctx context.Context, req *pb.BrandInfoReq) (*emptypb.Empty, error) {
+	brand := &model.Brand{}
+	brand.ID = req.Id
+	brand.Logo = req.Logo
+	brand.Name = req.Name
+	if err := brand.UpdateOneById(); err != nil {
+		return nil, err
+	}
+	return &emptypb.Empty{}, nil
+}

@@ -129,7 +129,7 @@ func (s *GoodsServer) UpdeateGoods(ctx context.Context, req *pb.WriteGoodsInfoRe
 		MarketPrice: req.MarketPrice,
 		SalePrice:   req.SalePrice,
 	}
-	if err := goods.UpdateOneByid(); err != nil {
+	if err := goods.UpdateOneById(); err != nil {
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil
@@ -139,6 +139,11 @@ func (s *GoodsServer) UpdeateGoods(ctx context.Context, req *pb.WriteGoodsInfoRe
 
 // }
 
-// func (s *GoodsServer) GetGoodsDetail(context.Context, *pb.GoodsInfoReq) (*pb.GoodsInfoRes, error) {
-
-// }
+func (s *GoodsServer) GetGoodsDetail(ctx context.Context, req *pb.GoodsInfoReq) (*pb.GoodsInfoRes, error) {
+	goods := &model.Goods{}
+	goods.ID = req.Id
+	if err := goods.FindOneById(); err != nil {
+		return nil, err
+	}
+	return GoodsToGoodsInfoRes(goods), nil
+}

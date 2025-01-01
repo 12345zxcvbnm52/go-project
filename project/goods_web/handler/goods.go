@@ -15,8 +15,10 @@ import (
 
 // 根据条件查找对应的商品
 func GetGoodsList(c *gin.Context) {
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+	ctx = context.WithValue(ctx, "ginCtx", c)
 	client, err := gb.RpcPool.Value()
 	if err != nil {
 		zap.S().Errorw("池内获取的连接不可用", "msg", err.Error())
@@ -55,11 +57,11 @@ func GetGoodsList(c *gin.Context) {
 	fliter.PagesNum = int32(pn)
 	if cid := c.DefaultQuery("cid", "0"); cid != "0" {
 		cid, _ := strconv.Atoi(cid)
-		fliter.CategyId = int32(cid)
+		fliter.CategyId = uint32(cid)
 	}
 	if bId := c.DefaultQuery("bid", "0"); bId != "0" {
 		bid, _ := strconv.Atoi(bId)
-		fliter.Brand = int32(bid)
+		fliter.BrandId = uint32(bid)
 	}
 	fliter.KeyWords = c.DefaultQuery("kw", "")
 	res, err := cc.GetGoodList(ctx, &fliter)
@@ -102,12 +104,9 @@ func CreateGoods(c *gin.Context) {
 		Images:      u.Images,
 		FirstImage:  u.FirstImage,
 		DescImages:  u.DescImages,
-		SoldNum:     0,
-		ClickNum:    0,
-		FavorNum:    0,
 		TransFree:   u.TransFree,
-		CategyId:    u.CategoryID,
-		BrandId:     u.BrandID,
+		CategyId:    uint32(u.CategoryID),
+		BrandId:     uint32(u.BrandID),
 	}
 	res, err := cc.CreateGoods(ctx, req)
 	if err != nil {

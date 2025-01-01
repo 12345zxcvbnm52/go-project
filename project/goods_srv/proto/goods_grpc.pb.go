@@ -29,7 +29,7 @@ type GoodsClient interface {
 	UpdeateGoods(ctx context.Context, in *WriteGoodsInfoReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 商品类型服务
 	GetCategyList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategyListRes, error)
-	GetCategy(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error)
+	GetCategyInfo(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error)
 	CreateCategy(ctx context.Context, in *CategyInfoReq, opts ...grpc.CallOption) (*CategyInfoRes, error)
 	DeleteCategy(ctx context.Context, in *DelCategyReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateCategy(ctx context.Context, in *CategyInfoReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -123,9 +123,9 @@ func (c *goodsClient) GetCategyList(ctx context.Context, in *emptypb.Empty, opts
 	return out, nil
 }
 
-func (c *goodsClient) GetCategy(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error) {
+func (c *goodsClient) GetCategyInfo(ctx context.Context, in *SubCategyReq, opts ...grpc.CallOption) (*SubCategyListRes, error) {
 	out := new(SubCategyListRes)
-	err := c.cc.Invoke(ctx, "/Goods/GetCategy", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Goods/GetCategyInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -291,7 +291,7 @@ type GoodsServer interface {
 	UpdeateGoods(context.Context, *WriteGoodsInfoReq) (*emptypb.Empty, error)
 	// 商品类型服务
 	GetCategyList(context.Context, *emptypb.Empty) (*CategyListRes, error)
-	GetCategy(context.Context, *SubCategyReq) (*SubCategyListRes, error)
+	GetCategyInfo(context.Context, *SubCategyReq) (*SubCategyListRes, error)
 	CreateCategy(context.Context, *CategyInfoReq) (*CategyInfoRes, error)
 	DeleteCategy(context.Context, *DelCategyReq) (*emptypb.Empty, error)
 	UpdateCategy(context.Context, *CategyInfoReq) (*emptypb.Empty, error)
@@ -340,8 +340,8 @@ func (UnimplementedGoodsServer) UpdeateGoods(context.Context, *WriteGoodsInfoReq
 func (UnimplementedGoodsServer) GetCategyList(context.Context, *emptypb.Empty) (*CategyListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategyList not implemented")
 }
-func (UnimplementedGoodsServer) GetCategy(context.Context, *SubCategyReq) (*SubCategyListRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCategy not implemented")
+func (UnimplementedGoodsServer) GetCategyInfo(context.Context, *SubCategyReq) (*SubCategyListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategyInfo not implemented")
 }
 func (UnimplementedGoodsServer) CreateCategy(context.Context, *CategyInfoReq) (*CategyInfoRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCategy not implemented")
@@ -530,20 +530,20 @@ func _Goods_GetCategyList_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Goods_GetCategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Goods_GetCategyInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SubCategyReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoodsServer).GetCategy(ctx, in)
+		return srv.(GoodsServer).GetCategyInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Goods/GetCategy",
+		FullMethod: "/Goods/GetCategyInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsServer).GetCategy(ctx, req.(*SubCategyReq))
+		return srv.(GoodsServer).GetCategyInfo(ctx, req.(*SubCategyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -869,8 +869,8 @@ var _Goods_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Goods_GetCategyList_Handler,
 		},
 		{
-			MethodName: "GetCategy",
-			Handler:    _Goods_GetCategy_Handler,
+			MethodName: "GetCategyInfo",
+			Handler:    _Goods_GetCategyInfo_Handler,
 		},
 		{
 			MethodName: "CreateCategy",

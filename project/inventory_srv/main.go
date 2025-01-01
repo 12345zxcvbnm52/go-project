@@ -5,7 +5,6 @@ import (
 	"fmt"
 	gb "inventory_srv/global"
 	"inventory_srv/handler"
-	_ "inventory_srv/initialize"
 	initialize "inventory_srv/initialize"
 	pb "inventory_srv/proto"
 	"net"
@@ -51,14 +50,16 @@ func main() {
 
 	// 监听库存归还topic,不允许主协程关闭
 	c, _ := rocketmq.NewPushConsumer(
-		consumer.WithNameServer([]string{fmt.Sprintf("%s:%d", gb.ServerConfig.RockMqConfig.Host, gb.ServerConfig.RedisConfig.Port)}),
-		consumer.WithGroupName("gin"),
+		consumer.WithNameServer([]string{fmt.Sprintf("%s:%d", gb.ServerConfig.RockMq.Host, gb.ServerConfig.RockMq.Port)}),
+		consumer.WithGroupName(gb.ServerConfig.Name),
 	)
-	if err := c.Subscribe("order_reback", consumer.MessageSelector{}, handler.AutoReback); err != nil {
+	if err := c.Subscribe(gb.ServerConfig.RockMq.RebackTopic, consumer.MessageSelector{}, handler.AutoReback); err != nil {
 		zap.S().Errorw("消息队列Comsumer读取消息失败", "msg", err.Error())
+		panic(err)
 	}
 	if err := c.Start(); err != nil {
 		zap.S().Errorw("消息队列Comsumer启动失败", "msg", err.Error())
+		panic(err)
 	}
 
 	<-sign

@@ -1,0 +1,30 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+option go_package=".;proto";
+
+service Inventory{
+    rpc CreateStock(WriteInvtReq)returns(google.protobuf.Empty);
+    rpc UpdateStock(WriteInvtReq)returns(google.protobuf.Empty);
+    rpc SetStock(WriteInvtReq)returns(google.protobuf.Empty);
+    //考虑传入一堆goodsId,返回对应所有商品的详细情况
+    //rpc GetStockDetail()returns();
+    //这里可以考虑在Res中列举哪些库存扣减成功,哪些失败
+    //暂时避免复杂化就只允许要么成功全部扣减,要么返回错误
+    rpc DecrStock(DecrStockReq)returns(google.protobuf.Empty);
+    rpc IncrStock(IncrStockReq)returns(google.protobuf.Empty);
+}
+
+message DecrStockReq{
+    repeated WriteInvtReq decrData = 1;
+    string orderSign = 2;
+
+}
+message IncrStockReq{
+    repeated WriteInvtReq incrData = 1;
+    string orderSign = 2;
+}
+
+message WriteInvtReq{
+    uint32 goodsId = 1;
+    int32 goodsNum = 2;
+}

@@ -24,6 +24,10 @@ type ConsulConfig struct {
 type RocketMqConfig struct {
 	Host string `mapstructure:"host"`
 	Port int    `mapstructure:"port"`
+	//库存归还用的topic
+	RebackTopic string `mapstructure:"reback_topic"`
+	//用于检测订单支付超时的topic
+	TimeoutTopic string `mapstructure:"timeout_topic"`
 }
 
 type ServerConfig struct {
@@ -40,5 +44,5 @@ type ServerConfig struct {
 	//consul的ip和端口就静态绑定docker的consul地址
 	ConsulConfig ConsulConfig   `mapstructure:"consul"`
 	RedisConfig  RedisConfig    `mapstructure:"redis"`
-	RockMqConfig RocketMqConfig `mapstructure:"rockmq"`
+	RockMq       RocketMqConfig `mapstructure:"rockmq"`
 }

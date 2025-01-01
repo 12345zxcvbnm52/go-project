@@ -21,7 +21,8 @@ type InventoryClient interface {
 	CreateStock(ctx context.Context, in *WriteInvtReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateStock(ctx context.Context, in *WriteInvtReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	SetStock(ctx context.Context, in *WriteInvtReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	FindStock(ctx context.Context, in *StockInfoReq, opts ...grpc.CallOption) (*StockInfoRes, error)
+	// 考虑传入一堆goodsId,返回对应所有商品的详细情况
+	// rpc GetStockDetail()returns();
 	// 这里可以考虑在Res中列举哪些库存扣减成功,哪些失败
 	// 暂时避免复杂化就只允许要么成功全部扣减,要么返回错误
 	DecrStock(ctx context.Context, in *DecrStockReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -63,15 +64,6 @@ func (c *inventoryClient) SetStock(ctx context.Context, in *WriteInvtReq, opts .
 	return out, nil
 }
 
-func (c *inventoryClient) FindStock(ctx context.Context, in *StockInfoReq, opts ...grpc.CallOption) (*StockInfoRes, error) {
-	out := new(StockInfoRes)
-	err := c.cc.Invoke(ctx, "/Inventory/FindStock", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *inventoryClient) DecrStock(ctx context.Context, in *DecrStockReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/Inventory/DecrStock", in, out, opts...)
@@ -97,7 +89,8 @@ type InventoryServer interface {
 	CreateStock(context.Context, *WriteInvtReq) (*emptypb.Empty, error)
 	UpdateStock(context.Context, *WriteInvtReq) (*emptypb.Empty, error)
 	SetStock(context.Context, *WriteInvtReq) (*emptypb.Empty, error)
-	FindStock(context.Context, *StockInfoReq) (*StockInfoRes, error)
+	// 考虑传入一堆goodsId,返回对应所有商品的详细情况
+	// rpc GetStockDetail()returns();
 	// 这里可以考虑在Res中列举哪些库存扣减成功,哪些失败
 	// 暂时避免复杂化就只允许要么成功全部扣减,要么返回错误
 	DecrStock(context.Context, *DecrStockReq) (*emptypb.Empty, error)
@@ -117,9 +110,6 @@ func (UnimplementedInventoryServer) UpdateStock(context.Context, *WriteInvtReq) 
 }
 func (UnimplementedInventoryServer) SetStock(context.Context, *WriteInvtReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetStock not implemented")
-}
-func (UnimplementedInventoryServer) FindStock(context.Context, *StockInfoReq) (*StockInfoRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindStock not implemented")
 }
 func (UnimplementedInventoryServer) DecrStock(context.Context, *DecrStockReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DecrStock not implemented")
@@ -194,24 +184,6 @@ func _Inventory_SetStock_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Inventory_FindStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StockInfoReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InventoryServer).FindStock(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/Inventory/FindStock",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServer).FindStock(ctx, req.(*StockInfoReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Inventory_DecrStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DecrStockReq)
 	if err := dec(in); err != nil {
@@ -263,10 +235,6 @@ var _Inventory_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetStock",
 			Handler:    _Inventory_SetStock_Handler,
-		},
-		{
-			MethodName: "FindStock",
-			Handler:    _Inventory_FindStock_Handler,
 		},
 		{
 			MethodName: "DecrStock",

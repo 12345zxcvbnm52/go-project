@@ -14,7 +14,7 @@ service Order{
     rpc CreateOrder(OrderInfoReq)returns(OrderInfoRes);
     rpc GetOrderList(OrderFliterReq)returns(OrderListRes);
     rpc GetOrderInfo(OrderInfoReq)returns(OrderDetailRes);
-    rpc UpdateOrder(WriteOrderReq)returns(google.protobuf.Empty);
+    rpc UpdateOrderStatus(OrderStatusReq)returns(google.protobuf.Empty);
 }
 
 message UserInfoReq{
@@ -63,6 +63,7 @@ message OrderInfoReq{
     string signerName = 4;
     string signerMobile = 5;
     string message = 6;
+    string payWay = 7;
 }
 
 message OrderInfoRes{
@@ -76,6 +77,12 @@ message OrderInfoRes{
     string signerName = 8;
     string signerMobile = 9;
     string message = 10;
+}
+
+message OrderDetailReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string OrderSign = 3;
 }
 
 //将一些详细信息放入其中
@@ -114,8 +121,10 @@ message OrderListRes{
     repeated OrderInfoRes data = 2;
 }
 
-message WriteOrderReq{
-    uint32 id = 1;
-    string orderSign = 2;
-    int32 status = 3;
+//暂时只考虑通过订单id来更新状态
+message OrderStatusReq{
+    int32 status = 1;
+    uint32 id = 2;
+    uint32 userId = 3;
+    string goodsSign = 4;
 }

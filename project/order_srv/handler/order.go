@@ -2,11 +2,20 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"math/rand/v2"
+	gb "order_srv/global"
 	"order_srv/model"
 	pb "order_srv/proto"
 	"time"
+
+	"github.com/apache/rocketmq-client-go/v2"
+	"github.com/apache/rocketmq-client-go/v2/consumer"
+	"github.com/apache/rocketmq-client-go/v2/primitive"
+	"github.com/apache/rocketmq-client-go/v2/producer"
+	"go.uber.org/zap"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func OrderToOrderInfoRes(c *model.Order) *pb.OrderInfoRes {
@@ -49,6 +58,8 @@ func (us *OrderServer) CreateOrder(ctx context.Context, req *pb.OrderInfoReq) (*
 	res.SignerMobile = req.SignerMobile
 	res.SignerName = req.SignerName
 	res.UserId = req.UserId
+	res.PayWay = req.PayWay
+	res.Status = model.StatusUnPay
 	res.OrderSign = GenOrderSign(req.UserId)
 	if err := res.InsertOne(ctx); err != nil {
 		return nil, err
@@ -58,7 +69,7 @@ func (us *OrderServer) CreateOrder(ctx context.Context, req *pb.OrderInfoReq) (*
 
 func (us *OrderServer) GetOrderList(ctx context.Context, req *pb.OrderFliterReq) (*pb.OrderListRes, error) {
 	logic := &model.Order{}
-	res, err := logic.FindByOpt(&model.OrderFindOption{PagesNum: req.PagesNum, PageSize: req.PageSize})
+	res, err := logic.FindByOpt(&model.OrderFindOption{PagesNum: req.PagesNum, PageSize: req.PageSize, UserId: req.UserId})
 	if err != nil {
 		return nil, err
 	}
@@ -76,8 +87,11 @@ func (us *OrderServer) GetOrderInfo(ctx context.Context, req *pb.OrderInfoReq) (
 	u.ID = req.Id
 	u.UserId = req.UserId
 	//先看看这个订单是否属于这个用户
-	if err := u.FindOne(); err != nil {
+	if err := u.FindOneById(); err != nil {
 		return nil, err
+	}
+	if u.UserId != req.UserId {
+		return nil, model.ErrOrderNotFound
 	}
 	res := &pb.OrderDetailRes{
 		Id:           u.ID,
@@ -94,7 +108,7 @@ func (us *OrderServer) GetOrderInfo(ctx context.Context, req *pb.OrderInfoReq) (
 	//在逻辑上是能保证查找的订单是一定有相应的商品的
 	logic := &model.OrderGoods{}
 	logic.OrderId = u.ID
-	if r, err := logic.FindByOrderId(); err != nil {
+	if r, err := logic.FindByOrderId(u.ID); err != nil {
 		return nil, err
 	} else {
 		for _, v := range r.Data {
@@ -102,4 +116,88 @@ func (us *OrderServer) GetOrderInfo(ctx context.Context, req *pb.OrderInfoReq) (
 		}
 	}
 	return res, nil
+}
+
+func (us *OrderServer) UpdateOrderStatus(ctx context.Context, req *pb.OrderStatusReq) (*emptypb.Empty, error) {
+	u := &model.Order{}
+	u.ID = req.Id
+	u.Status = int16(req.Status)
+	if err := u.UpdateById(); err != nil {
+		return nil, err
+	}
+	return &emptypb.Empty{}, nil
+}
+
+func OrderTimeout(ctx context.Context, msgs ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
+	for i := range msgs {
+		order := &model.Order{}
+		json.Unmarshal(msgs[i].Body, order)
+
+		zap.S().Infoln(order)
+
+		if err := order.FindOneByOrderSign(); err != nil {
+			if err == model.ErrOrderNotFound {
+				return consumer.ConsumeSuccess, nil
+			}
+			return consumer.ConsumeRetryLater, err
+		}
+		//如果状态小于等于订单未支付就归还
+		if order.Status <= model.StatusUnPay {
+			tx := gb.DB.Begin()
+			order.Status = model.StatusCancelled
+			if err := order.UpdateById(tx); err != nil {
+				zap.S().Errorw("订单状态更新失败", "msg", err.Error())
+				tx.Rollback()
+				return consumer.ConsumeRetryLater, err
+			}
+
+			orderGoodsLogic := &model.OrderGoods{}
+			res, err := orderGoodsLogic.FindByOrderId(order.ID, tx)
+			if err != nil {
+				if err == model.ErrOrderGoodsNotFound {
+					return consumer.ConsumeSuccess, nil
+				}
+				tx.Rollback()
+				return consumer.ConsumeRetryLater, err
+			}
+			//这里暂时只考虑使用gorm软删除下的购物车恢复功能
+			goodsIds := []uint32{}
+			for _, v := range res.Data {
+				goodsIds = append(goodsIds, v.GoodsId)
+			}
+			r := tx.Exec("update carts set deleted_at = null where goods_id in (?)", goodsIds)
+			if r.Error != nil {
+				tx.Rollback()
+				zap.S().Errorw("购物车恢复失败", "msg", r.Error.Error())
+				return consumer.ConsumeRetryLater, r.Error
+			}
+			if r.RowsAffected == 0 {
+				tx.Rollback()
+				zap.S().Errorw("购物车恢复失败", "msg", "不存在要恢复的数据")
+				return consumer.ConsumeSuccess, nil
+			}
+			p, err := rocketmq.NewProducer(
+				producer.WithNameServer([]string{fmt.Sprintf("%s:%d", gb.ServerConfig.RockMq.Host, gb.ServerConfig.RockMq.Port)}),
+				producer.WithGroupName(order.OrderSign+"-"+gb.ServerConfig.RockMq.RebackTopic),
+			)
+			if err != nil {
+				tx.Rollback()
+				zap.S().Errorw("rocketmq生成producer失败", "msg", err.Error())
+				return consumer.ConsumeRetryLater, err
+			}
+			if err = p.Start(); err != nil {
+				tx.Rollback()
+				zap.S().Errorw("rocketmq中producer启动失败", "msg", err.Error())
+				return consumer.ConsumeRetryLater, err
+			}
+			_, err = p.SendSync(context.Background(), primitive.NewMessage(gb.ServerConfig.RockMq.RebackTopic, msgs[i].Body))
+			if err != nil {
+				tx.Rollback()
+				zap.S().Errorw("rockmq中producer发送事务消息失败", "msg", err.Error())
+				return consumer.ConsumeRetryLater, err
+			}
+			tx.Commit()
+		}
+	}
+	return consumer.ConsumeSuccess, nil
 }

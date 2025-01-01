@@ -56,6 +56,6 @@ func InitRedis() {
 	}
 	gb.RedisConn = redis.NewClient(DefaultRedisOpts)
 	gb.RedLock = new(util.RedLock)
-	gb.RedLock.SetAddr(gb.ServerConfig.RedLockAddr...)
-	gb.RedLock.SetPassword(gb.ServerConfig.RedLockPassword)
+	gb.RedLock.SetAddr(gb.ServerConfig.RedLock.RedLockAddr...)
+	gb.RedLock.SetPassword(gb.ServerConfig.RedLock.RedLockPassword)
 }

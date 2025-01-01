@@ -134,3 +134,112 @@
 1:M 23 Dec 2024 05:18:07.418 * Ready to accept connections
 1:M 23 Dec 2024 05:18:43.122 # IP address for this node updated to 172.17.0.5
 1:M 23 Dec 2024 05:18:43.323 # Cluster state changed: ok
+1:C 31 Dec 2024 12:43:39.599 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 31 Dec 2024 12:43:39.600 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 31 Dec 2024 12:43:39.600 # Configuration loaded
+1:M 31 Dec 2024 12:43:39.600 * monotonic clock: POSIX clock_gettime
+1:M 31 Dec 2024 12:43:39.603 * Node configuration loaded, I'm 0d2422efe683a6a18c8540d0cd26c1b194008e5c
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in cluster mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 17715
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 31 Dec 2024 12:43:39.604 # Server initialized
+1:M 31 Dec 2024 12:43:39.604 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 31 Dec 2024 12:43:39.606 * Reading RDB base file on AOF loading...
+1:M 31 Dec 2024 12:43:39.606 * Loading RDB produced by version 7.0.15
+1:M 31 Dec 2024 12:43:39.606 * RDB age 719166 seconds
+1:M 31 Dec 2024 12:43:39.606 * RDB memory usage when created 1.51 Mb
+1:M 31 Dec 2024 12:43:39.606 * RDB is base AOF
+1:M 31 Dec 2024 12:43:39.606 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 31 Dec 2024 12:43:39.606 * DB loaded from base file appendonly17715.aof.1.base.rdb: 0.001 seconds
+1:M 31 Dec 2024 12:43:39.606 * DB loaded from append only file: 0.001 seconds
+1:M 31 Dec 2024 12:43:39.606 * Opening AOF incr file appendonly17715.aof.1.incr.aof on server start
+1:M 31 Dec 2024 12:43:39.607 * Ready to accept connections
+1:M 31 Dec 2024 12:43:41.617 # Cluster state changed: ok
+1:signal-handler (1735649034) Received SIGTERM scheduling shutdown...
+1:M 31 Dec 2024 12:43:54.861 # User requested shutdown...
+1:M 31 Dec 2024 12:43:54.861 * Calling fsync() on the AOF file.
+1:M 31 Dec 2024 12:43:54.862 * Saving the final RDB snapshot before exiting.
+1:M 31 Dec 2024 12:43:54.864 # Error moving temp DB file temp-1.rdb on the final destination dump17715.rdb (in server root dir /redlock/data): No such file or directory
+1:M 31 Dec 2024 12:43:54.864 # Error trying to save the DB, can't exit.
+1:M 31 Dec 2024 12:43:54.864 # Errors trying to shut down the server. Check the logs for more information.
+1:M 31 Dec 2024 12:44:00.095 * Marking node b35037cc480eeba691216b37d211ea1568622989 as failing (quorum reached).
+1:M 31 Dec 2024 12:44:00.095 # Cluster state changed: fail
+1:C 31 Dec 2024 12:48:45.225 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 31 Dec 2024 12:48:45.225 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 31 Dec 2024 12:48:45.226 # Configuration loaded
+1:M 31 Dec 2024 12:48:45.227 * monotonic clock: POSIX clock_gettime
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 17715
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 31 Dec 2024 12:48:45.228 # Server initialized
+1:M 31 Dec 2024 12:48:45.228 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 31 Dec 2024 12:48:45.229 * Reading RDB base file on AOF loading...
+1:M 31 Dec 2024 12:48:45.229 * Loading RDB produced by version 7.0.15
+1:M 31 Dec 2024 12:48:45.229 * RDB age 719472 seconds
+1:M 31 Dec 2024 12:48:45.229 * RDB memory usage when created 1.51 Mb
+1:M 31 Dec 2024 12:48:45.229 * RDB is base AOF
+1:M 31 Dec 2024 12:48:45.229 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 31 Dec 2024 12:48:45.229 * DB loaded from base file appendonly17715.aof.1.base.rdb: 0.001 seconds
+1:M 31 Dec 2024 12:48:45.229 * DB loaded from append only file: 0.001 seconds
+1:M 31 Dec 2024 12:48:45.230 * Opening AOF incr file appendonly17715.aof.1.incr.aof on server start
+1:M 31 Dec 2024 12:48:45.230 * Ready to accept connections
+1:M 31 Dec 2024 13:03:46.027 * 1 changes in 900 seconds. Saving...
+1:M 31 Dec 2024 13:03:46.041 * Background saving started by pid 20
+20:C 31 Dec 2024 13:03:46.045 * DB saved on disk
+20:C 31 Dec 2024 13:03:46.046 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 31 Dec 2024 13:03:46.141 * Background saving terminated with success
+1:M 31 Dec 2024 13:18:47.037 * 1 changes in 900 seconds. Saving...
+1:M 31 Dec 2024 13:18:47.040 * Background saving started by pid 21
+21:C 31 Dec 2024 13:18:47.055 * DB saved on disk
+21:C 31 Dec 2024 13:18:47.056 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 31 Dec 2024 13:18:47.142 * Background saving terminated with success
+1:M 31 Dec 2024 13:33:48.024 * 1 changes in 900 seconds. Saving...
+1:M 31 Dec 2024 13:33:48.025 * Background saving started by pid 22
+22:C 31 Dec 2024 13:33:48.027 * DB saved on disk
+22:C 31 Dec 2024 13:33:48.028 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 31 Dec 2024 13:33:48.126 * Background saving terminated with success
+1:M 31 Dec 2024 14:21:35.874 * 1 changes in 900 seconds. Saving...
+1:M 31 Dec 2024 14:21:35.879 * Background saving started by pid 23
+23:C 31 Dec 2024 14:21:35.897 * DB saved on disk
+23:C 31 Dec 2024 14:21:35.900 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 31 Dec 2024 14:21:35.979 * Background saving terminated with success
+1:M 31 Dec 2024 14:26:36.061 * 10 changes in 300 seconds. Saving...
+1:M 31 Dec 2024 14:26:36.061 * Background saving started by pid 24
+24:C 31 Dec 2024 14:26:36.065 * DB saved on disk
+24:C 31 Dec 2024 14:26:36.065 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 31 Dec 2024 14:26:36.162 * Background saving terminated with success
+1:M 31 Dec 2024 14:37:00.199 * 10 changes in 300 seconds. Saving...
+1:M 31 Dec 2024 14:37:00.199 * Background saving started by pid 25
+25:C 31 Dec 2024 14:37:00.207 * DB saved on disk
+25:C 31 Dec 2024 14:37:00.208 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 31 Dec 2024 14:37:00.299 * Background saving terminated with success

@@ -33,19 +33,6 @@ func (is *InventoryServer) SetStock(ctx context.Context, req *pb.WriteInvtReq) (
 	return &emptypb.Empty{}, nil
 }
 
-// func (is *InventoryServer) FindStock(ctx context.Context, req *pb.StockInfoReq) (*pb.StockInfoRes, error) {
-// 	u := &model.Inventory{
-// 		GoodsId: req.GoodsId,
-// 	}
-// 	if err := u.FindOneByGoodsId(); err != nil {
-// 		return nil, err
-// 	}
-// 	return &pb.StockInfoRes{
-// 		GoodsId:  u.GoodsId,
-// 		GoodsNum: u.GoodsNum,
-// 	}, nil
-// }
-
 // 这里的两个锁还没有排除连接出错的可能,可以考虑后期再封装一层或循环tryLock
 func (is *InventoryServer) DecrStock(ctx context.Context, req *pb.DecrStockReq) (*emptypb.Empty, error) {
 	return decrStockByLock(req)
@@ -60,7 +47,8 @@ func (is *InventoryServer) IncrStock(ctx context.Context, req *pb.IncrStockReq) 
 			return nil, err
 		}
 		inventory.GoodsNum += v.GoodsNum
-		if res := tx.Where(&model.Inventory{GoodsId: inventory.GoodsId}).Update("goods_num", inventory.GoodsNum); res.Error != nil {
+		if res := tx.Model(&model.Inventory{}).Where("goods_id = ?", inventory.GoodsId).
+			Update("goods_num", inventory.GoodsNum); res.Error != nil {
 			tx.Rollback()
 			return nil, model.ErrInternalWrong
 		}
@@ -182,14 +170,16 @@ func AutoReback(ctx context.Context, msgs ...*primitive.MessageExt) (consumer.Co
 			return consumer.ConsumeSuccess, nil
 		}
 		for _, v := range records.GoodsRecord {
-			res := tx.Model(&model.Inventory{}).Where("order_sign = ?", order.OrderSign).Update("goods_num", gorm.Expr("goods_num + ?", v.GoodsNum))
+			res := tx.Model(&model.Inventory{}).Where("goods_id = ?", v.GoodsId).
+				Update("goods_num", gorm.Expr("goods_num + ?", v.GoodsNum))
 			if res.Error != nil {
 				tx.Rollback()
 				return consumer.ConsumeRetryLater, nil
 			}
 		}
 		//Reback后把这条记录改为已经Reback
-		if res := tx.Model(&model.Inventory{}).Where("order_sign = ?", order.OrderSign).Update("status", model.StatusAlreadyReback); res.Error != nil {
+		if res := tx.Model(&model.InvtRecord{}).Where("order_sign = ?", order.OrderSign).
+			Update("status", model.StatusAlreadyReback); res.Error != nil {
 			tx.Rollback()
 			return consumer.ConsumeRetryLater, nil
 		}

@@ -54,6 +54,7 @@ type Cart struct {
 	Selected bool `gorm:"default:0"`
 }
 
+// 保证(除了订单取消和订单完成级别一样)过程前后和数字大小是一一对应即可
 const (
 	//待支付
 	StatusUnPay int16 = 1
@@ -64,12 +65,12 @@ const (
 	//已发货
 	StatusDisPached int16 = 4
 	//待收货
-	StatusUnRecv int16 = 5
-	StatusRecv   int16 = 6
-	//订单已取消
-	StatusCancelled int16 = 7
+	StatusUnRecved int16 = 5
+	StatusRecved   int16 = 6
 	//订单退款中
-	StatusRefunding int16 = 8
+	StatusRefunding int16 = 7
+	//订单已取消
+	StatusCancelled int16 = 8
 	//订单已完成
 	StatusFinished int16 = 9
 )
@@ -88,9 +89,9 @@ type Order struct {
 	//来自支付宝,微信的交易号,便于后期查账
 	TradeNum string `gorm:"type:varchar(100);not null"`
 	//订单的交易金额
-	Cost float32 `gormL:"not null"`
+	Cost float32 `gorm:"not null"`
 	//支付时间
-	PayTime time.Time
+	PayTime *time.Time
 	//目的地址
 	Address string `gorm:"type:varchar(100);not null"`
 	//收件人的信息

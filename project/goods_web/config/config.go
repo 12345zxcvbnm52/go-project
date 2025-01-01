@@ -21,6 +21,11 @@ type GoodsServerConfig struct {
 	GoodsServerTags []string
 }
 
+type JaegerConfig struct {
+	Host string `mapstructure:"host"`
+	Port int    `mapstructure:"port"`
+}
+
 type ServerConfig struct {
 	//consul的ip和端口就静态绑定docker的consul地址
 	ConsulConfig      ConsulConfig      `mapstructure:"consul"`
@@ -35,6 +40,7 @@ type ServerConfig struct {
 
 	Version string `mapstructure:"version"`
 	//用来存微服务层的数据
-	GoodsServerConfig GoodsServerConfig
-	JwtSign           string `mapstructure:"jwt_sign"`
+	GoodsServer GoodsServerConfig
+	JwtSign     string       `mapstructure:"jwt_sign"`
+	Jaeger      JaegerConfig `mapstructure:"jaeger"`
 }

@@ -35,28 +35,36 @@ func (u *Banner) FindOneById() error {
 }
 
 func (u *Banner) InsertOne() error {
-	res := gb.DB.Model(&Banner{}).Create(u)
-	if res.RowsAffected == 0 {
-		return ErrDuplicatedBanner
-	}
-	if res.Error != nil {
+	if res := gb.DB.Model(&Banner{}).Create(u); res.Error != nil {
+		zap.S().Errorw("一件商品banner插入失败", "msg", res.Error.Error())
+		if res.Error == gorm.ErrDuplicatedKey {
+			return ErrDuplicatedBanner
+		}
 		return ErrInternalWrong
 	}
 	return nil
 }
 
 func (u *Banner) DeleteOneById() error {
-	res := gb.DB.Delete(&Banner{}, u.ID)
-	return res.Error
+	res := gb.DB.Model(&Banner{}).Delete(&Banner{}, u.ID)
+	if res.Error != nil {
+		zap.S().Errorw("一件商品banner删除失败", "msg", res.Error.Error())
+		return ErrInternalWrong
+	}
+	if res.RowsAffected == 0 {
+		return ErrBannerNotFound
+	}
+	return nil
 }
 
 func (u *Banner) UpdateOneById() error {
 	res := gb.DB.Model(&Banner{}).Updates(u)
-	if res.Error == gorm.ErrRecordNotFound {
-		return ErrBannerNotFound
-	}
 	if res.Error != nil {
+		zap.S().Errorw("一件商品banner更新失败", "msg", res.Error.Error())
 		return ErrInternalWrong
+	}
+	if res.RowsAffected == 0 {
+		return ErrBannerNotFound
 	}
 	return nil
 }

@@ -11,15 +11,18 @@ import (
 )
 
 var (
-	ErrInternalWrong    = status.Error(codes.Internal, "服务器内部未知错误")
-	ErrCategoryNotFound = status.Error(codes.NotFound, "所选分类不存在")
-	ErrDuplicatedCategy = status.Error(codes.AlreadyExists, "欲创建的分类已存在")
-	ErrBannerNotFound   = status.Error(codes.NotFound, "所选滑窗未找到")
-	ErrDuplicatedBanner = status.Error(codes.AlreadyExists, "欲创建的滑窗已存在")
-	ErrGoodsNotFound    = status.Error(codes.NotFound, "不存在对应的商品")
-	ErrDuplicatedGoods  = status.Error(codes.AlreadyExists, "欲创建的商品已存在")
-	ErrBrandNotFound    = status.Error(codes.NotFound, "不存在对应的品牌")
-	ErrDuplicatedBrand  = status.Error(codes.AlreadyExists, "欲创建的品牌已存在")
+	ErrInternalWrong         = status.Error(codes.Internal, "服务器内部未知错误")
+	ErrCategoryNotFound      = status.Error(codes.NotFound, "所选分类不存在")
+	ErrDuplicatedCategy      = status.Error(codes.AlreadyExists, "欲创建的分类已存在")
+	ErrBannerNotFound        = status.Error(codes.NotFound, "所选滑窗未找到")
+	ErrDuplicatedBanner      = status.Error(codes.AlreadyExists, "欲创建的滑窗已存在")
+	ErrGoodsNotFound         = status.Error(codes.NotFound, "不存在对应的商品")
+	ErrDuplicatedGoods       = status.Error(codes.AlreadyExists, "欲创建的商品已存在")
+	ErrBrandNotFound         = status.Error(codes.NotFound, "不存在对应的品牌")
+	ErrDuplicatedBrand       = status.Error(codes.AlreadyExists, "欲创建的品牌已存在")
+	ErrCategyBrandNotFound   = status.Error(codes.NotFound, "该品牌不存在对应的商品类型")
+	ErrDuplicatedCategyBrand = status.Error(codes.AlreadyExists, "该品牌欲添加的商品类型已存在")
+	ErrCategoryRefered       = status.Error(codes.InvalidArgument, "当前类型存在子类型")
 )
 
 // gorm给出的分页函数的最佳实践
@@ -31,7 +34,7 @@ func Paginate(pagesNum int, pageSize int) func(db *gorm.DB) *gorm.DB {
 		switch {
 		case pageSize > 100:
 			pageSize = 100
-		case pageSize < 0:
+		case pageSize <= 0:
 			pageSize = 10
 		}
 		offset := (pagesNum - 1) * pageSize
@@ -46,6 +49,7 @@ type Model struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
+// json标签是考虑到返回数据时的格式,一般不返回的数据则json标签为'-'忽视
 // 商品类型/目录
 type Category struct {
 	Model
@@ -54,8 +58,8 @@ type Category struct {
 	Level int32 `gorm:"type:int;not null;default 1" json:"level"`
 	//是否可以在窗口上显示
 	OnTab bool `gorm:"default:false;not null" json:"on_tab"`
-	//自引用的从表外键
-	ParentCategoryID uint32 `json:"-"`
+	//自引用的从表外键,注意,这里的类型必须是指针,否则在gorm中无法创建
+	ParentCategoryID *uint32 `gorm:"column:parent_category_id" json:"-"`
 	//父层级商品类型,自引用的主表结构体字段
 	ParentCategory *Category `json:"parent_category" gorm:"foreignKey:ParentCategoryID"`
 	//装所有子商品分类,
@@ -66,7 +70,7 @@ type Category struct {
 // 商品品牌
 type Brand struct {
 	Model
-	Name string `gorm:"type:varchar(50);not null" json:"name"`
+	Name string `gorm:"type:varchar(50);not null;unique" json:"name"`
 	Logo string `gorm:"type:varchar(200);default:'';not null" json:"logo"`
 }
 
@@ -111,35 +115,35 @@ type Goods struct {
 	//这里自动生成绑定品牌的外键,即商品必须要有品牌
 	BrandID uint32 `gorm:"type:int;not null"`
 	Brand   Brand
-	//是否上架了
-	OnSale bool
+	//是否上架了,默认未上架,需要先审核
+	OnSale bool `gorm:"default:false"`
 	//运费是否免费
-	TransFree bool
+	TransFree bool `gorm:"default:false"`
 	//是否是热门产品
-	IsHot bool
+	IsHot bool `gorm:"default:false"`
 	//商品名称
 	Name string `gorm:"type:varchar(100);not null"`
-	//商品的编号
+	//商品的编号,这个由服务自动生成,测试时不要开unique
 	GoodSign string `gorm:"type:varchar(50);not null"`
 	//商品点击量
-	ClickNum int32
+	ClickNum int32 `gorm:"default:0"`
 	//售卖量
-	SoldNum int32
+	SoldNum int32 `gorm:"default:0"`
 	//收藏量
-	FavorNum int32
+	FavorNum int32 `gorm:"default:0"`
 	//原始价格
 	MarketPrice float32 `gorm:"not null"`
 	//实际价格,因打折等原因变动
 	SalePrice float32 `gorm:"not null"`
 	//商品简要评价
-	GoodsBrief string `gorm:"type:varchar(100);not null"`
+	GoodsBrief string `gorm:"type:varchar(100)"`
 	//商品的预览图,用的是字符串切片,即一张图片用字符串存储
 	Images GormList `gorm:"type:varchar(4000);not null"`
 	//商品的边缘图
 	DescImages GormList `gorm:"type:varchar(4000);not null"`
 	//封面
 	FirstImage string `gorm:"type:varchar(200);not null"`
-	IsNew      bool   `gorm:"not null"`
+	IsNew      bool   `gorm:"default:true"`
 }
 
 type EsGoods struct {

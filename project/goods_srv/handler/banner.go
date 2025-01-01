@@ -6,7 +6,6 @@ import (
 	"goods_srv/model"
 	pb "goods_srv/proto"
 
-	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -37,7 +36,6 @@ func (s *GoodsServer) CreateBanner(ctx context.Context, req *pb.BannerInfoReq) (
 		Image: req.Image,
 	}
 	if err := banner.InsertOne(); err != nil {
-		zap.S().Errorw("一件商品banner插入失败", "msg", err.Error())
 		return nil, err
 	}
 	return &pb.BannerInfoRes{Id: banner.ID}, nil
@@ -46,9 +44,7 @@ func (s *GoodsServer) CreateBanner(ctx context.Context, req *pb.BannerInfoReq) (
 func (s *GoodsServer) DeleteBanner(ctx context.Context, req *pb.DelBrandReq) (*emptypb.Empty, error) {
 	banner := &model.Banner{}
 	banner.ID = req.Id
-	err := banner.DeleteOneById()
-	if err != nil {
-		zap.S().Errorw("一件商品banner删除失败", "msg", err.Error())
+	if err := banner.DeleteOneById(); err != nil {
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil
@@ -61,7 +57,6 @@ func (s *GoodsServer) UpdateBanner(ctx context.Context, req *pb.BannerInfoReq) (
 	banner.Image = req.Image
 	banner.Index = req.Index
 	if err := banner.UpdateOneById(); err != nil {
-		zap.S().Errorw("一件商品banner更改失败", "msg", err.Error())
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil

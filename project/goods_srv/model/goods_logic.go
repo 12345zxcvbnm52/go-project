@@ -125,13 +125,12 @@ func (u *Goods) FindByOpt(opt *FindOption) (*Result, error) {
 }
 
 func (u *Goods) FindByIds(Id ...uint32) (*Result, error) {
-	zap.S().Errorw("err", "msg", Id)
 	data := []*Goods{}
 	if len(Id) == 0 {
 		return nil, ErrGoodsNotFound
 	}
 	//这里有个大问题,传入切片前一定要检查是否为空,否则会全表检查
-	res := gb.DB.Preload("Category").Preload("Brand").Find(&data, Id)
+	res := gb.DB.Model(&Goods{}).Preload("Category").Preload("Brand").Find(&data, Id)
 	if res.RowsAffected == 0 {
 		return nil, ErrGoodsNotFound
 	}
@@ -169,7 +168,17 @@ func (u *Goods) InsertOne() error {
 	return nil
 }
 
-func (u *Goods) UpdateOneByid() error {
+func (u *Goods) FindOneById() error {
+	if res := gb.DB.Model(&Goods{}).Preload("Brand").Preload("Category").First(u); res.Error != nil {
+		if res.Error == gorm.ErrRecordNotFound {
+			return ErrGoodsNotFound
+		}
+		return ErrInternalWrong
+	}
+	return nil
+}
+
+func (u *Goods) UpdateOneById() error {
 	return nil
 }
 

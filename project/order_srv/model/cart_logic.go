@@ -29,7 +29,7 @@ func (u *Cart) FindByOpt(opt *CartFindOption) (*CartResult, error) {
 	if opt.PageSize > 0 {
 		LocDB = LocDB.Scopes(Paginate(int(opt.PagesNum), int(opt.PageSize)))
 	}
-	r := LocDB.Find(res.Data)
+	r := LocDB.Find(&res.Data)
 	if r.RowsAffected == 0 {
 		return nil, ErrCartNotFound
 	}
@@ -41,7 +41,7 @@ func (u *Cart) FindByOpt(opt *CartFindOption) (*CartResult, error) {
 
 func (u *Cart) FindByUserId(userId uint32) (*CartResult, error) {
 	item := []*Cart{}
-	res := gb.DB.Where("user_id = ?", userId).Omit("user_id").Find(item)
+	res := gb.DB.Where("user_id = ?", userId).Omit("user_id").Find(&item)
 	if res.RowsAffected == 0 {
 		return nil, ErrCartNotFound
 	}

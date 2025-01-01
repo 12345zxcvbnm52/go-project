@@ -24,3 +24,5 @@ consul:
 rockmq: 
   host: '192.168.199.128'
   port: '9876'
+  reback_topic: 'order-reback'
+  timeout_topic: 'order-timeout'

@@ -22,7 +22,7 @@ service Goods{
 
 //商品类型服务
     rpc GetCategyList(google.protobuf.Empty)returns(CategyListRes);
-    rpc GetCategy(SubCategyReq)returns(SubCategyListRes);
+    rpc GetCategyInfo(SubCategyReq)returns(SubCategyListRes);
     rpc CreateCategy(CategyInfoReq)returns(CategyInfoRes);
     rpc DeleteCategy(DelCategyReq)returns(google.protobuf.Empty);
     rpc UpdateCategy(CategyInfoReq)returns(google.protobuf.Empty);

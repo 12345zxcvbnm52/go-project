@@ -17,10 +17,10 @@ func FindGoodsServer() {
 		panic(err)
 	}
 	for _, v := range serverData {
-		gb.ServerConfig.GoodsServerConfig.GoodsServerIp = v.Address
-		gb.ServerConfig.GoodsServerConfig.GoodsServerPort = v.Port
-		gb.ServerConfig.GoodsServerConfig.GoodsServerId = v.ID
-		gb.ServerConfig.GoodsServerConfig.GoodsServerTags = v.Tags
+		gb.ServerConfig.GoodsServer.GoodsServerIp = v.Address
+		gb.ServerConfig.GoodsServer.GoodsServerPort = v.Port
+		gb.ServerConfig.GoodsServer.GoodsServerId = v.ID
+		gb.ServerConfig.GoodsServer.GoodsServerTags = v.Tags
 	}
 }
 

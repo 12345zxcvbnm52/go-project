@@ -57,7 +57,7 @@ func (g *GoodsRecordList) Scan(value interface{}) error {
 // 如果事务出现问题能根据Record恢复
 type InvtRecord struct {
 	//订单编号
-	OrderSign string `gorm:"type:varchar(50);index:idx_order_sign,unique"`
+	OrderSign string `gorm:"column:order_sign;type:varchar(50);index:idx_order_sign,unique"`
 	//当前库存状态,用int类型能实现幂等性
 	Status      int32           `gorm:"type:int"`
 	GoodsRecord GoodsRecordList `gorm:"type:varchar(256)"`
