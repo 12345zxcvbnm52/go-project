@@ -4,7 +4,11 @@ import (
 	"net/http"
 	"strings"
 
+	gb "order_web/global"
+
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -22,7 +26,7 @@ func RemoveStructPrefix(msg map[string]string) map[string]string {
 	return res
 }
 
-func GrpcErrorToHttp(err error, c *gin.Context) {
+func RpcErrorHandle(c *gin.Context, err error) {
 	if e, ok := status.FromError(err); ok {
 		switch e.Code() {
 		case codes.NotFound:
@@ -42,10 +46,27 @@ func GrpcErrorToHttp(err error, c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"msg": "用户服务暂不可用",
 			})
+		case codes.ResourceExhausted:
+			c.JSON(http.StatusBadRequest, gin.H{
+				"msg": "库存暂时不足",
+			})
 		default:
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"msg": "其他错误",
+				"msg": "未知错误",
 			})
 		}
 	}
+}
+
+func ValidatorErrorHandle(c *gin.Context, err error) {
+	errs, ok := err.(validator.ValidationErrors)
+	if !ok {
+		zap.S().Errorw("Validate认证失败", "msg", err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"msg": err.Error(),
+		})
+	}
+	c.JSON(http.StatusBadRequest, gin.H{
+		"msg": RemoveStructPrefix(errs.Translate(gb.Translator)),
+	})
 }

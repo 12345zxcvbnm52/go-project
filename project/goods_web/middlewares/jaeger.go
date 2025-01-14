@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 	"go.uber.org/zap"
@@ -34,11 +35,12 @@ func TraceMarking() gin.HandlerFunc {
 			ctx.Abort()
 			return
 		}
+		opentracing.SetGlobalTracer(tracer)
 		defer closer.Close()
 		startSpan := tracer.StartSpan(ctx.Request.URL.Path)
 		defer startSpan.Finish()
 		ctx.Set("tracer", tracer)
-		ctx.Set("parent-span", startSpan)
+		ctx.Set("web-span", startSpan)
 		ctx.Next()
 	}
 }

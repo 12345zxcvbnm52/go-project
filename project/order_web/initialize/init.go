@@ -24,6 +24,6 @@ func init() {
 		}
 	}
 	InitValidator()
-
+	InitRpcPool()
 	zap.S().Infoln("ServerConfig is : ", gb.ServerConfig)
 }

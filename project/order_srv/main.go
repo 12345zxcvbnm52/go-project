@@ -7,6 +7,7 @@ import (
 	gb "order_srv/global"
 	"order_srv/handler"
 	initialize "order_srv/initialize"
+	otgrpc "order_srv/otgrpc"
 	pb "order_srv/proto"
 	"os"
 	"os/signal"
@@ -14,6 +15,10 @@ import (
 
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
+
+	"github.com/opentracing/opentracing-go"
+	"github.com/uber/jaeger-client-go"
+	jaegercfg "github.com/uber/jaeger-client-go/config"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health"
@@ -34,13 +39,32 @@ func main() {
 	//在consul中注册的两个服务如果name相同而id不同,且配置了负载均衡,则会被算为同一类服务的不同实例
 	//若id相同则服务会互相覆盖
 	//负载均衡应当在客户端配置
+	cfg := jaegercfg.Configuration{
+		Sampler: &jaegercfg.SamplerConfig{
+			Type:  jaeger.SamplerTypeConst,
+			Param: 1,
+		},
+		Reporter: &jaegercfg.ReporterConfig{
+			LogSpans:           true,
+			LocalAgentHostPort: fmt.Sprintf("%s:%d", gb.ServerConfig.Jaeger.Host, gb.ServerConfig.Jaeger.Port),
+		},
+		ServiceName: "kensame",
+	}
+	tracer, closer, err := cfg.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
+	if err != nil {
+		panic(err)
+	}
+	defer closer.Close()
+	opentracing.SetGlobalTracer(tracer)
+
+	lis, _ := net.Listen("tcp", fmt.Sprintf("%s:%d", *Ip, *Port))
+	server := grpc.NewServer(grpc.UnaryInterceptor(otgrpc.OpenTracingServerInterceptor(tracer)))
+	OrderServer := &handler.OrderServer{}
+	healthServer := healthpb.NewServer()
+	pb.RegisterOrderServer(server, OrderServer)
+	health.RegisterHealthServer(server, healthServer)
+
 	go func() {
-		lis, _ := net.Listen("tcp", fmt.Sprintf("%s:%d", *Ip, *Port))
-		server := grpc.NewServer()
-		OrderServer := &handler.OrderServer{}
-		healthServer := healthpb.NewServer()
-		pb.RegisterOrderServer(server, OrderServer)
-		health.RegisterHealthServer(server, healthServer)
 		server.Serve(lis)
 	}()
 	initialize.InitConsul()

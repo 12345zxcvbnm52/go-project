@@ -13,3 +13,7 @@ health_check:
   health_check_port: 8021
 
 jwt_sign: "kensame"
+
+jaeger:
+  host: '192.168.199.128'
+  port: '6831'

@@ -852,3 +852,40 @@
 19:C 31 Dec 2024 12:53:59.045 * DB saved on disk
 19:C 31 Dec 2024 12:53:59.045 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
 1:M 31 Dec 2024 12:53:59.141 * Background saving terminated with success
+1:signal-handler (1736162253) Received SIGTERM scheduling shutdown...
+1:M 06 Jan 2025 11:17:33.962 # User requested shutdown...
+1:M 06 Jan 2025 11:17:33.962 * Calling fsync() on the AOF file.
+1:M 06 Jan 2025 11:17:33.962 * Saving the final RDB snapshot before exiting.
+1:M 06 Jan 2025 11:17:33.993 * DB saved on disk
+1:M 06 Jan 2025 11:17:33.994 * Removing the pid file.
+1:M 06 Jan 2025 11:17:33.996 # Redis is now ready to exit, bye bye...
+1:C 06 Jan 2025 11:20:50.260 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 06 Jan 2025 11:20:50.264 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 06 Jan 2025 11:20:50.264 # Configuration loaded
+1:M 06 Jan 2025 11:20:50.270 * monotonic clock: POSIX clock_gettime
+1:M 06 Jan 2025 11:20:50.289 * Running mode=standalone, port=6379.
+1:M 06 Jan 2025 11:20:50.289 # Server initialized
+1:M 06 Jan 2025 11:20:50.289 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 06 Jan 2025 11:20:50.303 * Reading RDB base file on AOF loading...
+1:M 06 Jan 2025 11:20:50.303 * Loading RDB produced by version 7.0.15
+1:M 06 Jan 2025 11:20:50.303 * RDB age 1571762 seconds
+1:M 06 Jan 2025 11:20:50.303 * RDB memory usage when created 0.82 Mb
+1:M 06 Jan 2025 11:20:50.303 * RDB is base AOF
+1:M 06 Jan 2025 11:20:50.303 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 06 Jan 2025 11:20:50.303 * DB loaded from base file appendonly6379.aof.1.base.rdb: 0.003 seconds
+1:M 06 Jan 2025 11:20:50.344 * DB loaded from incr file appendonly6379.aof.1.incr.aof: 0.041 seconds
+1:M 06 Jan 2025 11:20:50.346 * DB loaded from append only file: 0.045 seconds
+1:M 06 Jan 2025 11:20:50.346 * Opening AOF incr file appendonly6379.aof.1.incr.aof on server start
+1:M 06 Jan 2025 11:20:50.346 * Ready to accept connections
+1:M 06 Jan 2025 11:25:51.090 * 100 changes in 300 seconds. Saving...
+1:M 06 Jan 2025 11:25:51.093 * Background saving started by pid 19
+19:C 06 Jan 2025 11:25:51.099 * DB saved on disk
+19:C 06 Jan 2025 11:25:51.099 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 06 Jan 2025 11:25:51.193 * Background saving terminated with success
+1:signal-handler (1736514264) Received SIGTERM scheduling shutdown...
+1:M 10 Jan 2025 13:04:24.450 # User requested shutdown...
+1:M 10 Jan 2025 13:04:24.454 * Calling fsync() on the AOF file.
+1:M 10 Jan 2025 13:04:24.454 * Saving the final RDB snapshot before exiting.
+1:M 10 Jan 2025 13:04:24.474 * DB saved on disk
+1:M 10 Jan 2025 13:04:24.481 * Removing the pid file.
+1:M 10 Jan 2025 13:04:24.481 # Redis is now ready to exit, bye bye...

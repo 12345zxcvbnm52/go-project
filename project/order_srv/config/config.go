@@ -30,6 +30,11 @@ type RocketMqConfig struct {
 	TimeoutTopic string `mapstructure:"timeout_topic"`
 }
 
+type JaegerConfig struct {
+	Host string `mapstructure:"host"`
+	Port int    `mapstructure:"port"`
+}
+
 type ServerConfig struct {
 	//这个名字是用来服务注册的
 	Name string `mapstructure:"name"`
@@ -45,4 +50,5 @@ type ServerConfig struct {
 	ConsulConfig ConsulConfig   `mapstructure:"consul"`
 	RedisConfig  RedisConfig    `mapstructure:"redis"`
 	RockMq       RocketMqConfig `mapstructure:"rockmq"`
+	Jaeger       JaegerConfig   `mapstructure:"jaeger"`
 }

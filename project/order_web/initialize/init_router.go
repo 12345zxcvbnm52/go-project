@@ -2,15 +2,19 @@ package initialize
 
 import (
 	"fmt"
-	//gb "user_web/global"
-	"order_web/global"
+	//gb "user_web/gb"
+	gb "order_web/global"
+	"order_web/handler"
+	"order_web/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() {
-	global.Router = gin.Default()
-	global.CartRter = global.Router.Group(fmt.Sprintf("/v%s/cart", global.ServerConfig.Version))
-	global.OrderRter = global.Router.Group(fmt.Sprintf("/v%s/router", global.ServerConfig.Version))
-
+	gb.Router = gin.Default()
+	gb.CartRter = gb.Router.Group(fmt.Sprintf("/v%s/cart", gb.ServerConfig.Version))
+	gb.OrderRter = gb.Router.Group(fmt.Sprintf("/v%s/order", gb.ServerConfig.Version), middlewares.TraceMarking())
+	{
+		gb.OrderRter.POST("insert", handler.CreateOrder)
+	}
 }

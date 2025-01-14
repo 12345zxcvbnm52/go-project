@@ -3,8 +3,10 @@ package util
 import (
 	"context"
 	"fmt"
+	otgrpc "goods_web/grpc_jaeger"
 	"time"
 
+	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/backoff"
@@ -104,6 +106,7 @@ func DefaultDial(opt *RpcConnOptions) (*grpc.ClientConn, error) {
 		grpc.WithInitialWindowSize(opt.initWindowSize),
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(int(opt.maxRecvSize))),
 		grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(int(opt.maxSendSize))),
+		grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer())),
 		grpc.WithKeepaliveParams(keepalive.ClientParameters{
 			Time:                opt.KeepAliveCheck,
 			Timeout:             opt.KeepAliveTimeout,

@@ -13,6 +13,7 @@ import (
 func (u *Banner) FindOneById() error {
 	key := fmt.Sprintf("goods_%d", u.ID)
 	s, err := gb.RedisConn.Get(key).Result()
+
 	if err != nil {
 		if err == redis.Nil {
 		} else {

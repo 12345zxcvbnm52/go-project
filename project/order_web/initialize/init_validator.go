@@ -93,11 +93,8 @@ func TranslateUserName() {
 
 func InitValidator() {
 	ValidateMobile()
-	ValidatePassword()
 	TranslateMobile()
 	TranslatePassword()
-	ValidateUserName()
-	TranslateUserName()
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		for k, f := range gb.ValidateFiledConfig {
 			v.RegisterValidation(k, f)

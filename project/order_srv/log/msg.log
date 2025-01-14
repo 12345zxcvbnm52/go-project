@@ -1,2 +1,7 @@
-{"level":"info","ts":"2024-12-31T22:36:48.072+0800","caller":"order_srv/main.go:47","msg":"ServerConfig is :  &{order_srv 192.168.199.128 38121 order_srv [order] goods_srv inventory_srv {tcp 192.168.199.128 3307 root 123 order_srv} {192.168.199.128 8500} { 0 } {192.168.199.128 9876 order-reback order-timeout}}"}
-{"level":"info","ts":"2024-12-31T22:37:00.143+0800","caller":"model/mq_logic.go:170","msg":"延时消息发送成功"}
+{"level":"info","ts":"2025-01-01T16:23:13.035+0800","caller":"order_srv/main.go:71","msg":"ServerConfig is :  &{order_srv 192.168.199.128 46419 order_srv [order] goods_srv inventory_srv {tcp 192.168.199.128 3307 root 123 order_srv} {192.168.199.128 8500} { 0 } {192.168.199.128 9876 order-reback order-timeout} {192.168.199.128 6831}}"}
+{"level":"info","ts":"2025-01-01T16:26:00.394+0800","caller":"model/mq_logic.go:177","msg":"延时消息发送成功"}
+{"level":"info","ts":"2025-01-01T16:26:01.970+0800","caller":"model/mq_logic.go:177","msg":"延时消息发送成功"}
+{"level":"info","ts":"2025-01-01T16:28:00.394+0800","caller":"handler/order.go:136","msg":"&{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} 1 2025-01-01 16:26:001@VJ9H3gAlW26 wechat 1  0 <nil> 永宁大道 剑侠 18174637586 放点糖}"}
+{"level":"info","ts":"2025-01-01T16:28:01.970+0800","caller":"handler/order.go:136","msg":"&{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} 2 2025-01-01 16:26:012@UQp0yIZHmXY wechat 1  0 <nil> 不宁大道 古努 18175637586 放点盐}"}
+{"level":"error","ts":"2025-01-01T16:29:07.130+0800","caller":"model/mq_logic.go:105","msg":"跨微服务扣减失败","msg":"rpc error: code = ResourceExhausted desc = 缺少库存"}
+{"level":"error","ts":"2025-01-01T16:31:49.891+0800","caller":"model/mq_logic.go:105","msg":"跨微服务扣减失败","msg":"rpc error: code = ResourceExhausted desc = 缺少库存"}

@@ -10,6 +10,7 @@ import (
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/apache/rocketmq-client-go/v2/producer"
+	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
 )
 
@@ -28,6 +29,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 	goodsIds := []uint32{}
 	order := &Order{}
 	json.Unmarshal(msg.Body, order)
+	fspan := opentracing.SpanFromContext(ol.Ctx)
 
 	//通过购物车找到对应的商品信息
 	goods, err := cartLogic.FindByOpt(&CartFindOption{UserId: order.UserId, Selected: true})
@@ -63,6 +65,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 	}
 
 	//获得商品价格信息
+	cspan := opentracing.GlobalTracer().StartSpan("ordersrv调用goodssrv", opentracing.ChildOf(fspan.Context()))
 	goodsClient := pb.NewGoodsClient(goodsConn)
 	goodsInfo, err := goodsClient.GetGoodsListById(context.Background(), &pb.GoodsIdsReq{Id: goodsIds})
 	if err != nil {
@@ -70,6 +73,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 		ol.Err = ErrBadGoodsClient
 		return primitive.RollbackMessageState
 	}
+	cspan.Finish()
 
 	//准备记录要写到orderGoods表的记录和扣减库存记录
 	//注意这里的orderGoods还没有填充orderId
@@ -92,6 +96,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 
 	//要考虑网络的问题(如出现误判,哪怕扣减成功,但因为网络的超时等导致返回的err是非nil),但是不知道怎么写好,先搁置在这
 	//先简化模型,如果出错,则一定是扣减失败
+	cspan = opentracing.GlobalTracer().StartSpan("ordersrv调用inventorysrv", opentracing.ChildOf(fspan.Context()))
 	inventoryClient := pb.NewInventoryClient(inventoryConn)
 	if _, err := inventoryClient.DecrStock(
 		context.Background(),
@@ -101,10 +106,12 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 		ol.Err = err
 		return primitive.RollbackMessageState
 	}
+	cspan.Finish()
 	//这里如果库存扣减完成,但是服务宕机在后续出错后commit或rollback前是只能靠回查来实现reback的
 	//要注意的是,上述这种情况本地事务是安全的
 
 	//事务开启后出了错就一定要发送出库存归还的半消息,补上上面的库存扣减
+	cspan = opentracing.GlobalTracer().StartSpan("localTrascation", opentracing.ChildOf(fspan.Context()))
 	tx := gb.DB.Begin()
 	if res := tx.Model(&Order{}).Omit("pay_time").Create(order); res.Error != nil {
 		tx.Rollback()
@@ -159,7 +166,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 	//发送延时消息,话说不确定不同组的producer是不是可以放心shutdown
 	//这时候发过去的是只有订单号的order
 	msg = primitive.NewMessage(gb.ServerConfig.RockMq.TimeoutTopic, msg.Body)
-	msg.WithDelayTimeLevel(4)
+	msg.WithDelayTimeLevel(6)
 	_, err = p.SendSync(context.Background(), msg)
 	if err != nil {
 		zap.S().Errorw("发送延时消息失败", "msg", err.Error())
@@ -169,6 +176,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 	}
 	zap.S().Infoln("延时消息发送成功")
 	tx.Commit()
+	cspan.Finish()
 	ol.Err = nil
 	return primitive.RollbackMessageState
 }
