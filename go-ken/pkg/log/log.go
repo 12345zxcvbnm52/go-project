@@ -14,7 +14,7 @@ func Init(opts *Options) {
 	std = NewLogger(opts)
 }
 
-// 生成指定的Logger,注意这里与option的build区别(前者是生成日志实例,后者是初始全局日志实例)
+// 生成指定的Logger,注意这里与option的build函数区别(前者是生成日志实例,后者是初始全局日志实例)
 func NewLogger(opts *Options) *Logger {
 	if opts == nil {
 		opts = NewOptions()

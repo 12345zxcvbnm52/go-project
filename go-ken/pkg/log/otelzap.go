@@ -34,7 +34,52 @@ var (
 	mu  sync.Mutex
 )
 
-// Logger is a thin wrapper for zap.Logger that adds Ctx method.
+type Log interface {
+	// Trace 级别日志记录
+	//Trace(msg string, args ...interface{})
+	// Debug 级别日志记录
+	Debug(msg string)
+	// Info 级别日志记录
+	Info(msg string)
+	// Warn 级别日志记录
+	Warn(msg string)
+	// Error 级别日志记录
+	Error(msg string)
+	// Fatal 级别日志记录
+	Fatal(msg string)
+}
+
+// 对Logger的简单的再一层封装,用于兼容其它接口
+type CompatLogger struct {
+	Logger *Logger
+}
+
+func NewCompatLogger() *CompatLogger {
+	log := NewLogger(nil)
+	return &CompatLogger{Logger: log}
+}
+
+func (l *CompatLogger) Debug(msg string) {
+	l.Logger.Debug(msg)
+}
+
+func (l *CompatLogger) Info(msg string) {
+	l.Logger.Info(msg)
+}
+
+func (l *CompatLogger) Warn(msg string) {
+	l.Logger.Warn(msg)
+}
+
+func (l *CompatLogger) Error(msg string) {
+	l.Logger.Error(msg)
+}
+
+func (l *CompatLogger) Fatal(msg string) {
+	l.Logger.Fatal(msg)
+}
+
+// 对zap.Logger的进一步封装,但是注意这个Logger的方法与zap强相关,极大可能不能与其它logger接口兼容
 type Logger struct {
 	*zap.Logger
 	skipCaller *zap.Logger

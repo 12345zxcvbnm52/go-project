@@ -1,10 +1,7 @@
 # 重要
 想要使用前请把所有与挂载(主要在.sh文件内),地址(在yaml配置文件中)有关的地方换成你需要的地址
 
-# canal
-暂时没用,考虑以后把transfer换成canal
-# im
-im聊天室,还没开始写
+
 # mysql
 搭的mysql Docker环境,未来要实现主从复制的mysql
 # project

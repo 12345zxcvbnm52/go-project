@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fatih/color"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	cliflag "mxshop/pkg/common/cli/flag"
 	"mxshop/pkg/common/cli/globalflag"
 	"mxshop/pkg/common/term"
 	"mxshop/pkg/common/version"
 	"mxshop/pkg/common/version/verflag"
 	"mxshop/pkg/errors"
+
+	"github.com/fatih/color"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"mxshop/pkg/log"
 )

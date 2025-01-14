@@ -3,39 +3,27 @@ package app
 import (
 	"context"
 	"goken/registry"
-	"net/url"
 	"os"
 	"os/signal"
 	"sync"
-
-	"github.com/google/uuid"
 )
 
 type App struct {
-	opts      *option
-	endpoints []string
-	mtx       sync.Mutex
-	instance  *registry.ServiceInstance
+	//这两个参数用于控制程序运行
+	ctx      context.Context
+	cancel   context.CancelFunc
+	opts     *options
+	mtx      sync.Mutex
+	instance *registry.ServiceInstance
 }
 
-func newDefaultOptions() *option {
-	opts := &option{}
-	opts.signals = []os.Signal{os.Kill, os.Interrupt}
-	id, _ := uuid.NewUUID()
-	opts.id = id.String()
-
-	return opts
-}
-
-func New(endpoints []*url.URL, opts ...Option) *App {
+func NewApp(opts ...Option) *App {
 	o := &App{}
-	for _, v := range endpoints {
-		o.endpoints = append(o.endpoints, v.String())
-	}
-	o.opts = newDefaultOptions()
+	o.opts = newOptions(opts...)
 	for _, v := range opts {
 		v(o.opts)
 	}
+	o.ctx, o.cancel = context.WithCancel(context.Background())
 	return o
 }
 
@@ -78,7 +66,7 @@ func (a *App) Stop() error {
 
 func (a *App) ServiceBuild() (*registry.ServiceInstance, error) {
 	endpoints := make([]string, 1)
-	copy(endpoints, a.endpoints)
+	copy(endpoints, a.opts.endpoints)
 	return &registry.ServiceInstance{
 		ID:        a.opts.id,
 		Name:      a.opts.name,
