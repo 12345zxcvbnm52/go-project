@@ -1,0 +1,12 @@
+syntax = "proto3";
+package options;
+option go_package = "./;options";
+import "google/protobuf/descriptor.proto";
+extend google.protobuf.MethodOptions {
+    string Accept = 60001;
+	string Produce = 60002;
+	string Success = 60003;
+	string Failure = 60004;
+    string Router = 60005;
+    repeated string Tags = 60006;
+}
