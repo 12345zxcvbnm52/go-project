@@ -1,0 +1,25 @@
+2025-02-02T19:37:43.991+0800	ERROR	test/main.go:24	wf	{"w": "v"}
+main.main
+	/home/ken/ken/go-project/test/main.go:24
+runtime.main
+	/usr/lib/go-1.22/src/runtime/proc.go:271
+2025-02-03T17:30:55.976+0800	ERROR	test/main.go:24	wf	{"w": "v"}
+main.main
+	/home/ken/ken/go-project/test/main.go:24
+runtime.main
+	/usr/lib/go-1.22/src/runtime/proc.go:271
+2025-02-03T17:36:13.732+0800	ERROR	test/main.go:22	wf	{"w": "v"}
+main.main
+	/home/ken/ken/go-project/test/main.go:22
+runtime.main
+	/usr/lib/go-1.22/src/runtime/proc.go:271
+2025-02-03T17:37:11.333+0800	ERROR	test/main.go:22	wf	{"w": "v"}
+main.main
+	/home/ken/ken/go-project/test/main.go:22
+runtime.main
+	/usr/lib/go-1.22/src/runtime/proc.go:271
+2025-02-03T17:45:29.744+0800	ERROR	test/main.go:22	wf	{"w": "v"}
+main.main
+	/home/ken/ken/go-project/test/main.go:22
+runtime.main
+	/usr/lib/go-1.22/src/runtime/proc.go:271

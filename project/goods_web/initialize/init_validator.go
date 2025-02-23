@@ -26,7 +26,7 @@ func translate(trans ut.Translator, fe validator.FieldError) string {
 func ValidateMobile() {
 	gb.AddValidator("mobile",
 		func(fl validator.FieldLevel) bool {
-			//fl.Field可以获得正在认证的结构体字段(binding标签对应的字段)
+			//fl.Field可以获得validate binding标签中对应tag的结构体字段
 			mobile := fl.Field().String()
 			ok, _ := regexp.MatchString(`^1[3-9]\d{9}$`, mobile)
 			return ok

@@ -1,0 +1,1 @@
+protoc -I=. -I=../../third_party --go_out=. --go-grpc_out=. --gin_out=. --model_out=. user.proto

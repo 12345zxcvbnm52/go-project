@@ -1,0 +1,14 @@
+syntax = "proto3";
+option go_package="./;proto";
+
+message req{
+    string name = 1;
+}
+
+message res{
+    string res = 1;
+}
+
+service test {
+    rpc Conn(req)returns(res);
+}

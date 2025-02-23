@@ -1,0 +1,23 @@
+#服务注册参数
+name: 'user_srv'
+id: 'user_srv'
+tags: 
+  - 'user'
+version: '1.0'
+
+#这里若使用具体ip则需要关闭mysql的保护模式
+mysql: 
+  host: '192.168.199.128'
+  port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'user_srv'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  host: '192.168.199.128'
+  port: 6379
+  password: '123'
