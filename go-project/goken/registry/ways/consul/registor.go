@@ -85,9 +85,9 @@ func (r *registor) Register(ctx context.Context, ins *registry.ServiceInstance) 
 					Timeout:                        r.timeout,
 				})
 
-			case "http":
+			case "http", "https":
 				asr.Checks = append(asr.Checks, &api.AgentServiceCheck{
-					HTTP:                           address.Host,
+					HTTP:                           address.Host + "/health",
 					Interval:                       r.healthcheckInterval,
 					DeregisterCriticalServiceAfter: r.deregisterCriticalServiceAfter,
 					Timeout:                        r.timeout,

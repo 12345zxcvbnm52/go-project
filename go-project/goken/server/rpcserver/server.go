@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"kenshop/goken/registry"
-	interceptors "kenshop/goken/server/rpcserver/sinterceptors"
+	sinterceptors "kenshop/goken/server/rpcserver/sinterceptors"
 	"kenshop/pkg/common/hostgen"
 	errors "kenshop/pkg/error"
 	"kenshop/pkg/log"
@@ -39,7 +39,7 @@ type Server struct {
 	Instance *registry.ServiceInstance
 }
 
-var ErrNilRegistor = errors.New("该服务不存在注册器")
+var ErrNilRpcRegistor = errors.New("该rpc服务不存在注册器")
 
 func (s *Server) listen() error {
 
@@ -60,10 +60,11 @@ func (s *Server) listen() error {
 
 func MustNewServer(ctx context.Context, opts ...ServerOption) *Server {
 	s := &Server{
-		Host:     "127.0.0.1:0",
-		Health:   health.NewServer(),
-		Ctx:      ctx,
-		Instance: new(registry.ServiceInstance),
+		Host:      "127.0.0.1:0",
+		Health:    health.NewServer(),
+		Ctx:       ctx,
+		Instance:  new(registry.ServiceInstance),
+		UnaryInts: []grpc.UnaryServerInterceptor{sinterceptors.HealthCheckInterceptor()},
 	}
 	for _, v := range opts {
 		v(s)
@@ -89,8 +90,17 @@ func MustNewServer(ctx context.Context, opts ...ServerOption) *Server {
 	if s.Instance.Name == "" {
 		if s.Instance.ID == "" {
 			s.Instance.ID = s.Host
+		} else {
+			s.Instance.Name = s.Instance.ID
 		}
-		s.Instance.Name = s.Instance.ID
+	}
+
+	if s.Instance.ID == "" {
+		if s.Instance.Name == "" {
+			s.Instance.Name = s.Host
+		} else {
+			s.Instance.ID = s.Instance.Name
+		}
 	}
 	//s.unaryInts = append(s.unaryInts, interceptors.UnaryTimeoutInterceptor(s.timeout))
 
@@ -106,7 +116,7 @@ func MustNewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 func (s *Server) Register(ctx context.Context, ins *registry.ServiceInstance) error {
 	if s.Registor == nil {
-		return ErrNilRegistor
+		return ErrNilRpcRegistor
 	}
 	return s.Registor.Register(ctx, ins)
 }
@@ -114,7 +124,7 @@ func (s *Server) Register(ctx context.Context, ins *registry.ServiceInstance) er
 // Deregister会注销Server内Instance存储的服务Id
 func (s *Server) Deregister(ctx context.Context) error {
 	if s.Registor == nil {
-		return ErrNilRegistor
+		return ErrNilRpcRegistor
 	}
 	return s.Registor.Deregister(ctx, s.Instance.ID)
 }
@@ -123,7 +133,7 @@ func (s *Server) Serve() error {
 	//运行前前打印配置信息
 	log.Infof("服务启动中,服务信息为: msg= %+v", s.Instance)
 	//如果注册器为空就不进行注册而不是返回错误,
-	if err := s.Register(s.Ctx, s.Instance); err != nil && err != ErrNilRegistor {
+	if err := s.Register(s.Ctx, s.Instance); err != nil && err != ErrNilRpcRegistor {
 		return err
 	}
 	//监听终止信号,优雅退出
@@ -133,7 +143,7 @@ func (s *Server) Serve() error {
 	go func() {
 		if err := s.Server.Serve(s.Lis); err != nil {
 			//同理若注册器为空就不进行注销
-			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRegistor {
+			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRpcRegistor {
 				log.Errorf("服务注销失败, err= %v", e)
 			}
 			ech <- err
@@ -143,7 +153,7 @@ func (s *Server) Serve() error {
 	case <-sign:
 		close(sign)
 		s.Server.GracefulStop()
-		if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRegistor {
+		if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRpcRegistor {
 			log.Errorf("服务注销失败, err= %v", e)
 		}
 		log.Info("服务正常注销")
@@ -162,7 +172,7 @@ func WithHost(host string) ServerOption {
 
 func WithTimeout(timeout time.Duration) ServerOption {
 	return func(o *Server) {
-		o.UnaryInts = append(o.UnaryInts, interceptors.UnaryTimeoutInterceptor(timeout))
+		o.UnaryInts = append(o.UnaryInts, sinterceptors.UnaryTimeoutInterceptor(timeout))
 	}
 }
 

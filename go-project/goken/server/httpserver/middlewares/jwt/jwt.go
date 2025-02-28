@@ -64,7 +64,7 @@ type GinJWTMiddleware struct {
 	// 在登录期间调用的回调函数,使用此函数可以向webtoken添加自定义的payload数据(负载数据),
 	// 默认不会设置额外的PayloadFunc
 	// 除此之外还可以通过c.Get("JWT_PAYLOAD")在请求期间得到这些数据,请注意payload在jwt存储中是不会加密的,
-	PayloadFunc func(keyvalue ...interface{}) jwt.MapClaims
+	PayloadFunc func(keyvalue ...string) jwt.MapClaims
 
 	// 用户自定义的未授权时回调处理函数,默认功能类似于WriteErrorToResponse,
 	//当认证失败时,调用该函数返回一个自定义的响应,默认返回401状态码和错误信息
@@ -85,13 +85,13 @@ type GinJWTMiddleware struct {
 	// 设置身份键
 	IdentityKey string
 
-	// TokenLookup 是一个字符串格式为 "<source>:x-token"用于从请求中提取 token,
+	// TokenFormat 是一个字符串格式为 "<source>:<x-token>"用于从请求中提取 token,
 	// 可选,默认值为 "header:Authorization",
 	// 可能的值:
 	// - "header:x-token"
 	// - "query:x-token"
 	// - "cookie:x-token"
-	TokenLookup string
+	TokenFormat string
 
 	// TokenHeadName是header中标识Token字段的字符串,默认值为"Bearer"
 	TokenHeadName string
@@ -191,9 +191,6 @@ var (
 
 	// ErrInvalidPrivKey indicates that the given private key is invalid
 	ErrInvalidPrivKey = errors.New("private key invalid")
-
-	// ErrInvalidPubKey indicates the the given public key is invalid
-	ErrInvalidPubKey = errors.New("public key invalid")
 )
 
 // New for check error with GinJWTMiddleware
@@ -379,7 +376,7 @@ func (mw *GinJWTMiddleware) CheckIfTokenExpire(c *gin.Context) (jwt.MapClaims, e
 }
 
 // 用于生成jwt.Token
-func (mw *GinJWTMiddleware) NewToken(keyvalue ...interface{}) (string, time.Time, error) {
+func (mw *GinJWTMiddleware) NewToken(keyvalue ...string) (string, time.Time, error) {
 	token := jwt.New(jwt.GetSigningMethod(mw.SigningAlgorithm))
 	claims := token.Claims.(jwt.MapClaims)
 	expire := mw.TimeFunc().Add(mw.TimeoutFunc(claims))
@@ -455,7 +452,7 @@ func (mw *GinJWTMiddleware) ParseToken(c *gin.Context) (*jwt.Token, error) {
 	var token string
 	var err error
 
-	methods := strings.Split(mw.TokenLookup, ",")
+	methods := strings.Split(mw.TokenFormat, ",")
 	for _, method := range methods {
 		if len(token) > 0 {
 			break
@@ -526,7 +523,6 @@ func (mw *GinJWTMiddleware) unauthorized(c *gin.Context, code int, message strin
 	if !mw.DisabledAbort {
 		c.Abort()
 	}
-
 	mw.Unauthorized(c, code, message)
 }
 

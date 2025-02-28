@@ -5,28 +5,26 @@ import (
 	"fmt"
 )
 
-// MessageCountMap contains occurrence for each error message.
+// MessageCountMap 包含每个错误消息的出现次数,
 type MessageCountMap map[string]int
 
-// Aggregate 表示一个包含多个错误的对象,但这些错误不一定具有单一的语义意义
-// 可以使用errors.Is来检查是否存在特定类型的错误
-// 不会支持errors.As,因为调用者可能只关心多个错误中匹配给定类型的特定错误
-type Aggregate interface {
+// ErrorGroup 表示一个包含多个错误的对象,但这些错误不一定具有单一的语义意义,
+// 可以使用 errors.Is 来检查是否存在特定类型的错误,
+// 不支持 errors.As,因为多个错误并不总是具有单一的类型,不支持将这些错误转换为特定类型的指针,
+type ErrorGroup interface {
 	error
 	Errors() []error
 	Is(error) bool
 }
 
-// NewAggregate converts a slice of errors into an Aggregate interface, which
-// is itself an implementation of the error interface.  If the slice is empty,
-// this returns nil.
-// It will check if any of the element of input error list is nil, to avoid
-// nil pointer panic when call Error().
-func NewAggregate(errlist []error) Aggregate {
+// NewErrorGroup 将一组错误转换为一个ErrorGroup接口,
+// 该接口本身实现了error接口,如果输入的错误列表为空,它会返回 nil,
+// 它还会检查输入的错误列表是否包含nil,以避免在调用Error()时发生nil指针panic,
+func NewErrorGroup(errlist []error) ErrorGroup {
 	if len(errlist) == 0 {
 		return nil
 	}
-	// In case of input error list contains nil
+	// 如果输入的错误列表中包含nil
 	var errs []error
 	for _, e := range errlist {
 		if e != nil {
@@ -36,18 +34,14 @@ func NewAggregate(errlist []error) Aggregate {
 	if len(errs) == 0 {
 		return nil
 	}
-	return aggregate(errs)
+	return errorGroup(errs)
 }
 
-// This helper implements the error and Errors interfaces.  Keeping it private
-// prevents people from making an aggregate of 0 errors, which is not
-// an error, but does satisfy the error interface.
-type aggregate []error
+type errorGroup []error
 
-// Error is part of the error interface.
-func (agg aggregate) Error() string {
+func (agg errorGroup) Error() string {
+	// 保险,但一般情况下不可能满足条件
 	if len(agg) == 0 {
-		// This should never happen, really.
 		return ""
 	}
 	if len(agg) == 1 {
@@ -73,20 +67,21 @@ func (agg aggregate) Error() string {
 	return "[" + result + "]"
 }
 
-func (agg aggregate) Is(target error) bool {
+// Is 是 ErrorGroup 接口的一部分,
+func (agg errorGroup) Is(target error) bool {
 	return agg.visit(func(err error) bool {
 		return errors.Is(err, target)
 	})
 }
 
-func (agg aggregate) visit(f func(err error) bool) bool {
+func (agg errorGroup) visit(f func(err error) bool) bool {
 	for _, err := range agg {
 		switch err := err.(type) {
-		case aggregate:
+		case errorGroup:
 			if match := err.visit(f); match {
 				return match
 			}
-		case Aggregate:
+		case ErrorGroup:
 			for _, nestedErr := range err.Errors() {
 				if match := f(nestedErr); match {
 					return match
@@ -102,27 +97,25 @@ func (agg aggregate) visit(f func(err error) bool) bool {
 	return false
 }
 
-// Errors is part of the Aggregate interface.
-func (agg aggregate) Errors() []error {
+// Errors 是 ErrorGroup 接口的一部分,
+func (agg errorGroup) Errors() []error {
 	return []error(agg)
 }
 
-// Matcher is used to match errors.  Returns true if the error matches.
+// Matcher 用于匹配错误,返回 true 表示错误匹配,
 type Matcher func(error) bool
 
-// FilterOut removes all errors that match any of the matchers from the input
-// error.  If the input is a singular error, only that error is tested.  If the
-// input implements the Aggregate interface, the list of errors will be
-// processed recursively.
+// FilterOut 从输入错误中移除所有匹配任何匹配器的错误,
+// 如果输入的是单一错误,则只测试该错误,如果输入实现了 ErrorGroup 接口,
+// 则会递归处理错误列表,
 //
-// This can be used, for example, to remove known-OK errors (such as io.EOF or
-// os.PathNotFound) from a list of errors.
+// 例如,它可以用来移除已知的无效错误（如 io.EOF 或 os.PathNotFound）,
 func FilterOut(err error, fns ...Matcher) error {
 	if err == nil {
 		return nil
 	}
-	if agg, ok := err.(Aggregate); ok {
-		return NewAggregate(filterErrors(agg.Errors(), fns...))
+	if agg, ok := err.(ErrorGroup); ok {
+		return NewErrorGroup(filterErrors(agg.Errors(), fns...))
 	}
 	if !matchesError(err, fns...) {
 		return err
@@ -130,7 +123,7 @@ func FilterOut(err error, fns ...Matcher) error {
 	return nil
 }
 
-// matchesError returns true if any Matcher returns true
+// matchesError 如果任何 Matcher 返回 true,则返回 true
 func matchesError(err error, fns ...Matcher) bool {
 	for _, fn := range fns {
 		if fn(err) {
@@ -140,10 +133,9 @@ func matchesError(err error, fns ...Matcher) bool {
 	return false
 }
 
-// filterErrors returns any errors (or nested errors, if the list contains
-// nested Errors) for which all fns return false. If no errors
-// remain a nil list is returned. The resulting silec will have all
-// nested slices flattened as a side effect.
+// filterErrors 返回所有 fns 返回 false 的错误（或嵌套错误,
+// 如果列表中包含嵌套的 Errors）,如果没有错误剩余,则返回 nil 列表,
+// 该函数的副作用是扁平化所有嵌套的错误列表,
 func filterErrors(list []error, fns ...Matcher) []error {
 	result := []error{}
 	for _, err := range list {
@@ -155,15 +147,15 @@ func filterErrors(list []error, fns ...Matcher) []error {
 	return result
 }
 
-// Flatten takes an Aggregate, which may hold other Aggregates in arbitrary
-// nesting, and flattens them all into a single Aggregate, recursively.
-func Flatten(agg Aggregate) Aggregate {
+// Flatten 接受一个 ErrorGroup,该 ErrorGroup 可能包含其他嵌套的 Aggregates,
+// 并将它们全部扁平化成一个单一的 ErrorGroup,递归地处理,
+func Flatten(agg ErrorGroup) ErrorGroup {
 	result := []error{}
 	if agg == nil {
 		return nil
 	}
 	for _, err := range agg.Errors() {
-		if a, ok := err.(Aggregate); ok {
+		if a, ok := err.(ErrorGroup); ok {
 			r := Flatten(a)
 			if r != nil {
 				result = append(result, r.Errors()...)
@@ -174,11 +166,11 @@ func Flatten(agg Aggregate) Aggregate {
 			}
 		}
 	}
-	return NewAggregate(result)
+	return NewErrorGroup(result)
 }
 
-// CreateAggregateFromMessageCountMap converts MessageCountMap Aggregate
-func CreateAggregateFromMessageCountMap(m MessageCountMap) Aggregate {
+// CreateAggregateFromMessageCountMap 将 MessageCountMap 转换为 ErrorGroup
+func CreateAggregateFromMessageCountMap(m MessageCountMap) ErrorGroup {
 	if m == nil {
 		return nil
 	}
@@ -190,13 +182,13 @@ func CreateAggregateFromMessageCountMap(m MessageCountMap) Aggregate {
 		}
 		result = append(result, fmt.Errorf("%v%v", errStr, countStr))
 	}
-	return NewAggregate(result)
+	return NewErrorGroup(result)
 }
 
-// Reduce will return err or, if err is an Aggregate and only has one item,
-// the first item in the aggregate.
+// Reduce 将返回 err,或者,如果 err 是一个 ErrorGroup 且只有一个元素,
+// 则返回 ErrorGroup 中的第一个元素,
 func Reduce(err error) error {
-	if agg, ok := err.(Aggregate); ok && err != nil {
+	if agg, ok := err.(ErrorGroup); ok && err != nil {
 		switch len(agg.Errors()) {
 		case 1:
 			return agg.Errors()[0]
@@ -207,10 +199,9 @@ func Reduce(err error) error {
 	return err
 }
 
-// AggregateGoroutines runs the provided functions in parallel, stuffing all
-// non-nil errors into the returned Aggregate.
-// Returns nil if all the functions complete successfully.
-func AggregateGoroutines(funcs ...func() error) Aggregate {
+// AggregateGoroutines 并行运行提供的函数,将所有非 nil 错误收集到返回的 ErrorGroup 中,
+// 如果所有函数成功执行,则返回 nil,
+func AggregateGoroutines(funcs ...func() error) ErrorGroup {
 	errChan := make(chan error, len(funcs))
 	for _, f := range funcs {
 		go func(f func() error) { errChan <- f() }(f)
@@ -221,8 +212,8 @@ func AggregateGoroutines(funcs ...func() error) Aggregate {
 			errs = append(errs, err)
 		}
 	}
-	return NewAggregate(errs)
+	return NewErrorGroup(errs)
 }
 
-// ErrPreconditionViolated is returned when the precondition is violated
+// ErrPreconditionViolated 当违反前置条件时返回的错误
 var ErrPreconditionViolated = errors.New("precondition is violated")

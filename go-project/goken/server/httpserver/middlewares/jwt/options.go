@@ -13,7 +13,7 @@ type JwtOption func(*GinJWTMiddleware)
 
 func new(opts ...JwtOption) (*GinJWTMiddleware, error) {
 	mw := &GinJWTMiddleware{
-		TokenLookup:      "header:Authorization",
+		TokenFormat:      "header:Authorization",
 		SigningAlgorithm: "HS256",
 		Timeout:          time.Hour * 24,
 		MaxRefresh:       time.Hour * 24,
@@ -102,9 +102,9 @@ func new(opts ...JwtOption) (*GinJWTMiddleware, error) {
 	return mw, nil
 }
 
-func WithTokenLookup(tokenLookup string) JwtOption {
+func WithTokenLookup(TokenFormat string) JwtOption {
 	return func(mw *GinJWTMiddleware) {
-		mw.TokenLookup = tokenLookup
+		mw.TokenFormat = TokenFormat
 	}
 }
 

@@ -137,6 +137,13 @@ func WithBalanceModel(model string) ClientOption {
 	}
 }
 
+func (c *Client) Reset() {
+	if c.client != nil {
+		c.client.Close()
+		c.client = nil
+	}
+}
+
 func (c *Client) Dial() (*grpc.ClientConn, error) {
 	if c.client == nil {
 		client, err := grpc.DialContext(c.Ctx, c.Endpoint.Host, c.GrpcOpts...)

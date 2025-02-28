@@ -1,151 +1,191 @@
 package httpserver
 
 import (
-	"context"
-	"fmt"
 
 	//"github.com/penglongli/gin-metrics/ginmetrics"
-	"net/http"
-	"time"
 
+	"context"
+	"fmt"
+	"net/http"
+	"net/url"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"kenshop/goken/registry"
 	mws "kenshop/goken/server/httpserver/middlewares"
+	"kenshop/goken/server/httpserver/middlewares/jwt"
+	ginotel "kenshop/goken/server/httpserver/middlewares/tracing"
+	"kenshop/goken/server/httpserver/validate"
+
 	//"kenshop/goken/server/httpserver/pprof"
-	//"kenshop/goken/server/httpserver/validation"
+
+	"kenshop/pkg/common/hostgen"
+	errors "kenshop/pkg/error"
 	"kenshop/pkg/log"
 
 	"github.com/gin-gonic/gin"
-	ut "github.com/go-playground/universal-translator"
-	"github.com/penglongli/gin-metrics/ginmetrics"
 )
 
-type JwtInfo struct {
-	// 默认为"JWT"
-	Realm string
-	// 默认为empty
-	Key string
-	// jwt-token的有效时间,默认为七天
-	Validity time.Duration
-	// jwt-token的refresh最大间隔时间,默认为七天
-	Refreshy time.Duration
+var ErrNilHttpRegistor = errors.New("该http服务不存在注册器")
+
+// 辅助protoc-gen-gin
+type HandlerFuncMux interface {
+	RegisterHandlerFunc(method string, path string, handler gin.HandlerFunc)
+	Execute(gin.IRouter)
 }
 
-// wrapper for gin.Engine
 type Server struct {
-	*gin.Engine
+	Ctx      context.Context
+	Engine   *gin.Engine
+	Host     string
+	Mode     string
+	InSecure bool
 
-	//端口号,默认为8080
-	port int
-
-	//开发模式, 默认值debug
-	mode string
-	//是否开启健康检查接口,默认开启,如果开启会自动添加/health接口
-	healthz bool
-
+	Jwt       *jwt.GinJWTMiddleware
+	Registor  registry.Registor
+	Validator *validate.Validator
+	Tracer    *ginotel.GinTracer
+	Mux       HandlerFuncMux
 	//是否开启pprof接口, 默认开启, 如果开启会自动添加/debug/pprof接口
-	enableProfiling bool
-
+	EnableProfiling bool
 	//是否开启metrics接口,默认开启,如果开启会自动添加/metrics接口
-	enableMetrics bool
+	EnableMetrics bool
 
-	//中间件
-	middlewares []string
+	//全局的中间件,在这里面不要添加非全局用的中间件
+	Middlewares map[string]gin.HandlerFunc
 
-	//默认值 zh
-	locale string
-	trans  ut.Translator
-	//从
-	server *http.Server
+	//翻译器
+	Locale string
 
-	serviceName string
+	Instance *registry.ServiceInstance
+
+	Server *http.Server
 }
 
-func NewServer(opts ...ServerOption) *Server {
-	srv := &Server{
-		port:            8080,
-		mode:            "debug",
-		healthz:         true,
-		enableProfiling: true,
+func MustNewServer(ctx context.Context, host string, handlerMux HandlerFuncMux, opts ...ServerOption) *Server {
+	s := &Server{
+		Ctx:             ctx,
+		Host:            host,
+		Mode:            "debug",
+		EnableProfiling: false,
+		EnableMetrics:   false,
 		Engine:          gin.New(),
-		locale:          "zh",
-		serviceName:     "goken",
+		Locale:          "zh",
+		Middlewares:     make(map[string]gin.HandlerFunc),
+		InSecure:        true,
+		Mux:             handlerMux,
+		Server:          &http.Server{},
 	}
 
+	s.Instance = &registry.ServiceInstance{
+		Name: host,
+		ID:   host,
+	}
 	for _, o := range opts {
-		o(srv)
+		o(s)
+	}
+	if len(s.Middlewares) == 0 {
+		mws.CopyDefaultMiddlewares(s.Middlewares)
+	}
+	gin.SetMode(s.Mode)
+
+	if ok := hostgen.ValidListenHost(s.Host); !ok {
+		panic(errors.New("无效的监听地址"))
 	}
 
-	//srv.Use(mws.TracingHandler(srv.serviceName))
-	for _, m := range srv.middlewares {
-		mw, ok := mws.Middlewares[m]
-		if !ok {
-			log.Warnf("无法寻找使用到该中间件: %s", m)
-		}
-		srv.Use(mw())
-	}
-
-	return srv
-}
-
-func (s *Server) Translator() ut.Translator {
-	return s.trans
-}
-
-// start rest server
-func (s *Server) Start(ctx context.Context) error {
-	//设置开发模式,打印路由信息格式
-	gin.SetMode(s.mode)
-	// gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
-	// 	log.Infof("%-6s %-s --> %s(%d handlers)", httpMethod, absolutePath, handlerName, nuHandlers)
-	// }
-
-	err := s.initTrans()
+	u, err := url.Parse(host)
 	if err != nil {
-		log.Errorf("初始翻译器失败 %s", err.Error())
-		return err
+		if s.InSecure {
+			host = fmt.Sprintf("http://%s", host)
+		} else {
+			host = fmt.Sprintf("https://%s", host)
+		}
+		u, err = url.Parse(host)
+		if err != nil {
+			panic(err)
+		}
 	}
 
-	// //注册mobile验证码
-	// validation.RegisterMobile(s.trans)
+	s.Server.Addr = u.Host
+	s.Server.Handler = s.Engine
+	s.Instance.Endpoints = append(s.Instance.Endpoints, u)
 
-	// //根据配置初始化pprof路由
-	// if s.enableProfiling {
-	// 	pprof.Register(s.Engine)
-	// }
+	s.Engine.GET("/health", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{})
+	})
 
-	if s.enableMetrics {
-		// get global Monitor object
-		m := ginmetrics.GetMonitor()
-		// +optional set metric path, default /debug/metrics
-		m.SetMetricPath("/metrics")
-		// +optional set slow time, default 5s
-		// +optional set request duration, default {0.1, 0.3, 1.2, 5, 10}
-		// used to p95, p99
-		m.SetDuration([]float64{0.1, 0.3, 1.2, 5, 10})
-		m.Use(s)
+	for _, m := range s.Middlewares {
+		s.Engine.Use(m)
 	}
 
-	log.Infof("服务正在启动中... 预计监听的端口为: %d", s.port)
-
-	//gin.Run内部的逻辑抽取出来,便于优雅退出
-	address := fmt.Sprintf(":%d", s.port)
-	s.server = &http.Server{
-		Addr:    address,
-		Handler: s.Engine,
+	s.Validator, err = validate.NewValidator(s.Locale)
+	if err != nil {
+		panic(err)
 	}
-	_ = s.SetTrustedProxies(nil)
-	if err = s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Errorf("http服务启动失败 err= %s", err.Error())
-		return err
-	}
-	return nil
+	return s
 }
 
-func (s *Server) Stop(ctx context.Context) error {
-	log.Infof("关闭http服务中...")
-	if err := s.server.Shutdown(ctx); err != nil {
-		log.Errorf("http服务关闭失败 err= %s", err.Error())
+func (s *Server) Register(ctx context.Context, ins *registry.ServiceInstance) error {
+	if s.Registor == nil {
+		return ErrNilHttpRegistor
+	}
+	return s.Registor.Register(ctx, ins)
+}
+
+// Deregister会注销Server内Instance存储的服务Id
+func (s *Server) Deregister(ctx context.Context) error {
+	if s.Registor == nil {
+		return ErrNilHttpRegistor
+	}
+	return s.Registor.Deregister(ctx, s.Instance.ID)
+}
+
+func (s *Server) Serve() error {
+	//设置开发模式,打印路由信息格式
+	gin.SetMode(s.Mode)
+	//运行前前打印配置信息
+	log.Infof("服务启动中,服务信息为: msg= %+v", s.Instance)
+
+	if err := s.Validator.Excute(); err != nil {
 		return err
 	}
-	log.Infoln("服务关闭成功")
-	return nil
+
+	//如果注册器为空就不进行注册而不是返回错误,
+	if err := s.Register(s.Ctx, s.Instance); err != nil && err != ErrNilHttpRegistor {
+		return err
+	}
+
+	s.Mux.Execute(s.Engine)
+	//监听终止信号,优雅退出
+
+	sign := make(chan os.Signal, 1)
+	signal.Notify(sign, syscall.SIGTERM, syscall.SIGINT)
+	ech := make(chan error, 1)
+	go func() {
+		if err := s.Server.ListenAndServe(); err != nil {
+			//同理若注册器为空就不进行注销
+			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilHttpRegistor {
+				log.Errorf("服务注销失败, err= %v", e)
+			}
+			ech <- err
+		}
+	}()
+	select {
+	case <-sign:
+		close(sign)
+		if e1 := s.Server.Shutdown(s.Ctx); e1 != nil {
+			log.Errorf("服务注销失败, err= %v", e1)
+			return e1
+		}
+		if e2 := s.Deregister(s.Ctx); e2 != nil && e2 != ErrNilHttpRegistor {
+			log.Errorf("服务注销失败, err= %v", e2)
+			return e2
+		}
+		log.Info("服务正常注销")
+		return nil
+	case err := <-ech:
+		close(ech)
+		return err
+	}
 }

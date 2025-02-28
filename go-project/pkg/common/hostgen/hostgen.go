@@ -5,9 +5,36 @@ import (
 	"strconv"
 )
 
-func IsValidIP(addr string) bool {
-	ip := net.ParseIP(addr)
-	return ip.IsGlobalUnicast() && !ip.IsInterfaceLocalMulticast()
+func isValidIPAndLocalHost(ip string) bool {
+	parsedIP := net.ParseIP(ip)
+	if parsedIP == nil {
+		if ip == "localhost" || ip == "127.0.0.1" {
+			return true
+		}
+		return false
+	}
+
+	return parsedIP.To4() != nil || parsedIP.To16() != nil
+}
+
+// func isValidIPButLocalHost(addr string) bool {
+// 	ip := net.ParseIP(addr)
+// 	return ip.IsGlobalUnicast() && !ip.IsInterfaceLocalMulticast()
+// }
+
+func isValidPort(port any) bool {
+	switch t := port.(type) {
+	case string:
+		p, err := strconv.Atoi(t)
+		if err != nil {
+			return false
+		}
+		return p >= 1 && p <= 65535
+	case int, int32, int64:
+		p := port.(int)
+		return p >= 1 && p <= 65535
+	}
+	return false
 }
 
 func GetUsagePort() int {
@@ -20,7 +47,7 @@ func GetUsagePort() int {
 
 }
 
-// 解析传入的host和lis,选取(若无适合的ip或port则自动生成一个可用的)两者中适合的地址(即可使用的ip与port),
+// 解析传入的host,选取(若无适合的ip或port则自动生成一个可用的)两者中适合的地址(即可使用的ip与port),
 func ResolveHost(host string) (string, error) {
 	ip, port, err := net.SplitHostPort(host)
 	if err != nil {
@@ -69,7 +96,7 @@ func ResolveHost(host string) (string, error) {
 			default:
 				continue
 			}
-			if IsValidIP(ip.String()) {
+			if isValidIPAndLocalHost(ip.String()) {
 				result = ip
 			}
 		}
@@ -78,4 +105,12 @@ func ResolveHost(host string) (string, error) {
 		return net.JoinHostPort(result.String(), port), nil
 	}
 	return "", nil
+}
+
+func ValidListenHost(host string) bool {
+	ip, port, err := net.SplitHostPort(host)
+	if err != nil {
+		return false
+	}
+	return isValidIPAndLocalHost(ip) && isValidPort(port)
 }

@@ -1,0 +1,2 @@
+2025-02-23T20:01:46.519+0800	INFO	resourse/resourse.go:36	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 45067 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 { 3307 root 123 user_srv} {192.168.199.128 8500} { 6379 123}}
+2025-02-23T20:01:58.492+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为:  pageSize:12

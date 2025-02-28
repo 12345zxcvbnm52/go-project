@@ -13,10 +13,10 @@ var tpl string
 // rpc GetDemoName(*Req, *Resp)
 type method struct {
 	MethodComment string
-	HandlerName   string // GetDemoName
-	RequestType   string // *Req
-	ReplyType     string // *Resp
-
+	HandlerName   string
+	RequestType   string
+	ReplyType     string
+	SwaggerApi    map[string]string
 	// 路由
 	Path string
 	//路由参数
@@ -53,11 +53,12 @@ func (m *method) initPathParams() {
 }
 
 type service struct {
-	Name     string
-	FullName string
-
-	Methods        []*method
+	Name           string
+	FullName       string
 	ServiceComment string
+
+	SwaggerApi map[string]string
+	Methods    []*method
 }
 
 func (s *service) execute() string {

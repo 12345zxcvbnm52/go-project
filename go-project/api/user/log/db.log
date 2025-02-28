@@ -1,0 +1,55 @@
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[1.104ms] [rows:-] SELECT DATABASE()
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[8.222ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'user_srv%' ORDER BY SCHEMA_NAME='user_srv' DESC,SCHEMA_NAME limit 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[6.481ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'user_srv' AND table_name = 'user_srv' AND table_type = 'BASE TABLE'
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[1.233ms] [rows:-] SELECT DATABASE()
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[5.777ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'user_srv%' ORDER BY SCHEMA_NAME='user_srv' DESC,SCHEMA_NAME limit 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[5.396ms] [rows:-] SELECT * FROM `user_srv` LIMIT 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[4.876ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'user_srv' AND table_name = 'user_srv' ORDER BY ORDINAL_POSITION
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: 
+[1.012ms] [rows:-] SELECT DATABASE()
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: 
+[3.649ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'user_srv%' ORDER BY SCHEMA_NAME='user_srv' DESC,SCHEMA_NAME limit 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[4.227ms] [rows:4] 
+SELECT
+	TABLE_NAME,
+	COLUMN_NAME,
+	INDEX_NAME,
+	NON_UNIQUE 
+FROM
+	information_schema.STATISTICS 
+WHERE
+	TABLE_SCHEMA = 'user_srv' 
+	AND TABLE_NAME = 'user_srv' 
+ORDER BY
+	INDEX_NAME,
+	SEQ_IN_INDEX
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: 
+[1.129ms] [rows:-] SELECT DATABASE()
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: 
+[3.636ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'user_srv%' ORDER BY SCHEMA_NAME='user_srv' DESC,SCHEMA_NAME limit 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: 
+[6.174ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'user_srv' AND table_name = 'user_srv' AND constraint_name = 'uni_user_srv_mobile'
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[1.303ms] [rows:-] SELECT DATABASE()
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[4.241ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'user_srv%' ORDER BY SCHEMA_NAME='user_srv' DESC,SCHEMA_NAME limit 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[5.210ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'user_srv' AND table_name = 'user_srv' AND index_name = 'idx_user_srv_deleted_at'
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[1.120ms] [rows:-] SELECT DATABASE()
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[3.596ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'user_srv%' ORDER BY SCHEMA_NAME='user_srv' DESC,SCHEMA_NAME limit 1
+2025/02/23 20:01:46 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/user/internal/resourse/db.go:51
+[3.929ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'user_srv' AND table_name = 'user_srv' AND index_name = 'idx_mobile'
+2025/02/23 20:01:58 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/data/user_db.go:45
+[2.656ms] [rows:1] SELECT count(*) FROM `user_srv` WHERE `user_srv`.`deleted_at` IS NULL
+2025/02/23 20:01:58 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/user/internal/data/user_db.go:46
+[3.197ms] [rows:1] SELECT * FROM `user_srv` WHERE `user_srv`.`deleted_at` IS NULL LIMIT 12
