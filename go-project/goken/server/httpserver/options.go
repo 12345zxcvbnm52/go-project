@@ -4,7 +4,7 @@ import (
 	"kenshop/goken/registry"
 	"kenshop/goken/server/httpserver/middlewares/jwt"
 	opengintracing "kenshop/goken/server/httpserver/middlewares/tracing"
-	"kenshop/goken/server/httpserver/validate"
+	"kenshop/goken/server/rpcserver"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -48,21 +48,15 @@ func WithEnableMetrics(enable bool) ServerOption {
 	}
 }
 
-func WithJWTMiddleware(jwt *jwt.GinJWTMiddleware) ServerOption {
+func WithJWTMiddleware(key string) ServerOption {
 	return func(s *Server) {
-		s.Jwt = jwt
+		s.Jwt = jwt.MustNewGinJWTMiddleware(key)
 	}
 }
 
-func WithTracer(tracer *opengintracing.GinTracer) ServerOption {
+func WithTracer(target string, opts ...opengintracing.GinTracerOption) ServerOption {
 	return func(s *Server) {
-		s.Tracer = tracer
-	}
-}
-
-func WithValidator(validator *validate.Validator) ServerOption {
-	return func(s *Server) {
-		s.Validator = validator
+		s.Tracer = opengintracing.MustNewGinTracer(s.Ctx, target)
 	}
 }
 
@@ -89,5 +83,11 @@ func WithLocale(locale string) ServerOption {
 func WithHTTPServer(server *http.Server) ServerOption {
 	return func(s *Server) {
 		s.Server = server
+	}
+}
+
+func WithGrpcClient(target string, opts ...rpcserver.ClientOption) ServerOption {
+	return func(s *Server) {
+		s.GrpcCli = rpcserver.MustNewClient(s.Ctx, target, opts...)
 	}
 }

@@ -10,7 +10,7 @@ func InitConf() {
 		config.WithEnableEnv(true),
 		config.WithPaths([]string{fmt.Sprintf("%s/etc", Pwd)}),
 	)
-	if err := ConfLoader.LoadYaml("user_release", &Conf); err != nil {
+	if err := ConfLoader.LoadYaml("user", &Conf); err != nil {
 		panic(err)
 	}
 }

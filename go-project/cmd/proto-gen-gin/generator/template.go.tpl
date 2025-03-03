@@ -1,21 +1,40 @@
-// PathsMap中key为对应的handler函数名,{{$.ServiceComment }}
+{{- $.ServiceComment -}}
 {{- range $k,$v := $.SwaggerApi}}
 // @{{$k}} {{$v}}
 {{- end}}
 type {{ $.Name }}HttpServer struct{
-	PathsMap	map[string] gin.HandlerFunc
+	Server 		*httpserver.Server
+	{{$.Name}}Data {{$.Name | lower}}data.{{$.Name}}DataService
+	Logger   *otelzap.Logger
 }
 
-func Register{{ $.Name }}HTTPServer() *{{ $.Name }}HttpServer {
-	s := &{{ $.Name }}HttpServer{
-		PathsMap:  make(map[string] gin.HandlerFunc),
+{{ range $k1,$v1:= $.AllRequestForm}}
+type {{$k1}} struct{
+{{- range $k2,$v2 := $v1}}
+	{{$k2}}	{{ $v2.Type }} `json:"{{ $v2.Snack }}" form:"{{ $v2.Snack }}" binding:"{{ $v2.Required }}"`
+{{- end}}
+}
+{{ end}}
+
+// 默认使用otelzap.Logger以及Grpc{{$.Name}}Data
+func MustNew{{ $.Name }}HTTPServer(s *httpserver.Server,opts ...OptionFunc) *{{ $.Name }}HttpServer {
+	ss := &{{ $.Name }}HttpServer{
+		Server:		s,
 	}
-	return s
-}
-
-
-func (s *{{ $.Name }}HttpServer)RegisterHandlerFunc(method string,path string,handler gin.HandlerFunc) {
-	s.PathsMap[method+";"+path] = handler
+	for _, opt := range opts {
+		opt(ss)
+	}
+	if ss.Logger == nil {
+		ss.Logger = log.MustNewOtelLogger()
+	}
+	if ss.{{$.Name}}Data == nil {
+		cli, err := s.GrpcCli.Dial()
+		if err != nil {
+			panic(err)
+		}
+		ss.{{ $.Name }}Data = {{ $.Name | lower}}data.MustNewGrpc{{ $.Name }}Data(cli)
+	}
+	return ss
 }
 
 {{- range $k,$v := .Methods}}
@@ -23,31 +42,49 @@ func (s *{{ $.Name }}HttpServer)RegisterHandlerFunc(method string,path string,ha
 	{{- range $k2,$v2 := $v.SwaggerApi}}
 // @{{$k2}} {{$v2}}
 	{{- end}}
-func (s *{{ $.Name }}HttpServer){{ $v.HandlerName }}(c *gin.Context) {}
+	{{- range $k2,$v2 := $v.Params}}
+// @Param {{$v2}}
+	{{- end}}
+func (s *{{ $.Name }}HttpServer){{ $v.HandlerName }}(c *gin.Context) {
+	u := &form.{{$v.RequestFormName}}{}
+	if err := c.ShouldBind(u); err != nil {
+		s.ValidatorErrorHandle(c, err)
+		return
+	}
+
+	res, err := s.{{$.Name}}Data.{{ $v.HandlerName }}DB(s.Server.Ctx, &proto.{{$v.RequestType}}{
+		{{- range $k2,$v2:=$v.RequestParams}}
+		{{$v2.Camel}}: u.{{$v2.Camel}},
+		{{- end}}
+	})
+	if err != nil {
+		s.Logger.Sugar().Errorw("微服务调用失败", "msg", err.Error())
+		RpcErrorHandle(c, err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{})
+}
 {{- end}}
 
-func (s *{{ $.Name }}HttpServer) register() {
-{{- range .Methods}}
-		s.RegisterHandlerFunc("{{.Method}}","{{.Path}}", s.{{ .HandlerName }})
+func (s *{{ $.Name }}HttpServer) Execute()error {
+{{- range $k,$v := .Methods}}
+		s.Server.Engine.{{$v.Method}}("{{$v.Path2Http}}", s.{{ $v.HandlerName }})
 {{- end}}
+	return s.Server.Serve()
 }
 
-func(s *{{ $.Name }}HttpServer) Execute(r gin.IRouter){
-	s.register()
-	for k,v := range s.PathsMap{
-		path := strings.Split(k,";")
-		path[0] = strings.ToUpper(path[0])
-		switch path[0]{
-			case "GET":
-				r.GET(path[1],v)
-			case "PUT":
-				r.PUT(path[1],v)
-			case "DELETE":
-				r.DELETE(path[1],v)
-			case "POST":
-				r.POST(path[1],v)
-			case "PATCH":
-				r.PATCH(path[1],v)
-		}
+type OptionFunc func(*UserHttpServer)
+
+func WithLogger(l *otelzap.Logger) OptionFunc {
+	return func(s *UserHttpServer) {
+		s.Logger = l
+	}
+}
+
+func WithUserDataService(s userdata.UserDataService) OptionFunc {
+	return func(h *UserHttpServer) {
+		h.UserData = s
 	}
 }

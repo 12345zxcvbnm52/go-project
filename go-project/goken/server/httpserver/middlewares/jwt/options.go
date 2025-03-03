@@ -2,7 +2,6 @@ package jwt
 
 import (
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -11,34 +10,33 @@ import (
 
 type JwtOption func(*GinJWTMiddleware)
 
-func new(opts ...JwtOption) (*GinJWTMiddleware, error) {
+func MustNewGinJWTMiddleware(key string, opts ...JwtOption) *GinJWTMiddleware {
 	mw := &GinJWTMiddleware{
-		TokenFormat:      "header:Authorization",
+		TokenInside:      "header",
+		TokenHeadName:    "Authorization",
 		SigningAlgorithm: "HS256",
 		Timeout:          time.Hour * 24,
 		MaxRefresh:       time.Hour * 24,
-		TokenHeadName:    "Bearer",
-		IdentityKey:      "identity",
 		Realm:            "gin-jwt",
 		CookieMaxAge:     time.Hour * 24,
 		CookieName:       "jwt-cookie",
 		ExpField:         "exp",
 		SendCookie:       false,
-		SecureCookie:     true,
+		SecureCookie:     false,
 		CookieHTTPOnly:   false,
 		DisabledAbort:    false,
 		TimeFunc:         time.Now,
+		Key:              []byte(key),
 		CookieSameSite:   http.SameSiteDefaultMode,
-		Authorizator:     func(data interface{}, c *gin.Context) bool { return true },
 		Unauthorized: func(c *gin.Context, code int, message string) {
 			c.JSON(code, gin.H{
-				"code":    code,
-				"message": message,
+				"code":  code,
+				"error": message,
 			})
 		},
 		LoginResponse: func(c *gin.Context, code int, token string, expire time.Time) {
-			c.JSON(http.StatusOK, gin.H{
-				"code":   http.StatusOK,
+			c.JSON(code, gin.H{
+				"code":   code,
 				"token":  token,
 				"expire": expire.Format(time.RFC3339),
 			})
@@ -48,19 +46,17 @@ func new(opts ...JwtOption) (*GinJWTMiddleware, error) {
 				"code": http.StatusOK,
 			})
 		},
-		PayloadFunc: func(keyvalue ...interface{}) jwt.MapClaims {
+		PayloadFunc: func(keyvalue ...string) jwt.MapClaims {
 			c := make(jwt.MapClaims)
 			//每隔一个设置一对键值对
 			for i := 0; i < len(keyvalue)-1; i += 2 {
-				if key, ok := keyvalue[i].(string); ok {
-					c[key] = keyvalue[i+1]
-				}
+				c[keyvalue[i]] = keyvalue[i+1]
 			}
 			return c
 		},
-		HTTPStatusMessageFunc: func(e error, c *gin.Context) string {
-			return e.Error()
-		},
+		// HTTPStatusMessageFunc: func(e error, c *gin.Context) string {
+		// 	return e.Error()
+		// },
 	}
 
 	// 应用所有选项函数
@@ -80,43 +76,27 @@ func new(opts ...JwtOption) (*GinJWTMiddleware, error) {
 		}
 	}
 
-	if mw.Authenticator == nil {
-		return nil, ErrMissingAuthenticatorFunc
-	}
-
-	if mw.IdentityHandler == nil {
-		mw.IdentityHandler = func(ctx *gin.Context) interface{} {
-			return mw.IdentityKey
-		}
-	}
-
 	//如果有能获得Key的Func就无需再判断有没有Key了
 	if mw.KeyFunc != nil {
-		return mw, nil
+		return mw
 	}
 
 	if mw.Key == nil {
-		return nil, ErrMissingSecretKey
+		panic(ErrMissingSecretKey)
 	}
 
-	return mw, nil
+	return mw
 }
 
-func WithTokenLookup(TokenFormat string) JwtOption {
+func WithTokenInside(t string) JwtOption {
 	return func(mw *GinJWTMiddleware) {
-		mw.TokenFormat = TokenFormat
-	}
-}
-
-func WithSecureKey(key string) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.Key = []byte(key)
+		mw.TokenInside = t
 	}
 }
 
-func WithAuthenticator(Authenticator func(ctx *gin.Context) (interface{}, error)) JwtOption {
+func WithTokenHeadName(h string) JwtOption {
 	return func(mw *GinJWTMiddleware) {
-		mw.Authenticator = Authenticator
+		mw.TokenHeadName = h
 	}
 }
 
@@ -144,25 +124,13 @@ func WithTimeFunc(timeFunc func() time.Time) JwtOption {
 	}
 }
 
-func WithTokenHeadName(tokenHeadName string) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.TokenHeadName = strings.TrimSpace(mw.TokenHeadName)
-	}
-}
-
-func WithAuthorizator(authorizator func(data interface{}, c *gin.Context) bool) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.Authorizator = authorizator
-	}
-}
-
 func WithUnauthorized(unauthorized func(c *gin.Context, code int, message string)) JwtOption {
 	return func(mw *GinJWTMiddleware) {
 		mw.Unauthorized = unauthorized
 	}
 }
 
-func WithPayloadFunc(payloadFunc func(keyvalue ...interface{}) jwt.MapClaims) JwtOption {
+func WithPayloadFunc(payloadFunc func(keyvalue ...string) jwt.MapClaims) JwtOption {
 	return func(mw *GinJWTMiddleware) {
 		mw.PayloadFunc = payloadFunc
 	}
@@ -180,23 +148,11 @@ func WithLogoutResponse(logoutResponse func(c *gin.Context, code int)) JwtOption
 	}
 }
 
-func WithIdentityKey(identityKey string) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.IdentityKey = identityKey
-	}
-}
-
-func WithIdentityHandler(identityHandler func(c *gin.Context) interface{}) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.IdentityHandler = identityHandler
-	}
-}
-
-func WithHTTPStatusMessageFunc(httpStatusMessageFunc func(e error, c *gin.Context) string) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.HTTPStatusMessageFunc = httpStatusMessageFunc
-	}
-}
+// func WithHTTPStatusMessageFunc(httpStatusMessageFunc func(e error, c *gin.Context) string) JwtOption {
+// 	return func(mw *GinJWTMiddleware) {
+// 		mw.HTTPStatusMessageFunc = httpStatusMessageFunc
+// 	}
+// }
 
 func WithRealm(realm string) JwtOption {
 	return func(mw *GinJWTMiddleware) {
@@ -225,11 +181,5 @@ func WithExpField(expField string) JwtOption {
 func WithKeyFunc(keyFunc func(t *jwt.Token) (interface{}, error)) JwtOption {
 	return func(mw *GinJWTMiddleware) {
 		mw.KeyFunc = keyFunc
-	}
-}
-
-func WithKey(key []byte) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.Key = key
 	}
 }

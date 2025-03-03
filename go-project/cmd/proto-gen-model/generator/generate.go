@@ -52,9 +52,9 @@ func genService(_ *protogen.File, _ *protogen.GeneratedFile, s *protogen.Service
 
 	for _, method := range s.Methods {
 		s := genMethod(method)
-		if s.MethodComment[len(s.MethodComment)-1] == '\n' {
-			s.MethodComment = s.MethodComment[:len(s.MethodComment)-1]
-		}
+		// if s.MethodComment[len(s.MethodComment)-1] == '\n' {
+		// 	s.MethodComment = s.MethodComment[:len(s.MethodComment)-1]
+		// }
 		sd.Methods = append(sd.Methods, s)
 	}
 

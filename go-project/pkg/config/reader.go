@@ -78,9 +78,9 @@ func (l *Loader) LoadYaml(filename string, data interface{}) error {
 func (l *Loader) Watch(data interface{}, f func(e fsnotify.Event)) {
 	if f == nil {
 		f = func(e fsnotify.Event) {
-			log.Println("Config file changed:", e.Name)
+			log.Println("[config] 配置文件发生变动:", e.Name)
 			if err := l.v.Unmarshal(data); err != nil {
-				log.Println("Failed to reload config:", err)
+				log.Println("[config] 重新加载配置文件失败:", err)
 			}
 		}
 	}

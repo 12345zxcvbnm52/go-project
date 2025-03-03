@@ -7,7 +7,7 @@ import (
 	"kenshop/goken/server/rpcserver"
 	"kenshop/goken/server/rpcserver/sinterceptors"
 	"kenshop/pkg/trace"
-	pb "kenshop/test_srv/proto"
+	proto "kenshop/proto/test"
 	"net"
 
 	"github.com/hashicorp/consul/api"
@@ -15,12 +15,11 @@ import (
 )
 
 type ConnServer struct {
-	pb.UnimplementedTestServer
+	proto.UnimplementedMessagingServer
 }
 
-func (c *ConnServer) Conn(ctx context.Context, in *pb.Req) (*pb.Res, error) {
-
-	return &pb.Res{Res: in.Name + " hello ken"}, nil
+func (c *ConnServer) UpdateMessage(ctx context.Context, in *proto.ReqMessage) (*proto.ResMessage, error) {
+	return &proto.ResMessage{Res: in.Req + "hello"}, nil
 }
 
 func main() {
@@ -31,8 +30,8 @@ func main() {
 		panic(err)
 	}
 	otel.SetTracerProvider(tp)
-	cfg := api.DefaultConfig()
 
+	cfg := api.DefaultConfig()
 	cfg.Address = "192.168.199.128:8500"
 	cli, err := api.NewClient(cfg)
 	if err != nil {
@@ -56,7 +55,7 @@ func main() {
 	)
 
 	cs := &ConnServer{}
-	pb.RegisterTestServer(s.Server, cs)
+	proto.RegisterMessagingServer(s.Server, cs)
 
 	if err := s.Serve(); err != nil {
 		panic(err)

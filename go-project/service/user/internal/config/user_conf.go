@@ -22,13 +22,18 @@ type ConsulConf struct {
 	Port int    `mapstructure:"port"`
 }
 
-type LogConf struct {
-	Level       string   `mapstructure:"level"`
-	ErrLevel    string   `mapstructure:"error-level"`
-	OutPaths    []string `mapstructure:"out-paths"`
-	ErrOutPaths []string `mapstructure:"error-out-paths"`
-	Format      string   `mapstructure:"format"`
-	Development bool     `mapstructure:"development"`
+// type LogConf struct {
+// 	Level       string   `mapstructure:"level"`
+// 	ErrLevel    string   `mapstructure:"error-level"`
+// 	OutPaths    []string `mapstructure:"out-paths"`
+// 	ErrOutPaths []string `mapstructure:"error-out-paths"`
+// 	Format      string   `mapstructure:"format"`
+// 	Development bool     `mapstructure:"development"`
+// }
+
+type OtelConf struct {
+	Ip   string `mapstructure:"ip"`
+	Port int    `mapstructure:"port"`
 }
 
 type ServerConf struct {
@@ -46,4 +51,5 @@ type ServerConf struct {
 	//consul的ip和端口就静态绑定docker的consul地址
 	Consul ConsulConf `mapstructure:"consul"`
 	Redis  RedisConf  `mapstructure:"redis"`
+	Otel   OtelConf   `mapstructure:"otel"`
 }

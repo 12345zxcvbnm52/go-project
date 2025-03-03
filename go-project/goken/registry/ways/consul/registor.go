@@ -54,7 +54,7 @@ func (r *registor) Register(ctx context.Context, ins *registry.ServiceInstance) 
 	checkAddresses := make([]*url.URL, 0, len(ins.Endpoints))
 	//这里通过一系列操作用于记录对应的信息
 	for _, endpoint := range ins.Endpoints {
-		port, _ := strconv.ParseInt(endpoint.Port(), 10, 16)
+		port, _ := strconv.ParseInt(endpoint.Port(), 10, 32)
 		checkAddresses = append(checkAddresses, endpoint)
 		addresses[endpoint.Scheme] = api.ServiceAddress{Address: endpoint.Hostname(), Port: int(port)}
 	}
@@ -70,7 +70,7 @@ func (r *registor) Register(ctx context.Context, ins *registry.ServiceInstance) 
 	//拿第一个地址做默认地址
 	if len(checkAddresses) > 0 {
 		asr.Address = checkAddresses[0].Hostname()
-		port, _ := strconv.ParseInt(checkAddresses[0].Port(), 10, 16)
+		port, _ := strconv.ParseInt(checkAddresses[0].Port(), 10, 32)
 		asr.Port = int(port)
 	}
 

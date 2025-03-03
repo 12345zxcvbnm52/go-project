@@ -1,0 +1,27 @@
+#服务注册参数
+ip: '0.0.0.0'
+port: 8081
+name: 'user_web'
+id: 'user_web'
+tags: 
+  - 'user'
+version: '1.0'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  ip: '192.168.199.128'
+  port: 6379
+  password: '123'
+
+jwt:
+  key: 'kensame'
+
+otel:
+  ip: '192.168.199.128'
+  port: 4318
+
+user-server:
+  name: 'user_srv'

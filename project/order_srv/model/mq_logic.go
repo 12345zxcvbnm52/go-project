@@ -140,6 +140,7 @@ func (ol *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primiti
 	if res := tx.Model(&Cart{}).Where("selected = ? and user_id = ?", true, order.UserId).Delete(&Cart{}); res.RowsAffected == 0 || res.Error != nil {
 		zap.S().Errorw("购物车清除失败", "msg", res.Error.Error())
 		tx.Rollback()
+
 		ol.Err = ErrInternalWrong
 		return primitive.CommitMessageState
 	}

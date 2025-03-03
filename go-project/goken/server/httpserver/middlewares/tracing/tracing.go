@@ -7,26 +7,59 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
+	"google.golang.org/grpc/metadata"
 )
 
 type GinTracer struct {
-	Ctx            context.Context
-	SpanContextKey string
-	AbortOnErrors  bool
+	Ctx context.Context
+	// SpanGinCtxKey是gin.Context中找到Span的键
+	SpanGinCtxKey string
+	AbortOnErrors bool
+	TracerName    string
+	Host          string
 }
 
 var (
 	ErrSpanNotFound = errors.New("span was not found in context")
 )
 
+type GinTracerOption func(*GinTracer)
+
+func MustNewGinTracer(ctx context.Context, host string, opts ...GinTracerOption) *GinTracer {
+	gt := &GinTracer{
+		Ctx:           ctx,
+		SpanGinCtxKey: "gin-goken",
+		AbortOnErrors: true,
+		TracerName:    "goken",
+		Host:          host,
+	}
+
+	for _, opt := range opts {
+		opt(gt)
+	}
+
+	if host != "" {
+		tracer := ktrace.MustNewTracer(ctx)
+		tp, err := tracer.NewTraceProvider(host)
+		if err != nil {
+			panic(err)
+		}
+		otel.SetTracerProvider(tp)
+	}
+	return gt
+}
+
 // NewSpan会返回一个Handler,在其中启动一个新的Span并注入到请求上下文中,
 // 它会测量所有后续处理程序的执行时间,
-func (g *GinTracer) NewSpan(tracer trace.Tracer, spanName string, opts ...trace.SpanStartOption) gin.HandlerFunc {
+func (g *GinTracer) WithSpanHandler(spanName string, opts ...trace.SpanStartOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		tracer := otel.Tracer(g.TracerName)
 		c, span := tracer.Start(g.Ctx, spanName, opts...)
-		ctx.Set(g.SpanContextKey, c)
+		ctx.Set(g.SpanGinCtxKey, c)
+		ctx.Set("tracer-name", g.TracerName)
 		defer span.End()
 		ctx.Next()
 	}
@@ -39,7 +72,7 @@ func (g *GinTracer) SpanFromHeaders(tracer trace.Tracer, spanName string, opts .
 		spanContext := ktrace.Extract(g.Ctx, propagation.HeaderCarrier(ctx.Request.Header))
 
 		cspanContext, cspan := tracer.Start(spanContext, spanName, opts...)
-		ctx.Set(g.SpanContextKey, cspanContext)
+		ctx.Set(g.SpanGinCtxKey, cspanContext)
 		defer cspan.End()
 		ctx.Next()
 	}
@@ -48,7 +81,7 @@ func (g *GinTracer) SpanFromHeaders(tracer trace.Tracer, spanName string, opts .
 // 该函数会从gin.context中提取父Span数据,并使用Derive启动一个与Span相关联的新Span,
 func (g *GinTracer) SpanFromContext(tracer trace.Tracer, spanName string, opts ...trace.SpanStartOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		spanContextAny, _ := ctx.Get(g.SpanContextKey)
+		spanContextAny, _ := ctx.Get(g.SpanGinCtxKey)
 		spanContext, typeOk := spanContextAny.(context.Context)
 		if spanContext != nil && typeOk {
 			opts = append(opts, trace.WithLinks(trace.LinkFromContext(spanContext)))
@@ -60,7 +93,7 @@ func (g *GinTracer) SpanFromContext(tracer trace.Tracer, spanName string, opts .
 		}
 
 		cSpanContext, cspan := tracer.Start(spanContext, spanName, opts...)
-		ctx.Set(g.SpanContextKey, cSpanContext)
+		ctx.Set(g.SpanGinCtxKey, cSpanContext)
 		defer cspan.End()
 
 		ctx.Next()
@@ -70,7 +103,7 @@ func (g *GinTracer) SpanFromContext(tracer trace.Tracer, spanName string, opts .
 // 该函数将Span的元信息注入到请求头中,适合跟踪链式请求(如客户端->服务1->服务2),
 func (g *GinTracer) InjectToHeaders(tracer trace.Tracer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		spanContextAny, _ := ctx.Get(g.SpanContextKey)
+		spanContextAny, _ := ctx.Get(g.SpanGinCtxKey)
 		spanContext, typeOk := spanContextAny.(context.Context)
 		if spanContext != nil && typeOk {
 			ktrace.Inject(spanContext, propagation.HeaderCarrier(ctx.Request.Header))
@@ -84,9 +117,37 @@ func (g *GinTracer) InjectToHeaders(tracer trace.Tracer) gin.HandlerFunc {
 	}
 }
 
+func (g *GinTracer) InjectMD(c *gin.Context) *metadata.MD {
+	md := metadata.Pairs("tracer-name", g.TracerName)
+	spanContextAny, _ := c.Get(g.SpanGinCtxKey)
+	spanContext, typeOk := spanContextAny.(context.Context)
+	if spanContext != nil && typeOk {
+		ktrace.InjectMD(spanContext, &md)
+	}
+	return &md
+}
+
 // GetSpan从上下文中提取Span
 func (g *GinTracer) GetSpanContext(ctx *gin.Context) (context.Context, bool) {
-	spanContextAny, _ := ctx.Get(g.SpanContextKey)
+	spanContextAny, _ := ctx.Get(g.SpanGinCtxKey)
 	spanContext, ok := spanContextAny.(context.Context)
 	return spanContext, ok
+}
+
+func WithAbortOnErrors(abortOnErrors bool) GinTracerOption {
+	return func(g *GinTracer) {
+		g.AbortOnErrors = abortOnErrors
+	}
+}
+
+func WithSpanContextKey(spanContextKey string) GinTracerOption {
+	return func(g *GinTracer) {
+		g.SpanGinCtxKey = spanContextKey
+	}
+}
+
+func WithTracerName(tracerName string) GinTracerOption {
+	return func(g *GinTracer) {
+		g.TracerName = tracerName
+	}
 }

@@ -79,7 +79,6 @@ func (s *GormUserData) CreateUserDB(ctx context.Context, in *proto.CreateUserReq
 	u := &model.User{
 		Password: encrypt.EncryptString(in.Password),
 		Mobile:   in.Mobile,
-		Role:     in.Role,
 		Gender:   in.Gender,
 		UserName: in.UserName,
 		Birth:    &t,
@@ -90,7 +89,6 @@ func (s *GormUserData) CreateUserDB(ctx context.Context, in *proto.CreateUserReq
 	}
 	return &proto.CreateUserRes{
 		Mobile:   in.Mobile,
-		Role:     in.Role,
 		Gender:   in.Gender,
 		UserName: in.UserName,
 		Birth:    in.Birth,

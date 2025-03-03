@@ -18,21 +18,21 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
-	// 获得用户列表,可通过FliterReq过滤
+	// 获取用户列表
 	GetUserList(ctx context.Context, in *UserFliterReq, opts ...grpc.CallOption) (*UserListRes, error)
-	// 通过用户id获取用户信息
+	// 通过用户ID获取用户信息
 	GetUserById(ctx context.Context, in *UserIdReq, opts ...grpc.CallOption) (*UserInfoRes, error)
-	// 通过用户电话号码获取用户信息
+	// 通过手机号获取用户信息
 	GetUserByMobile(ctx context.Context, in *UserMobileReq, opts ...grpc.CallOption) (*UserInfoRes, error)
-	// 创建一个用户
+	// 创建用户
 	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRes, error)
-	// 更新用户,传入的用户信息字段中无论是否为空都会完全覆盖原来的值
+	// 绝对更新用户(全量更新)
 	AbsUpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// 局部更新设置了值的参数
+	// 局部更新用户(部分字段更新)
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// 注销一个用户
+	// 删除用户
 	DeleteUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// 权限验证
+	// 用户权限验证
 	CheckUserRole(ctx context.Context, in *UserPasswordReq, opts ...grpc.CallOption) (*UserCheckRes, error)
 }
 
@@ -46,7 +46,7 @@ func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 
 func (c *userClient) GetUserList(ctx context.Context, in *UserFliterReq, opts ...grpc.CallOption) (*UserListRes, error) {
 	out := new(UserListRes)
-	err := c.cc.Invoke(ctx, "/User/GetUserList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/GetUserList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (c *userClient) GetUserList(ctx context.Context, in *UserFliterReq, opts ..
 
 func (c *userClient) GetUserById(ctx context.Context, in *UserIdReq, opts ...grpc.CallOption) (*UserInfoRes, error) {
 	out := new(UserInfoRes)
-	err := c.cc.Invoke(ctx, "/User/GetUserById", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/GetUserById", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *userClient) GetUserById(ctx context.Context, in *UserIdReq, opts ...grp
 
 func (c *userClient) GetUserByMobile(ctx context.Context, in *UserMobileReq, opts ...grpc.CallOption) (*UserInfoRes, error) {
 	out := new(UserInfoRes)
-	err := c.cc.Invoke(ctx, "/User/GetUserByMobile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/GetUserByMobile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (c *userClient) GetUserByMobile(ctx context.Context, in *UserMobileReq, opt
 
 func (c *userClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRes, error) {
 	out := new(CreateUserRes)
-	err := c.cc.Invoke(ctx, "/User/CreateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/CreateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (c *userClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...
 
 func (c *userClient) AbsUpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/User/AbsUpdateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/AbsUpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (c *userClient) AbsUpdateUser(ctx context.Context, in *UpdateUserReq, opts 
 
 func (c *userClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/User/UpdateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (c *userClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...
 
 func (c *userClient) DeleteUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/User/DeleteUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/DeleteUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (c *userClient) DeleteUser(ctx context.Context, in *DelUserReq, opts ...grp
 
 func (c *userClient) CheckUserRole(ctx context.Context, in *UserPasswordReq, opts ...grpc.CallOption) (*UserCheckRes, error) {
 	out := new(UserCheckRes)
-	err := c.cc.Invoke(ctx, "/User/CheckUserRole", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/CheckUserRole", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -120,21 +120,21 @@ func (c *userClient) CheckUserRole(ctx context.Context, in *UserPasswordReq, opt
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
-	// 获得用户列表,可通过FliterReq过滤
+	// 获取用户列表
 	GetUserList(context.Context, *UserFliterReq) (*UserListRes, error)
-	// 通过用户id获取用户信息
+	// 通过用户ID获取用户信息
 	GetUserById(context.Context, *UserIdReq) (*UserInfoRes, error)
-	// 通过用户电话号码获取用户信息
+	// 通过手机号获取用户信息
 	GetUserByMobile(context.Context, *UserMobileReq) (*UserInfoRes, error)
-	// 创建一个用户
+	// 创建用户
 	CreateUser(context.Context, *CreateUserReq) (*CreateUserRes, error)
-	// 更新用户,传入的用户信息字段中无论是否为空都会完全覆盖原来的值
+	// 绝对更新用户(全量更新)
 	AbsUpdateUser(context.Context, *UpdateUserReq) (*emptypb.Empty, error)
-	// 局部更新设置了值的参数
+	// 局部更新用户(部分字段更新)
 	UpdateUser(context.Context, *UpdateUserReq) (*emptypb.Empty, error)
-	// 注销一个用户
+	// 删除用户
 	DeleteUser(context.Context, *DelUserReq) (*emptypb.Empty, error)
-	// 权限验证
+	// 用户权限验证
 	CheckUserRole(context.Context, *UserPasswordReq) (*UserCheckRes, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -190,7 +190,7 @@ func _User_GetUserList_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/GetUserList",
+		FullMethod: "/user.User/GetUserList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).GetUserList(ctx, req.(*UserFliterReq))
@@ -208,7 +208,7 @@ func _User_GetUserById_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/GetUserById",
+		FullMethod: "/user.User/GetUserById",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).GetUserById(ctx, req.(*UserIdReq))
@@ -226,7 +226,7 @@ func _User_GetUserByMobile_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/GetUserByMobile",
+		FullMethod: "/user.User/GetUserByMobile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).GetUserByMobile(ctx, req.(*UserMobileReq))
@@ -244,7 +244,7 @@ func _User_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/CreateUser",
+		FullMethod: "/user.User/CreateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).CreateUser(ctx, req.(*CreateUserReq))
@@ -262,7 +262,7 @@ func _User_AbsUpdateUser_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/AbsUpdateUser",
+		FullMethod: "/user.User/AbsUpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).AbsUpdateUser(ctx, req.(*UpdateUserReq))
@@ -280,7 +280,7 @@ func _User_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/UpdateUser",
+		FullMethod: "/user.User/UpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).UpdateUser(ctx, req.(*UpdateUserReq))
@@ -298,7 +298,7 @@ func _User_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/DeleteUser",
+		FullMethod: "/user.User/DeleteUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).DeleteUser(ctx, req.(*DelUserReq))
@@ -316,7 +316,7 @@ func _User_CheckUserRole_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/User/CheckUserRole",
+		FullMethod: "/user.User/CheckUserRole",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).CheckUserRole(ctx, req.(*UserPasswordReq))
@@ -325,7 +325,7 @@ func _User_CheckUserRole_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 var _User_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "User",
+	ServiceName: "user.User",
 	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

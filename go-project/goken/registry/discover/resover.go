@@ -92,14 +92,14 @@ func (r *Resolver) update(ins []*registry.ServiceInstance) {
 
 	// 如果没有有效的地址信息但是却触发了update函数,需要记录警告日志
 	if len(addrs) == 0 {
-		log.Warnf("resolver未发现有效的地址信息, instances= %v", ins)
+		log.Warnf("[discover] resolver未发现有效的地址信息, instances= %v", ins)
 		return
 	}
 
 	// grpc给出的接口,是grpc内部获得,更新连接的核心代码
 	err := r.cc.UpdateState(resolver.State{Addresses: addrs})
 	if err != nil {
-		log.Errorf("resolver服务更新失败, err= %v", err)
+		log.Errorf("[discover] resolver服务更新失败, err= %v", err)
 	}
 
 	//可以在最后打日志记录:更新/修改了某个服务以便快速得知信息变更
@@ -109,7 +109,7 @@ func (r *Resolver) Close() {
 	r.cancel()
 	err := r.listener.StopListen(context.TODO())
 	if err != nil {
-		log.Errorf("resolver停止监听服务失败, err= %s", err)
+		log.Errorf("[discover] resolver停止监听服务失败, err= %s", err)
 	}
 }
 

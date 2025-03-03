@@ -2,8 +2,10 @@ package resourse
 
 import (
 	"context"
+	"fmt"
 	"kenshop/goken/server/rpcserver"
 	"kenshop/pkg/config"
+	ktrace "kenshop/pkg/trace"
 	userconfig "kenshop/service/user/internal/config"
 	usercontroller "kenshop/service/user/internal/controller"
 	userdata "kenshop/service/user/internal/data"
@@ -14,8 +16,8 @@ import (
 	"github.com/uptrace/opentelemetry-go-extra/otelzap"
 )
 
-var UserData *userdata.GormUserData
 var Ctx context.Context
+var UserData *userdata.GormUserData
 var ConfLoader *config.Loader
 var Conf *userconfig.ServerConf
 var Logger *otelzap.Logger
@@ -33,5 +35,6 @@ func init() {
 	ip, port, _ := net.SplitHostPort(Server.Host)
 	Conf.Ip = ip
 	Conf.Port, _ = strconv.Atoi(port)
+	ktrace.RegistorTP(Ctx, fmt.Sprintf("%s:%d", Conf.Otel.Ip, Conf.Otel.Port))
 	Logger.Sugar().Info("服务配置文件为: ", Conf)
 }

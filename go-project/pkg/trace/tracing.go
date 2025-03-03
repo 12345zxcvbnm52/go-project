@@ -11,6 +11,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -25,10 +26,6 @@ const TraceName = "goken"
 var TraceIdKey = http.CanonicalHeaderKey("x-trace-id")
 
 var kPropagator = propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{})
-
-func init() {
-	otel.SetTextMapPropagator(kPropagator)
-}
 
 type Tracer struct {
 	Ctx context.Context
@@ -55,6 +52,16 @@ type Tracer struct {
 }
 
 type TracerOption func(*Tracer)
+
+func init() {
+	otel.SetTextMapPropagator(kPropagator)
+	te, err := stdouttrace.New()
+	if err != nil {
+		panic(err)
+	}
+	tp := sdktrace.NewTracerProvider(sdktrace.WithBatcher(te))
+	otel.SetTracerProvider(tp)
+}
 
 // NewTracer 创建一个默认的 Tracer
 func MustNewTracer(ctx context.Context, opts ...TracerOption) *Tracer {
@@ -111,6 +118,18 @@ func (c *Tracer) NewTraceProvider(host string) (*sdktrace.TracerProvider, error)
 	}))
 
 	return tp, nil
+}
+
+// 注册对应的traceProvider
+func RegistorTP(ctx context.Context, host string, opts ...TracerOption) error {
+	opts = append(opts, WithGlobal(true))
+	tr := MustNewTracer(ctx, opts...)
+	_, err := tr.NewTraceProvider(host)
+	if err != nil {
+		return nil
+	}
+
+	return nil
 }
 
 // 注意,Extract不会把span信息以context的形式抽取出,而是把span的spanContext信息抽取到ctx中

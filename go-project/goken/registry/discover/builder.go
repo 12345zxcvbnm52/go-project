@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"kenshop/goken/registry"
-	errors "kenshop/pkg/error"
+	errors "kenshop/pkg/errors"
 
 	"google.golang.org/grpc/resolver"
 )
@@ -31,7 +31,7 @@ const (
 )
 
 // NewBuilder创建一个用于registry解析程序的构建器
-func NewBuilder(discover registry.Discover, opts ...BuilderOption) resolver.Builder {
+func MustNewBuilder(discover registry.Discover, opts ...BuilderOption) resolver.Builder {
 	builder := &builder{
 		discover: discover,
 		timeout:  time.Second * 10,

@@ -1,0 +1,10 @@
+2025-02-28T21:16:01.860+0800	INFO	test/main.go:57	this is rq msg 5
+2025-02-28T21:16:01.873+0800	INFO	test/main.go:57	this is rq msg 6
+2025-02-28T21:16:01.874+0800	INFO	test/main.go:57	this is rq msg 8
+2025-02-28T21:16:01.885+0800	INFO	test/main.go:57	this is rq msg 1
+2025-02-28T21:16:01.891+0800	INFO	test/main.go:57	this is rq msg 4
+2025-02-28T21:16:01.925+0800	INFO	test/main.go:57	this is rq msg 2
+2025-02-28T21:16:01.933+0800	INFO	test/main.go:57	this is rq msg 3
+2025-02-28T21:16:01.952+0800	INFO	test/main.go:57	this is rq msg 0
+2025-02-28T21:16:01.977+0800	INFO	test/main.go:57	this is rq msg 7
+2025-02-28T21:16:01.981+0800	INFO	test/main.go:57	this is rq msg 9

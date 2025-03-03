@@ -3,7 +3,7 @@ package sinterceptors
 import (
 	"context"
 	"fmt"
-	errors "kenshop/pkg/error"
+	errors "kenshop/pkg/errors"
 	"runtime/debug"
 	"strings"
 	"sync"

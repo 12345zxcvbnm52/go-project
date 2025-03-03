@@ -1,7 +1,7 @@
 syntax="proto3";
 package proto;
 import "google/api/annotations.proto";
-import "google/api/options.proto";
+import "google/api/swagger.proto";
 option go_package="./;proto";
 
 // service
@@ -17,16 +17,17 @@ service Messaging {
     // Update Message Summary | This function updates a message.
     rpc UpdateMessage(ReqMessage) returns(ResMessage) {
         option(google.api.http) = {
-            patch: "/v1/messages/{message_id}"
+            get: "/messages/{message_id}"
             body: "text"
         };
         option(google.api.MethodOpt) = {
             Accept: "application/json",
             Produce: "application/json",
-            Success: "200 OK",
-            Failure: "500 Internal Server Error",
-            Router: "/api/v1/resource",
-            Tags: "ken tag"
+            Success: "200 {object} map[string]interface{}",
+            Failure: "500 {object} map[string]interface{}",
+            Tags: "ken tag",
+            Params: "message_id path string true '消息 ID'",
+            Params: "message_name path string true '消息 Name'",
         };
     }
 }

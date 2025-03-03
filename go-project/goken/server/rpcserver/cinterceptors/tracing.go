@@ -159,24 +159,34 @@ func getAndInjectMD(ctx context.Context, method, target string) (context.Context
 	if !ok {
 		md = metadata.MD{}
 	}
-	var span trace.Span
-	spanCtx := ktrace.ExtractMD(ctx, &md)
-	sc := trace.SpanContextFromContext(spanCtx)
-	if !sc.IsValid() {
-		span = trace.SpanFromContext(ctx)
-		sc = span.SpanContext()
-		spanCtx = trace.ContextWithSpanContext(spanCtx, sc)
-	}
 
 	var traceName string
+	//如果md中没有traceName则到传入的context里找
 	if len(md.Get("tracer-name")) == 0 {
 		traceName, ok = ctx.Value("tracer-name").(string)
+		//如果context里也没有traceName则使用默认的traceName
 		if !ok || traceName == "" {
 			traceName = ktrace.TraceName
 		}
 		md.Set("tracer-name", traceName)
 	} else {
 		traceName = md.Get("tracer-name")[0]
+	}
+
+	var span trace.Span
+	spanCtx := ktrace.ExtractMD(ctx, &md)
+	sc := trace.SpanContextFromContext(spanCtx)
+	//如果md里没有有效的spanCtx信息则从传入的ctx中找
+	if !sc.IsValid() {
+		span = trace.SpanFromContext(ctx)
+		sc = span.SpanContext()
+		//如果传入ctx中仍然没有span信息则用传入的ctx自定义一个span
+		if !sc.IsValid() {
+			spanCtx = ctx
+		} else {
+			//把span中spanContext的信息注入到新的ctx中
+			spanCtx = trace.ContextWithSpanContext(spanCtx, sc)
+		}
 	}
 
 	tp := otel.GetTracerProvider()

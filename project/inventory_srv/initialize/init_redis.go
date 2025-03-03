@@ -8,12 +8,15 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/redis/go-redis/v9"
 )
 
 var DefaultRedisOpts *redis.Options
 
 func InitRedis() {
+	//redis.UniversalClient
+	//redis.Client
+	//redis.ClusterClient
 	DefaultRedisOpts = &redis.Options{
 		Network:  gb.ServerConfig.RedisConfig.Host,
 		Addr:     fmt.Sprintf("%s:%d", gb.ServerConfig.RedisConfig.Host, gb.ServerConfig.RedisConfig.Port),

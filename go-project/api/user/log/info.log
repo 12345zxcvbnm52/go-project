@@ -1,2 +1,114 @@
-2025-02-23T20:01:46.519+0800	INFO	resourse/resourse.go:36	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 45067 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 { 3307 root 123 user_srv} {192.168.199.128 8500} { 6379 123}}
-2025-02-23T20:01:58.492+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为:  pageSize:12
+2025-03-03T15:50:17.050+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T15:50:29.237+0800	ERROR	controller/user_cnt.go:66	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:32767: connect: connection refused\""}
+kenshop/api/user/internal/controller.(*UserHttpServer).GetUserList
+	/home/ken/ken/go-project/api/user/internal/controller/user_cnt.go:66
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-03T16:07:58.127+0800	ERROR	controller/user_cnt.go:66	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:32767: connect: connection refused\""}
+kenshop/api/user/internal/controller.(*UserHttpServer).GetUserList
+	/home/ken/ken/go-project/api/user/internal/controller/user_cnt.go:66
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-03T16:08:35.911+0800	ERROR	controller/user_cnt.go:66	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:32767: connect: connection refused\""}
+kenshop/api/user/internal/controller.(*UserHttpServer).GetUserList
+	/home/ken/ken/go-project/api/user/internal/controller/user_cnt.go:66
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-03T16:08:42.330+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T16:08:51.793+0800	ERROR	controller/user_cnt.go:66	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:32767: connect: connection refused\""}
+kenshop/api/user/internal/controller.(*UserHttpServer).GetUserList
+	/home/ken/ken/go-project/api/user/internal/controller/user_cnt.go:66
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-03T16:09:10.005+0800	ERROR	controller/user_cnt.go:66	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:32767: connect: connection refused\""}
+kenshop/api/user/internal/controller.(*UserHttpServer).GetUserList
+	/home/ken/ken/go-project/api/user/internal/controller/user_cnt.go:66
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-03T16:27:47.448+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T16:30:56.117+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T16:32:36.298+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T16:33:05.024+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T16:38:39.304+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T17:34:26.771+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-03T17:36:19.302+0800	INFO	resourse/resourse.go:33	服务配置文件为: &{user_web user_web [user] 0.0.0.0 8081 1.0 {192.168.199.128 8500  0} {192.168.199.128 6379 123 } {kensame} {192.168.199.128 4318} {user_srv   0 []} {{0 0} 0 0 {{} 0} {{} 0}}}

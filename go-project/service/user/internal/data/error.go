@@ -1,7 +1,7 @@
 package userdata
 
 import (
-	errors "kenshop/pkg/error"
+	errors "kenshop/pkg/errors"
 
 	"gorm.io/gorm"
 )

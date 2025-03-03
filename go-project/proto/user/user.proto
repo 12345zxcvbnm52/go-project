@@ -1,87 +1,161 @@
 syntax="proto3";
+package user;
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
-option go_package=".;proto";
+import "google/api/swagger.proto";
+option go_package="./;proto";
 
-//用户服务
-service User{
-    // 获得用户列表,可通过FliterReq过滤
-    rpc GetUserList(UserFliterReq)returns(UserListRes){
+// 用户服务
+service User {
+    option (google.api.ServiceOpt) = {
+        title: "User Service API",
+        version: "1.0.0",
+        description: "User management service API",
+        host: "NULL",
+        BasePath: "/",
+    };
+
+    // 获取用户列表
+    rpc GetUserList(UserFliterReq) returns (UserListRes) {
         option (google.api.http) = {
-          get: "/users"
-          body: "*"
+            get: "/users"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} map[string]interface{}",
+            Failure: "404 {object} map[string]interface{}",
+            Params: "pagesNum query int false '返回数据集的页号'",
+            Params: "pageSize query int false '返回数据集的页大小'",
         };
     }
 
-    // 通过用户id获取用户信息
-    rpc GetUserById(UserIdReq)returns(UserInfoRes){
+    // 通过用户ID获取用户信息
+    rpc GetUserById(UserIdReq) returns (UserInfoRes) {
         option (google.api.http) = {
-            get: "/user/id"
-            body: "*"
+            get: "/user/id/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} map[string]interface{}",
+            Failure: "404 {object} map[string]interface{}",
+            Params: "id path int true '用户ID'",
         };
     }
 
-    // 通过用户电话号码获取用户信息
-    rpc GetUserByMobile(UserMobileReq)returns(UserInfoRes){
+    // 通过手机号获取用户信息
+    rpc GetUserByMobile(UserMobileReq) returns (UserInfoRes) {
         option (google.api.http) = {
-            get: "/user/mobile"
-            body: "*"
+            get: "/user/model/{mobile}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} map[string]interface{}",
+            Failure: "404 {object} map[string]interface{}",
+            Params: "mobile path string true '用户手机号'",
         };
     }
 
-    // 创建一个用户
-    rpc CreateUser(CreateUserReq)returns(CreateUserRes){
+    // 创建用户
+    rpc CreateUser(CreateUserReq) returns (CreateUserRes) {
         option (google.api.http) = {
             post: "/users"
-            body: "*"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "201 {object} map[string]interface{}",
+            Failure: "400 {object} map[string]interface{}",
+            Params: "userName body string true '欲创建的用户名'",
+            Params: "password body string true '欲创建的用户密码'",
+            Params: "mobile body string true '欲创建的用户手机号'",
+            Params: "gender body string false '欲创建的用户性别'",
+            Params: "birth body int true '欲创建的用户出生日'",
         };
     }
 
-    //更新用户,传入的用户信息字段中无论是否为空都会完全覆盖原来的值
-    rpc AbsUpdateUser(UpdateUserReq)returns(google.protobuf.Empty){
+    // 绝对更新用户(全量更新)
+    rpc AbsUpdateUser(UpdateUserReq) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/user/id"
-            body: "*"
+            put: "/user/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "204 {object} map[string]interface{}",
+            Failure: "400 {object} map[string]interface{}",
+            Params: "id path int true '欲修改用户ID'",
+            Params: "userName body string true '欲修改的用户名'",
+            Params: "password body string true '欲修改的用户密码'",
+            Params: "mobile body string true '欲修改的用户手机号'",
+            Params: "gender body string true '欲修改的用户性别'",
+            Params: "birth body int true '欲修改的用户出生日'",
+            Params: "role body int true '欲修改的用户权限'",
         };
     }
 
-        //局部更新设置了值的参数
-        rpc UpdateUser(UpdateUserReq)returns(google.protobuf.Empty){
-            option (google.api.http) = {
-                put: "/user/id"
-                body: "*"
-            };
-        }
-
-    //注销一个用户
-    rpc DeleteUser(DelUserReq)returns(google.protobuf.Empty){
+    // 局部更新用户(部分字段更新)
+    rpc UpdateUser(UpdateUserReq) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/user/id"
-            body: "*"
+            patch: "/user/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "204 {object} map[string]interface{}",
+            Failure: "400 {object} map[string]interface{}",
+            Params: "id path int true '欲修改用户ID'",
+            Params: "userName body string false '欲修改的用户名'",
+            Params: "password body string false '欲修改的用户密码'",
+            Params: "mobile body string false '欲修改的用户手机号'",
+            Params: "gender body string false '欲修改的用户性别'",
+            Params: "birth body int false '欲修改的用户出生日'",
+            Params: "role body int false '欲修改的用户权限'",
         };
     }
 
-    //权限验证
-    rpc CheckUserRole(UserPasswordReq)returns(UserCheckRes){
+    // 删除用户
+    rpc DeleteUser(DelUserReq) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            get: "/user/id/check"
-            body: "*"
+            delete: "/user/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "204 {object} map[string]interface{}",
+            Failure: "404 {object} map[string]interface{}",
+            Params: "id path int true '欲删除的用户ID'"
+            Params: "name query string true '欲删除的用户名'"
         };
     }
 
+    // 用户权限验证
+    rpc CheckUserRole(UserPasswordReq) returns (UserCheckRes) {
+        option (google.api.http) = {
+            post: "/user/{id}/check"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} map[string]interface{}",
+            Failure: "403 {object} map[string]interface{}",
+            Params: "id path int true '用户ID'",
+            Params: "userName body string true '欲检查的用户名'",
+            Params: "password body string true '欲检查的用户密码'"
+        };
+    }
 }
 
-message DelUserReq{
+// 消息体定义
+message DelUserReq {
     string name = 1;
     uint32 id = 2;
 }
 
-message UserFliterReq{
-    int32 pagesNum=1;
-    int32 pageSize=2;
+message UserFliterReq {
+    int32 pagesNum = 1;
+    int32 pageSize = 2;
 }
 
-message UserInfoRes{
+message UserInfoRes {
     uint32 id = 1;
     string password = 2;
     string mobile = 3;
@@ -91,54 +165,51 @@ message UserInfoRes{
     int32 role = 7;
 }
 
-message UserListRes{
+message UserListRes {
     int64 total = 1;
     repeated UserInfoRes data = 2;
 }
 
-message UserIdReq{
+message UserIdReq {
     uint32 id = 1;
 }
 
-message UserMobileReq{
+message UserMobileReq {
     string mobile = 1;
 }
 
-message UserPasswordReq{
+message UserPasswordReq {
     string password = 1;
     uint32 id = 2;
-    string userName =3;
+    string userName = 3;
 }
 
-message CreateUserReq{
+message CreateUserReq {
     string userName = 1;
     string password = 2;
     string mobile = 3;
     string gender = 5;
     int64 birth = 6;
-    int32 Role = 7;
 }
 
-message CreateUserRes{
+message CreateUserRes {
     string userName = 1;
     string mobile = 3;
     uint32 id = 4;
     string gender = 5;
     int64 birth = 6;
-    int32 Role = 7;
 }
 
-message UpdateUserReq{
+message UpdateUserReq {
     string userName = 1;
     string password = 2;
     string mobile = 3;
     uint32 id = 4;
     string gender = 5;
     int64 birth = 6;
-    int32 Role = 7;
+    int32 role = 7;
 }
 
-message UserCheckRes{
+message UserCheckRes {
     bool ok = 1;
 }
-

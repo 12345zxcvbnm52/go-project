@@ -2,10 +2,10 @@ package resourse
 
 import (
 	"fmt"
-	"kenshop/goken/registry"
 	"kenshop/goken/registry/registor"
 	"kenshop/goken/registry/ways/consul"
 	"kenshop/goken/server/rpcserver"
+	"kenshop/goken/server/rpcserver/sinterceptors"
 	usercontroller "kenshop/service/user/internal/controller"
 	userlogic "kenshop/service/user/internal/logic"
 
@@ -13,12 +13,6 @@ import (
 )
 
 func InitServer() {
-	ins := &registry.ServiceInstance{
-		ID:      Conf.Id,
-		Name:    Conf.Name,
-		Version: Conf.Version,
-	}
-
 	cfg := api.DefaultConfig()
 	cfg.Address = fmt.Sprintf("%s:%d", Conf.Consul.Ip, Conf.Consul.Port)
 	cli, err := api.NewClient(cfg)
@@ -27,8 +21,12 @@ func InitServer() {
 	}
 
 	regisor := registor.MustNewRegister(consul.MustNewConsulRegistor(cli))
+
 	Server = rpcserver.MustNewServer(Ctx,
-		rpcserver.WithServiceInstance(ins),
+		rpcserver.WithServiceID(Conf.Id),
+		rpcserver.WithServiceName(Conf.Name),
+		rpcserver.WithUnaryInts(sinterceptors.UnaryTracingInterceptor),
+		rpcserver.WithVersion(Conf.Version),
 		rpcserver.WithRegistor(regisor),
 		rpcserver.WithHost("192.168.199.128:0"),
 	)

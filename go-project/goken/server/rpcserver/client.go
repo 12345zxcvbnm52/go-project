@@ -65,8 +65,10 @@ func MustNewClient(ctx context.Context, target string, opts ...ClientOption) *Cl
 	c.GrpcOpts = append(c.GrpcOpts, grpc.WithChainStreamInterceptor(c.StreamInts...))
 
 	if c.Discover != nil {
+		c.Endpoint.Scheme = "discovery"
+		c.Endpoint.Host = "127.0.0.1:65536"
 		c.GrpcOpts = append(c.GrpcOpts, grpc.WithResolvers(
-			discover.NewBuilder(c.Discover),
+			discover.MustNewBuilder(c.Discover),
 		))
 	}
 
@@ -145,12 +147,16 @@ func (c *Client) Reset() {
 }
 
 func (c *Client) Dial() (*grpc.ClientConn, error) {
+	var err error
 	if c.client == nil {
-		client, err := grpc.DialContext(c.Ctx, c.Endpoint.Host, c.GrpcOpts...)
+		if c.Discover != nil {
+			c.client, err = grpc.DialContext(c.Ctx, c.Endpoint.String(), c.GrpcOpts...)
+		} else {
+			c.client, err = grpc.DialContext(c.Ctx, c.Endpoint.Host, c.GrpcOpts...)
+		}
 		if err != nil {
 			return nil, err
 		}
-		c.client = client
 	}
 	return c.client, nil
 }

@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"kenshop/goken/registry"
@@ -17,23 +18,19 @@ import (
 	"kenshop/goken/server/httpserver/middlewares/jwt"
 	ginotel "kenshop/goken/server/httpserver/middlewares/tracing"
 	"kenshop/goken/server/httpserver/validate"
+	"kenshop/goken/server/rpcserver"
 
 	//"kenshop/goken/server/httpserver/pprof"
 
 	"kenshop/pkg/common/hostgen"
-	errors "kenshop/pkg/error"
+	errors "kenshop/pkg/errors"
 	"kenshop/pkg/log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 var ErrNilHttpRegistor = errors.New("该http服务不存在注册器")
-
-// 辅助protoc-gen-gin
-type HandlerFuncMux interface {
-	RegisterHandlerFunc(method string, path string, handler gin.HandlerFunc)
-	Execute(gin.IRouter)
-}
 
 type Server struct {
 	Ctx      context.Context
@@ -46,7 +43,7 @@ type Server struct {
 	Registor  registry.Registor
 	Validator *validate.Validator
 	Tracer    *ginotel.GinTracer
-	Mux       HandlerFuncMux
+	GrpcCli   *rpcserver.Client
 	//是否开启pprof接口, 默认开启, 如果开启会自动添加/debug/pprof接口
 	EnableProfiling bool
 	//是否开启metrics接口,默认开启,如果开启会自动添加/metrics接口
@@ -63,7 +60,7 @@ type Server struct {
 	Server *http.Server
 }
 
-func MustNewServer(ctx context.Context, host string, handlerMux HandlerFuncMux, opts ...ServerOption) *Server {
+func MustNewServer(ctx context.Context, host string, opts ...ServerOption) *Server {
 	s := &Server{
 		Ctx:             ctx,
 		Host:            host,
@@ -74,7 +71,6 @@ func MustNewServer(ctx context.Context, host string, handlerMux HandlerFuncMux, 
 		Locale:          "zh",
 		Middlewares:     make(map[string]gin.HandlerFunc),
 		InSecure:        true,
-		Mux:             handlerMux,
 		Server:          &http.Server{},
 	}
 
@@ -93,32 +89,45 @@ func MustNewServer(ctx context.Context, host string, handlerMux HandlerFuncMux, 
 	if ok := hostgen.ValidListenHost(s.Host); !ok {
 		panic(errors.New("无效的监听地址"))
 	}
-
-	u, err := url.Parse(host)
-	if err != nil {
-		if s.InSecure {
-			host = fmt.Sprintf("http://%s", host)
-		} else {
-			host = fmt.Sprintf("https://%s", host)
-		}
-		u, err = url.Parse(host)
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	s.Server.Addr = u.Host
+	s.Server.Addr = s.Host
 	s.Server.Handler = s.Engine
-	s.Instance.Endpoints = append(s.Instance.Endpoints, u)
-
+	//无论如何都开启/health路径便于后续服务注册,健康检查
 	s.Engine.GET("/health", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{})
 	})
+
+	//只有注册器存在才构造instance
+	if s.Registor != nil {
+		u, err := url.Parse(host)
+		if err != nil {
+			if s.InSecure {
+				host = fmt.Sprintf("http://%s", host)
+			} else {
+				host = fmt.Sprintf("https://%s", host)
+			}
+			u, err = url.Parse(host)
+			if err != nil {
+				panic(err)
+			}
+		}
+		s.Instance.Endpoints = append(s.Instance.Endpoints, u)
+	}
 
 	for _, m := range s.Middlewares {
 		s.Engine.Use(m)
 	}
 
+	if s.Jwt == nil {
+		log.Warn("[httpserver] Server的Jwt为nil,可能将导致错误")
+	}
+	if s.Tracer == nil {
+		log.Warn("[httpserver] Server的Tracer为nil,可能将导致错误")
+	}
+	if s.GrpcCli == nil {
+		log.Warn("[httpserver] Server的GrpcCli为nil,可能将导致错误")
+	}
+
+	var err error
 	s.Validator, err = validate.NewValidator(s.Locale)
 	if err != nil {
 		panic(err)
@@ -145,7 +154,7 @@ func (s *Server) Serve() error {
 	//设置开发模式,打印路由信息格式
 	gin.SetMode(s.Mode)
 	//运行前前打印配置信息
-	log.Infof("服务启动中,服务信息为: msg= %+v", s.Instance)
+	log.Infof("[httpserver] 服务启动中,服务信息为: msg= %+v", s.Instance)
 
 	if err := s.Validator.Excute(); err != nil {
 		return err
@@ -156,9 +165,7 @@ func (s *Server) Serve() error {
 		return err
 	}
 
-	s.Mux.Execute(s.Engine)
 	//监听终止信号,优雅退出
-
 	sign := make(chan os.Signal, 1)
 	signal.Notify(sign, syscall.SIGTERM, syscall.SIGINT)
 	ech := make(chan error, 1)
@@ -166,7 +173,7 @@ func (s *Server) Serve() error {
 		if err := s.Server.ListenAndServe(); err != nil {
 			//同理若注册器为空就不进行注销
 			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilHttpRegistor {
-				log.Errorf("服务注销失败, err= %v", e)
+				log.Errorf("[httpserver] 服务注销失败, err= %v", e)
 			}
 			ech <- err
 		}
@@ -175,17 +182,30 @@ func (s *Server) Serve() error {
 	case <-sign:
 		close(sign)
 		if e1 := s.Server.Shutdown(s.Ctx); e1 != nil {
-			log.Errorf("服务注销失败, err= %v", e1)
+			log.Errorf("[httpserver] 服务注销失败, err= %v", e1)
 			return e1
 		}
 		if e2 := s.Deregister(s.Ctx); e2 != nil && e2 != ErrNilHttpRegistor {
-			log.Errorf("服务注销失败, err= %v", e2)
+			log.Errorf("[httpserver] 服务注销失败, err= %v", e2)
 			return e2
 		}
-		log.Info("服务正常注销")
+		log.Info("[httpserver] 服务正常注销")
 		return nil
 	case err := <-ech:
 		close(ech)
 		return err
 	}
+}
+
+func (s *Server) TranslateErr(err validator.ValidationErrors) map[string]string {
+	// 移除默认字段检测时多出来的结构体名称.
+	f := func(msg map[string]string) map[string]string {
+		res := map[string]string{}
+		for k, v := range msg {
+			res[k[strings.Index(k, ".")+1:]] = v
+		}
+		return res
+	}
+
+	return f(err.Translate(s.Validator.Trans))
 }

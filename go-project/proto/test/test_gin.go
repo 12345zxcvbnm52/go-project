@@ -1,59 +1,39 @@
 package proto
 
 import (
-	strings "strings"
-
 	gin "github.com/gin-gonic/gin"
+	httpserver "kenshop/goken/server/httpserver"
 )
 
+// service
+// @BasePath /v1
+// @Description This is a sample API
+// @Host api.example.com
+// @Title My API
+// @Version 1.0.0
 type MessagingHttpServer struct {
-	PathsMap map[string]gin.HandlerFunc
+	Server *httpserver.Server
 }
 
-func RegisterMessagingHTTPServer() *MessagingHttpServer {
-	s := &MessagingHttpServer{
-		PathsMap: make(map[string]gin.HandlerFunc),
+func RegisterMessagingHTTPServer(s *httpserver.Server) *MessagingHttpServer {
+	ss := &MessagingHttpServer{
+		Server: s,
 	}
-	return s
-}
-
-func (s *MessagingHttpServer) RegisterHandlerFunc(method string, path string, handler gin.HandlerFunc) {
-	s.PathsMap[method+";"+path] = handler
+	return ss
 }
 
 // Update Message Summary | This function updates a message.
 // @Accept application/json
-// @Failure 500 Internal Server Error
+// @Failure 500 {object} map[string]interface{}
 // @Produce application/json
-// @Router /api/v1/resource
-// @Success 200 OK
+// @Router /messages/{message_id} [GET]
+// @Success 200 {object} map[string]interface{}
 // @Tags ken tag
-func (s *MessagingHttpServer) UpdateMessage(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Update Message",
-	})
-}
+// @Param message_id path string true "消息 ID"
+// @Param message_name path string true "消息 Name"
+func (s *MessagingHttpServer) UpdateMessage(c *gin.Context) {}
 
-func (s *MessagingHttpServer) register() {
-	s.RegisterHandlerFunc("PATCH", "/v1/messages/:message_id", s.UpdateMessage)
-}
-
-func (s *MessagingHttpServer) Execute(r gin.IRouter) {
-	s.register()
-	for k, v := range s.PathsMap {
-		path := strings.Split(k, ";")
-		path[0] = strings.ToUpper(path[0])
-		switch path[0] {
-		case "GET":
-			r.GET(path[1], v)
-		case "PUT":
-			r.PUT(path[1], v)
-		case "DELETE":
-			r.DELETE(path[1], v)
-		case "POST":
-			r.POST(path[1], v)
-		case "PATCH":
-			r.PATCH(path[1], v)
-		}
-	}
+func (s *MessagingHttpServer) Execute() error {
+	s.Server.Engine.GET("/messages/:message_id", s.UpdateMessage)
+	return s.Server.Serve()
 }
