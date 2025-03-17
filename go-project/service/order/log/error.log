@@ -1,0 +1,54 @@
+2025-03-12T18:41:08.565+0800	ERROR	controller/order_cnt.go:86	调用CreateOrder失败,具体信息为: : : rpc error: code = ResourceExhausted desc = {"code_msg":{"code":1130003,"http_code":400,"grpc_code":8,"message":"指定商品缺少库存"},"stack_msg":": 库存不足,无法扣减,库存id为:3,库存现有存量为:145,欲扣减库存量为:146\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:189\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:208\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:210\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n"}
+kenshop/service/order/internal/data.GormOrderErrHandle
+	/home/ken/ken/go-project/service/order/internal/data/error.go:24
+kenshop/service/order/internal/data.(*OrderListener).ExecuteLocalTransaction
+	/home/ken/ken/go-project/service/order/internal/data/order_data.go:229
+github.com/apache/rocketmq-client-go/v2/producer.(*transactionProducer).SendMessageInTransaction
+	/home/ken/go/pkg/mod/github.com/apache/rocketmq-client-go/v2@v2.1.2/producer/producer.go:724
+kenshop/pkg/rockmq.(*TransProducer).SendMessageInTransaction
+	/home/ken/ken/go-project/pkg/rockmq/rockmq.go:87
+kenshop/service/order/internal/data.(*GormOrderData).CreateOrderDB
+	/home/ken/ken/go-project/service/order/internal/data/order_data.go:297
+kenshop/service/order/internal/logic.(*OrderService).CreateOrderLogic
+	/home/ken/ken/go-project/service/order/internal/logic/order_logic.go:44
+kenshop/service/order/internal/controller.(*OrderServer).CreateOrder
+	/home/ken/ken/go-project/service/order/internal/controller/order_cnt.go:84
+kenshop/proto/order._Order_CreateOrder_Handler.func1
+	/home/ken/ken/go-project/proto/order/order_grpc.pb.go:258
+kenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22
+google.golang.org/grpc.getChainUnaryHandler.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212
+kenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203
+kenshop/proto/order._Order_CreateOrder_Handler
+	/home/ken/ken/go-project/proto/order/order_grpc.pb.go:260
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400
+google.golang.org/grpc.(*Server).handleStream
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030
+
+kenshop/service/order/internal/controller.(*OrderServer).CreateOrder
+	/home/ken/ken/go-project/service/order/internal/controller/order_cnt.go:86
+kenshop/proto/order._Order_CreateOrder_Handler.func1
+	/home/ken/ken/go-project/proto/order/order_grpc.pb.go:258
+kenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22
+google.golang.org/grpc.getChainUnaryHandler.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212
+kenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203
+kenshop/proto/order._Order_CreateOrder_Handler
+	/home/ken/ken/go-project/proto/order/order_grpc.pb.go:260
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400
+google.golang.org/grpc.(*Server).handleStream
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030

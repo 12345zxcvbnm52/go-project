@@ -18,6 +18,7 @@ type service struct {
 	SwaggerApi     map[string]string
 	Methods        []*method
 	AllRequestForm map[string]map[string]*RequestParam
+	AllRequestUsed map[string]int
 }
 
 type RequestParam struct {
@@ -28,16 +29,16 @@ type RequestParam struct {
 	//请求体类型内的字段的类型
 	Type string
 	//json名
-	Json      string
-	Form      string
-	QueryStr  string
-	Url       string
-	UrlStr    string
-	Header    string
-	HeaderStr string
-	Xml       string
-	Yaml      string
-	Required  string
+	Json   string
+	Form   string
+	Url    string
+	Header string
+
+	Xml              string
+	Yaml             string
+	Required         string
+	IsSlice          bool
+	SubRequestParams map[string]map[string]*RequestParam
 }
 
 // rpc GetDemoName(*Req, *Resp)
@@ -53,9 +54,11 @@ type method struct {
 	RequestParams   map[string]*RequestParam
 	RequestFormName string
 	//记录swagger的注解
-	SwaggerApi map[string]string
+	SwaggoInfo map[string]string
 	//swagger的Params注解集
-	Params []string
+	SwaggoParams   []string
+	SwaggoHeaders  []string
+	SwaggoFailures []string
 	//是否是必须的参数
 	// 把路由参数转化为http适配的(:id)
 	Path2Http string
@@ -66,7 +69,12 @@ type method struct {
 	//方法类型
 	Method string
 	//
-	Body string
+	Body      string
+	HeaderStr string
+	UrlStr    string
+	QueryStr  string
+	FormStr   string
+	BodyStr   string
 }
 
 // 将所有{xx}的路径参数转为:xx形式的路由参数

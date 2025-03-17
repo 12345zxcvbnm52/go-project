@@ -10,6 +10,7 @@ import (
 
 	"google.golang.org/grpc"
 	grpcinsecure "google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 )
 
 const (
@@ -66,7 +67,7 @@ func MustNewClient(ctx context.Context, target string, opts ...ClientOption) *Cl
 
 	if c.Discover != nil {
 		c.Endpoint.Scheme = "discovery"
-		c.Endpoint.Host = "127.0.0.1:65536"
+		c.Endpoint.Host = "127.0.0.1:65535"
 		c.GrpcOpts = append(c.GrpcOpts, grpc.WithResolvers(
 			discover.MustNewBuilder(c.Discover),
 		))
@@ -76,6 +77,10 @@ func MustNewClient(ctx context.Context, target string, opts ...ClientOption) *Cl
 		c.GrpcOpts = append(c.GrpcOpts, grpc.WithTransportCredentials(grpcinsecure.NewCredentials()))
 	}
 	return c
+}
+
+func (c *Client) CtxWithMetadata(md metadata.MD) context.Context {
+	return metadata.NewOutgoingContext(c.Ctx, md)
 }
 
 func WithEnableTracing(on bool) ClientOption {

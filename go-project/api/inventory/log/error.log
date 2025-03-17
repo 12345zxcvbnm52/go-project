@@ -1,0 +1,1470 @@
+2025-03-07T22:50:49.126+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unknown desc = this method is not implemented"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T12:39:57.070+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = this method is not implemented"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T12:40:26.518+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = this method is not implemented"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T12:40:44.021+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = this method is not implemented"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T12:41:25.959+0800	ERROR	controller/inventory_cnt.go:169	微服务调用失败	{"msg": "rpc error: code = Unknown desc = this method is not implemented"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:169
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T15:50:56.258+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unknown desc = record not found"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T15:55:33.266+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unknown desc = sql: transaction has already been committed or rolled back"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T15:55:56.431+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unknown desc = sql: transaction has already been committed or rolled back"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:01:03.723+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unknown desc = sql: transaction has already been committed or rolled back"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:06:06.096+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:06:06.548+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:10:15.202+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:16:00.268+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:26:32.176+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:27:53.615+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = error reading from server: EOF"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:28:49.059+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:33045: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:28:49.822+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:33045: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:28:50.320+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:33045: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:28:53.193+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = error reading from server: EOF"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:30:21.119+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:40677: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:30:26.585+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:40677: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:30:27.117+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:40677: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:30:32.452+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 192.168.199.128:40677: connect: connection refused\""}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:30:35.738+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = error reading from server: EOF"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:32:23.669+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T16:47:54.839+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:04:17.577+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:05:18.176+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = duplicated key not allowed"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:11:23.888+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:36:44.581+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:41:57.518+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:41:58.788+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:41:59.306+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:42:00.100+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:44:01.408+0800	ERROR	controller/inventory_cnt.go:165	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:165
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:44:02.419+0800	ERROR	controller/inventory_cnt.go:165	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:165
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:47:26.155+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:48:03.748+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:48:51.290+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:50:41.617+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:50:41.715+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:51:41.665+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T19:53:05.184+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = Unknown desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T20:25:50.574+0800	ERROR	controller/inventory_cnt.go:166	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:166
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T20:27:26.052+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T20:28:46.026+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T20:29:43.715+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T20:30:16.049+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T20:31:06.706+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:08:13.312+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:08:58.522+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:10:08.245+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:10:41.925+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:11:45.089+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:17:28.521+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:19:17.234+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:20:08.132+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 指定商品缺少库存"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:22:06.470+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = "}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:22:06.518+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = "}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:25:23.321+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = "}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:26:23.368+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = "}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:28:08.194+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = "}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:28:56.338+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = Unavailable desc = error reading from server: EOF"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:30:43.978+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:140\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:194\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:196\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130003,\"http_code\":400,\"grpc_code\":8,\"message\":\"指定商品缺少库存\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:32:19.263+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:140\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:194\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:196\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130003,\"http_code\":400,\"grpc_code\":8,\"message\":\"指定商品缺少库存\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:32:21.259+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:140\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:194\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:196\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130003,\"http_code\":400,\"grpc_code\":8,\"message\":\"指定商品缺少库存\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-08T21:32:21.987+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:140\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:194\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:196\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130003,\"http_code\":400,\"grpc_code\":8,\"message\":\"指定商品缺少库存\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-09T13:04:02.492+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:140\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:194\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:196\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130003,\"http_code\":400,\"grpc_code\":8,\"message\":\"指定商品缺少库存\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-09T13:04:04.819+0800	ERROR	controller/inventory_cnt.go:164	微服务调用失败	{"msg": "rpc error: code = ResourceExhausted desc = 库存不足,无法扣减,库存id为:2,库存现有存量为:39,欲扣减库存量为:151\nkenshop/service/inventory/internal/data.(*GormInventoryData).DecrStockDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:140\nkenshop/service/inventory/internal/logic.(*InventoryService).DecrStockLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:30\nkenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:70\nkenshop/proto/inventory._Inventory_DecrStock_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:194\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_DecrStock_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:196\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130003,\"http_code\":400,\"grpc_code\":8,\"message\":\"指定商品缺少库存\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).DecrStock
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:164
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-09T14:07:32.963+0800	ERROR	controller/inventory_cnt.go:126	微服务调用失败	{"msg": "rpc error: code = NotFound desc = record not found\nkenshop/service/inventory/internal/data.GormInventoryErrHandle\n\t/home/ken/ken/go-project/service/inventory/internal/data/error.go:23\nkenshop/service/inventory/internal/data.(*GormInventoryData).GetStockInfoDB\n\t/home/ken/ken/go-project/service/inventory/internal/data/inventory_data.go:127\nkenshop/service/inventory/internal/logic.(*InventoryService).GetStockInfoLogic\n\t/home/ken/ken/go-project/service/inventory/internal/logic/inventory_logic.go:26\nkenshop/service/inventory/internal/controller.(*InventoryServer).GetStockInfo\n\t/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:59\nkenshop/proto/inventory._Inventory_GetStockInfo_Handler.func1\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:176\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/inventory._Inventory_GetStockInfo_Handler\n\t/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:178\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1130001,\"http_code\":404,\"grpc_code\":5,\"message\":\"对应库存信息不存在\"};"}
+kenshop/api/inventory/internal/controller.(*InventoryHttpServer).GetStockInfo
+	/home/ken/ken/go-project/api/inventory/internal/controller/inventory_cnt.go:126
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044

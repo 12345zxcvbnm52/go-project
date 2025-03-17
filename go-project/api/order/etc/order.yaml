@@ -1,0 +1,29 @@
+#服务注册参数
+ip: '0.0.0.0'
+port: 8084
+name: 'order_web'
+id: 'order_web'
+tags: 
+  - 'order'
+version: '1.0'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  ip: '192.168.199.128'
+  port: 6379
+  password: '123'
+
+jwt:
+  key: 'kensame'
+
+otel:
+  ip: '192.168.199.128'
+  port: 4318
+  tracer-name: 'gin-order-srv'
+  service-name: 'order-srv'
+
+order-server:
+  name: 'order_srv'

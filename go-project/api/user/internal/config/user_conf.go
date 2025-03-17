@@ -48,8 +48,10 @@ type UserServerConf struct {
 }
 
 type OtelConf struct {
-	Ip   string `mapstructure:"ip"`
-	Port int    `mapstructure:"port"`
+	Ip          string `mapstructure:"ip"`
+	Port        int    `mapstructure:"port"`
+	TracerName  string `mapstructure:"tracer-name"`
+	ServiceName string `mapstructure:"service-name"`
 }
 
 type ServerConf struct {

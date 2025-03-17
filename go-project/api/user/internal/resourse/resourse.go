@@ -27,6 +27,8 @@ func init() {
 	InitLogger()
 	InitConf()
 	InitServer()
+	InitOtel()
+	InitValidate()
 	ip, port, _ := net.SplitHostPort(UserServer.Server.Host)
 	Conf.Ip = ip
 	Conf.Port, _ = strconv.Atoi(port)

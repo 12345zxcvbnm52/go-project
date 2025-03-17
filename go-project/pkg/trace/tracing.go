@@ -16,9 +16,11 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	"go.opentelemetry.io/otel/trace"
+	"google.golang.org/grpc/metadata"
 )
 
-const TraceName = "goken"
+const KTraceName = "goken"
 
 // TraceIdKey is the trace id header.
 // https://www.w3.org/TR/trace-context/#trace-id
@@ -140,6 +142,48 @@ func Extract(ctx context.Context, carrier propagation.TextMapCarrier) context.Co
 // 注意,Inject不会把span信息以context的形式注入到ctx中,而是把span的spanContext信息注入到carrier中
 func Inject(ctx context.Context, carrier propagation.TextMapCarrier) {
 	kPropagator.Inject(ctx, carrier)
+}
+
+// 从ctx中获取记录的tracer和spanCtx以便直接生成新span
+func ExtractSpanFormCtx(ctx context.Context, opts ...trace.TracerOption) (trace.Tracer, context.Context) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		md = metadata.MD{}
+	}
+
+	var traceName string
+	//同理先到md中找tracer-name,如果没有再从ctx中找
+	if len(md.Get("tracer-name")) == 0 {
+		traceName, ok = ctx.Value("tracer-name").(string)
+		if !ok || traceName == "" {
+			traceName = KTraceName
+		}
+		md.Set("tracer-name", traceName)
+	} else {
+		traceName = md.Get("tracer-name")[0]
+	}
+
+	//从ExtractMD中提取得到带有spanContext的ctx
+	ctx = ExtractMD(ctx, md)
+	sc := trace.SpanContextFromContext(ctx)
+	//如果md中的spanContext无效,则从传入的ctx获取
+	if !sc.IsValid() {
+		return otel.Tracer(traceName, opts...), ctx
+	}
+	ctx = trace.ContextWithSpanContext(ctx, sc)
+	return otel.Tracer(traceName, opts...), ctx
+}
+
+// 将ctx中的span信息注入到metadata中
+func NewSpanOutgoingContext(ctx context.Context, span trace.Span) context.Context {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		md = metadata.MD{}
+	}
+
+	InjectMD(ctx, md)
+	ctx = metadata.NewOutgoingContext(ctx, md)
+	return ctx
 }
 
 func (c *Tracer) AddResources(attrs ...attribute.KeyValue) {

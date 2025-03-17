@@ -26,6 +26,12 @@ const (
 	CodeBadUserClient
 	// Internal:500:订单服务连接失败
 	CodeBadOrderClient
+	// Internal:500:分布式锁加锁失败
+	CodeRedlockLockFailed
+	// Internal:500:分布式锁解锁失败
+	CodeRedlockUnlockFailed
+	//Internal:500:分布式锁延长使用时间失败
+	CodeRedlockExtendFailed
 )
 
 const (

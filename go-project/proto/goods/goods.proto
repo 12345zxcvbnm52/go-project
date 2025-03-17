@@ -1,0 +1,802 @@
+syntax="proto3";
+package goods;
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/api/swagger.proto";
+option go_package="./;proto";
+
+///////////////////可能差一个店铺,店铺与品牌之间有关联
+service Goods{
+    option (google.api.ServiceOpt) = {
+        title: "Goods Service API",
+        version: "1.0.0",
+        description: "Goods management service API",
+        host: "NULL",
+        BasePath: "/",
+    };
+    //获得商品列表
+    rpc GetGoodList(GoodsFilterReq) returns(GoodsListRes){
+        option (google.api.http) = {
+                get: "/goods"
+            };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.GoodsListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获得商品列表",
+            Params: "minPrice query integer false '(int32)商品最低价格'",
+            Params: "maxPrice query integer false '(int32)商品最高价格'",
+            Params: "isHot query bool false '是否热门商品'",
+            Params: "isNew query bool false '是否新品'",
+            Params: "status query integer false '(int32)商品状态'",
+            Params: "categoryId query integer false '(uint32)类别目录ID,确定点击的目录是哪一级,会递归显示下一层类别目录'",
+            Params: "pagesNum query integer false '(int32)返回数据集的页号'",
+            Params: "pageSize query integer false '(int32)返回数据集的页大小'",
+            Params: "keyWords query string false '搜索关键词'",
+            Params: "brandId query integer false '(uint32)品牌ID'",
+            Params: "id query integer false '(uint32)商品ID'",
+        };
+    }
+
+    //用于通过id数组得到所有商品信息,常用于从订单中获得所有商品信息,
+    rpc GetGoodsListById(GoodsIdsReq)returns(GoodsListRes){
+        option (google.api.http) = {
+                get: "/goods/ids"
+            };
+        option (google.api.MethodOpt) = {
+            Accept: "multipart/form-data",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.GoodsListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "用于通过id数组得到所有商品信息,常用于从订单中获得所有商品信息",
+            Params: "ids formData []integer true '([]uint32)商品ID'",
+        };
+    }
+
+    rpc GetGoodsDetail(GoodsInfoReq)returns(GoodsDetailRes){
+        option (google.api.http) = {
+            get: "/goods/detail/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "multipart/form-data",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.GoodsDetailRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "通过商品id获取对应商品的详细信息",
+            Params: "id path integer true '(uint32)商品ID'",
+        };
+    }
+
+    rpc CreateGoods(CreateGoodsReq)returns(GoodsDetailRes){
+        option (google.api.http) = {
+            post: "/goods"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json"
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.GoodsDetailRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建一个商品",
+            Params: "categoryId body integer true '(uint32)商品类型id'",
+            Params: "brandId body integer true '(uint32)商品品牌id'",
+            Params: "name body string true '商品名'",
+            Params: "marketPrice body number true '(float32)商品原始售价'",
+            Params: "salePrice body number true '(float32)商品实际售价'",
+            Params: "goodsBrief body string true '商品简要介绍'",
+            Params: "shipFree body bool true '(int32)是否免运费'",
+            Params: "images body model.GormList true '商品图片'",
+            Params: "descImages body model.GormList true '商品功能图'",
+            Params: "firstImage body string true '商品封面'",
+        };
+    }
+
+    rpc DeleteGoods(DelGoodsReq) returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/goods/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除一个商品",
+            Params: "id path integer true '(uint32)商品id'"
+        };
+    }
+    rpc UpdeateGoods(UpdateGoodsReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/goods/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json"
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            
+            Description: "局部更新一个商品",
+            Params: "id path integer true '(uint32)商品id'",
+            Params: "categoryId body integer false '(uint32)商品类型id'",
+            Params: "brandId body integer false '(uint32)商品品牌id'",
+            Params: "name body string false '商品名'",
+            Params: "marketPrice body number false '(float32)商品原始售价'",
+            Params: "salePrice body number false '(float32)商品实际售价'",
+            Params: "goodsBrief body string false '商品简要介绍'",
+            Params: "shipFree body bool false '(int32)是否免运费'",
+            Params: "images body model.GormList false '商品图片'",
+            Params: "descImages body model.GormList false '商品功能图'",
+            Params: "firstImage body string false '商品封面'",
+            Params: "status body integer false '商品状态'"
+        };
+    }
+
+
+
+
+
+
+
+
+
+//商品类型服务
+    rpc GetCategoryList(google.protobuf.Empty)returns(CategoryListRes){
+        option (google.api.http) = {
+            get: "/categories"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.CategoryListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取商品目录列表",
+        };
+    }
+    rpc GetCategoryInfo(SubCategoryReq)returns(SubCategoryListRes){
+        option (google.api.http) = {
+            get: "/category/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.SubCategoryListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取商品目录及其子目录信息",
+            Params: "id path integer true '(uint32)商品目录ID'",
+            Params: "level query integer false '(int32)目录层级'",
+        };
+    }
+    rpc CreateCategory(CreateCategoryReq)returns(CategoryInfoRes){
+        option (google.api.http) = {
+            post: "/categories"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.CategoryInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建一个商品目录",
+            Params: "name body string true '商品目录名称'",
+            Params: "parentCategoryId body integer false '(uint32)父目录ID'",
+            Params: "level body integer true '(int32)目录层级'",
+        };
+    }
+    rpc DeleteCategory(DelCategoryReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/category/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除一个商品目录",
+            Params: "id path integer true '(uint32)商品目录ID'",
+        };
+    }
+    rpc UpdateCategory(UpdateCategoryReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/category/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "更新一个商品目录",
+            Params: "id path integer true '(uint32)商品目录ID'",
+            Params: "name body string false '商品目录名称'",
+            Params: "parentCategoryId body integer false '(uint32)父目录ID'",
+            Params: "level body integer false '(int32)目录层级'",
+        };
+    }
+
+
+
+
+
+
+
+
+
+
+
+//品牌服务
+    rpc GetBrandList(BrandFilterReq)returns(BrandListRes){
+        option (google.api.http) = {
+            get: "/brands"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.BrandListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取品牌列表",
+            Params: "pagesNum query integer false '(int32)返回数据集的页号'",
+            Params: "pageSize query integer false '(int32)返回数据集的页大小'",
+        };
+    }
+    rpc CreateBrand(CreateBrandReq)returns(BrandInfoRes){
+        option (google.api.http) = {
+            post: "/brand"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.BrandInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建一个品牌",
+            Params: "name body string true '品牌名称'",
+            Params: "logo body string true '品牌Logo'",
+        };
+    }
+    rpc DeleteBrand(DelBrandReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/brand/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除一个品牌",
+            Params: "id path integer true '(uint32)品牌ID'",
+            Params: "name query string true '品牌名称'",
+        };
+    }
+    rpc UpdateBrand(UpdateBrandReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/brand/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "更新一个品牌",
+            Params: "id path integer true '(uint32)品牌ID'",
+            Params: "name body string false '品牌名称'",
+            Params: "logo body string false '品牌Logo'",
+        };
+    }
+
+
+
+
+
+
+
+
+
+
+
+//轮播窗口服务
+    rpc GetBannerList(google.protobuf.Empty)returns(BannerListRes){
+        option (google.api.http) = {
+            get: "/banners"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.BannerListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取轮播图列表",
+        };
+    }
+
+    rpc CreateBanner(CreateBannerReq)returns(BannerInfoRes){
+        option (google.api.http) = {
+            post: "/banners"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.BannerInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建一个轮播图",
+            Params: "index body integer true '(int32)轮播图序号'",
+            Params: "image body string true '轮播图图片URL'",
+            Params: "url body string true '轮播图跳转URL'",
+        };
+    }
+
+    rpc DeleteBanner(DelBannerReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/banner/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除一个轮播图",
+            Params: "id path integer true '(uint32)轮播图ID'",
+            Params: "index query integer false '(int32)轮播图索引'",
+        };
+    }
+    
+    rpc UpdateBanner(UpdateBannerReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/banner/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "更新一个轮播图",
+            Params: "id path integer true '(uint32)轮播图ID'",
+            Params: "index body integer false '(int32)轮播图序号'",
+            Params: "image body string false '轮播图图片URL'",
+            Params: "url body string false '轮播图跳转URL'",
+        };
+    }
+
+
+
+
+
+
+
+
+
+
+
+//品牌分类服务
+    rpc GetCategoryBrandList(CategoryBrandFilterReq)returns(CategoryBrandListRes){
+        option (google.api.http) = {
+            get: "/categorybrands"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.CategoryBrandListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取品牌与目录关联列表",
+            Params: "pagesNum query integer false '(int32)返回数据集的页号'",
+            Params: "pageSize query integer false '(int32)返回数据集的页大小'",
+        };
+    }
+    //通过一个类型获得所有有这个类型的品牌
+    //rpc GetBrandListByCategory(CategoryInfoReq)returns(BrandListRes);
+    rpc CreateCategoryBrand(CreateCategoryBrandReq)returns(CategoryBrandInfoRes){
+        option (google.api.http) = {
+            post: "/categorybrands"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.CategoryBrandInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建一个品牌与目录关联",
+            Params: "categoryId body integer true '(uint32)目录ID'",
+            Params: "brandId body integer true '(uint32)品牌ID'",
+        };
+    }
+
+    rpc DeleteCategoryBrand(DelCategoryBrandReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/categorybrand/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除一个品牌与目录关联",
+            Params: "id path integer true '(uint32)关联ID'",
+        };
+    }
+
+    rpc UpdateCategoryBrand(UpdateCategoryBrandReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/categorybrand/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "更新一个品牌与目录关联",
+            Params: "id path integer true '(uint32)关联ID'",
+            Params: "categoryId body integer false '(uint32)目录ID'",
+            Params: "brandId body integer false '(uint32)品牌ID'",
+        };
+    }
+}   
+
+//返回一堆商品目录
+message CategoryListRes{
+    int64 total = 1;
+    repeated CategoryInfoRes data = 2;
+    string jsonData = 3;
+}
+
+//商品目录信息类
+message CategoryInfoReq{
+    uint32 id = 1;
+    string name = 2;
+}
+
+//商品目录信息类
+message CreateCategoryReq{
+    string name = 1;
+    uint32 parentCategoryId = 2;
+    int32 level = 3;
+    bool onTable = 4;
+}
+
+//商品目录信息类
+message UpdateCategoryReq{
+    uint32 id = 1;
+    string name = 2;
+    uint32 parentCategoryId = 3;
+    int32 level = 4;
+    bool onTable = 5;
+}
+
+//返回商品目录信息
+message CategoryInfoRes{
+    uint32 id = 1;
+    string name = 2;
+    uint32 parentCategoryId = 3;
+    int32 level = 4;
+    bool onTable =5;
+}
+
+//指定删除目录
+message DelCategoryReq{
+    uint32 id = 1;
+}
+
+//请求对应商品目录的子目录
+message SubCategoryReq{
+    uint32 id = 1;
+    int32 level = 2;
+}
+
+//返回查询到的子商品目录
+message SubCategoryListRes{
+    int64 total = 1;
+    //既把Sub目录返回,也把Sub的Sub目录返回
+    CategoryInfoRes selfInfo = 2;
+    repeated CategoryInfoRes subInfo = 3;
+}
+
+//返回商品简明信息
+message CategoryBriefInfoRes{
+    uint32 id = 1;
+    string name = 2;
+}
+
+
+
+
+
+
+
+
+
+
+message CategoryBrandFilterReq{
+    int32 pagesNum = 1;
+    int32 pageSize = 2;
+}
+
+//请求获得商品品牌与商品目录
+message CategoryBrandInfoReq{
+    uint32 id = 1;
+    uint32 categoryId = 2;
+    uint32 brandId = 3;
+}
+
+//请求获得商品品牌与商品目录
+message DelCategoryBrandReq{
+    uint32 id = 1;
+}
+
+//请求获得商品品牌与商品目录
+message CreateCategoryBrandReq{
+    uint32 categoryId = 1;
+    uint32 brandId = 2;
+}
+
+//请求获得商品品牌与商品目录
+message UpdateCategoryBrandReq{
+    uint32 id = 1;
+    uint32 categoryId = 2;
+    uint32 brandId = 3;
+}
+
+//
+message CategoryBrandListRes{
+    int64 total = 1;
+    repeated CategoryBrandInfoRes data = 2;
+}
+
+//返回获得商品品牌与商品目录?
+message CategoryBrandInfoRes{
+    uint32 id = 1;
+    BrandInfoRes brandInfo = 2;
+    CategoryInfoRes categoryInfo = 3;
+}
+
+
+
+
+
+
+
+
+//返回一堆滑动窗口商品信息
+message BannerListRes{
+    int64 total = 1;
+    repeated BannerInfoRes data = 2;
+}
+
+//请求滑动窗口的商品
+message BannerInfoReq{
+    uint32 id = 1;
+    int32 index = 2;
+}
+
+//请求滑动窗口的商品
+message CreateBannerReq{
+    int32 index = 1;
+    string image = 2;
+    string url = 3;
+}
+
+//请求滑动窗口的商品
+message UpdateBannerReq{
+    uint32 id = 1;
+    int32 index = 2;
+    string image = 3;
+    string url = 4;
+}
+
+//返回滑动窗口的商品的信息
+message BannerInfoRes{
+    uint32 id = 1;
+    int32 index = 2;
+    string image = 3;
+    string url = 4;
+}
+
+message DelBannerReq{
+    uint32 id = 1;
+    int32 index = 2;
+}
+
+
+
+
+
+
+
+
+
+
+
+//请求限制数量的品牌类型
+message BrandFilterReq{
+    int32 pagesNum = 1;
+    int32 pageSize = 2;
+}
+
+//请求商品品牌
+message BrandInfoReq{
+    uint32 id = 1;
+}
+
+//请求商品品牌
+message CreateBrandReq{
+    string name = 1;
+    string logo = 2;
+}
+
+//请求商品品牌
+message UpdateBrandReq{
+    uint32 id = 1;
+    string name = 2;
+    string logo = 3;
+}
+
+//返回品牌信息
+message BrandInfoRes{
+    uint32 id = 1;
+    string name = 2;
+    string logo = 3;
+}
+
+//返回一堆品牌信息
+message BrandListRes{
+    int64 total = 1;
+    repeated BrandInfoRes data = 2;
+}
+
+//请求删除一个指定的品牌
+message DelBrandReq{
+    uint32 id = 1;
+    string name = 2;
+}
+
+
+
+
+
+
+
+
+
+//请求删除指定商品
+message DelGoodsReq{
+    uint32 id = 1;
+}
+
+//请求具体商品信息
+message GoodsInfoReq{
+    uint32 id = 1;
+}
+
+message GoodsIdsReq{
+    repeated uint32 ids = 1;
+}
+
+//请求创建/或创建商品
+message CreateGoodsReq{
+    uint32 categoryId = 1;
+    uint32 brandId = 2;
+    string name = 3;
+    float marketPrice = 4;
+    float salePrice = 5;
+    string goodsBrief = 6;
+    bool shipFree = 7;
+    repeated string images = 8;
+    repeated string descImages = 9;
+    string firstImage = 10;
+}
+
+//请求创建/或创建商品
+message UpdateGoodsReq{
+    uint32 id = 1;
+    uint32 categoryId = 2;
+    uint32 brandId = 3;
+    string name = 4;
+    float marketPrice = 5;
+    float salePrice = 6;
+    string goodsBrief = 7;
+    bool shipFree = 8;
+    repeated string images = 9;
+    repeated string descImages = 10;
+    string firstImage = 11;
+    int32 status = 12;
+}
+
+//请求并过滤商品信息
+message GoodsFilterReq{
+    int32 minPrice = 1;
+    int32 maxPrice = 2;
+    bool isHot = 3;
+    bool isNew = 4;
+    int32 status = 5;
+    //确定点击的目录是哪一级,会递归显示下一层(或者说下几层)目录
+    uint32 categoryId = 6;
+    int32 pagesNum = 7;
+    int32 pageSize = 8;
+    string keyWords = 9;
+    uint32 brandId = 10;
+    uint32 id = 11;
+}
+
+//返回具体商品信息
+message GoodsInfoRes{
+    uint32 id = 1;
+    uint32 categoryId = 2;
+    uint32 BrandId = 3;
+    string name = 4;
+    string goodsSign = 5;
+    int32 clickNum = 6;
+    int32 soldNum = 7;
+    int32 favorNum = 8;
+    float marketPrice = 9;
+    float salePrice = 10;
+    bool shipFree = 11;
+    string firstImage = 12;
+    bool isNew = 13;
+    bool isHot = 14;
+    int32 status = 15;
+}
+
+//返回具体商品信息
+message GoodsDetailRes{
+    uint32 id = 1;
+    uint32 categoryId = 2;
+    uint32 brandId = 3;
+    string name = 4;
+    string goodsSign = 5;
+    int32 clickNum = 6;
+    int32 soldNum = 7;
+    int32 favorNum = 8;
+    float marketPrice = 9;
+    float salePrice = 10;
+    string goodsBrief = 11;
+    bool shipFree = 12;
+    repeated string images = 13;
+    repeated string descImages = 14;
+    string firstImage = 15;
+    bool isNew = 16;
+    bool isHot = 17;
+    int32 status = 18;
+    //这里还把该商品目录的简明信息拿到了
+    CategoryBriefInfoRes category = 19;
+    BrandInfoRes brand = 20; 
+    uint32 GoodsDetailId = 21;
+}
+
+//
+message GoodsListRes{
+    int64 total = 1;
+    repeated GoodsInfoRes data = 2;
+}

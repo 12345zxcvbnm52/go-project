@@ -12,6 +12,8 @@ service Inventory{
     //暂时避免复杂化就只允许要么成功全部扣减,要么返回错误
     rpc DecrStock(DecrStockReq)returns(google.protobuf.Empty);
     rpc IncrStock(IncrStockReq)returns(google.protobuf.Empty);
+
+    rpc rebackStock(RebackStockReq)returns(google.protobuf.Empty);
 }
 
 message DecrStockReq{

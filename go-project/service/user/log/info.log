@@ -1,19 +1,20 @@
-2025-03-03T15:49:49.986+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 42535 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:03:05.006+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 39717 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:07:04.172+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 46461 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:07:34.244+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 39095 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:27:37.928+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 42813 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:27:57.460+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为:  
-2025-03-03T16:30:51.406+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 40747 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:31:11.508+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为: %v 
-2025-03-03T16:32:31.406+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 40925 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:32:41.183+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为: 
-2025-03-03T16:33:04.024+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 33579 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:33:15.042+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为: 
-2025-03-03T16:33:15.042+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为: 
-2025-03-03T16:34:22.182+0800	INFO	controller/user_cnt.go:23	正在进行一次GetUserList调用,调用信息为: 
-2025-03-03T16:38:33.934+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 41391 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318}}
-2025-03-03T16:38:49.314+0800	INFO	controller/user_cnt.go:25	正在进行一次GetUserList调用,调用信息为: {}
-2025-03-03T16:38:49.314+0800	INFO	controller/user_cnt.go:25	正在进行一次GetUserList调用,调用信息为: {}
-2025-03-03T17:34:30.951+0800	INFO	controller/user_cnt.go:25	正在进行一次GetUserList调用,调用信息为: {}
-2025-03-03T17:36:21.753+0800	INFO	controller/user_cnt.go:25	正在进行一次GetUserList调用,调用信息为: {"pageSize":2}
+2025-03-04T12:18:20.806+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":1}
+2025-03-04T12:19:29.084+0800	INFO	controller/user_cnt.go:62	正在进行一次GetUserByMobile调用,调用信息为: {"mobile":"18174637586"}
+2025-03-04T12:22:51.704+0800	INFO	controller/user_cnt.go:74	正在进行一次CreateUser调用,调用信息为: {"userName":"gin", "password":"zxcvbnm52", "mobile":"18174687586", "gender":"boy", "birth":"1740300000"}
+2025-03-04T12:26:26.620+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":2}
+2025-03-04T13:22:10.826+0800	INFO	resourse/resourse.go:40	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 46265 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 user-srv}}
+2025-03-04T14:24:12.077+0800	INFO	controller/user_cnt.go:122	正在进行一次CheckUserRole调用,调用信息为: {"password":"zxcvbnm52", "id":0, "userName":"kensame"}
+2025-03-04T14:27:17.992+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":2}
+2025-03-04T14:31:12.922+0800	INFO	resourse/resourse.go:40	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 43679 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 user-srv}}
+2025-03-04T14:31:27.769+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":2}
+2025-03-04T14:31:46.989+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":2}
+2025-03-04T15:09:23.289+0800	INFO	resourse/resourse.go:37	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 42525 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 user-srv}}
+2025-03-04T15:09:41.762+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":2}
+2025-03-04T15:09:56.984+0800	INFO	controller/user_cnt.go:50	正在进行一次GetUserById调用,调用信息为: {"id":2}
+2025-03-04T15:10:33.235+0800	INFO	controller/user_cnt.go:38	正在进行一次GetUserList调用,调用信息为: {"pagesNum":0,"pageSize":0}
+2025-03-04T15:15:07.507+0800	INFO	resourse/resourse.go:37	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 33469 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 user-srv}}
+2025-03-04T15:16:25.680+0800	INFO	controller/user_cnt.go:38	正在进行一次GetUserList调用,调用信息为: {"pagesNum":0,"pageSize":0}
+2025-03-04T15:38:08.120+0800	INFO	controller/user_cnt.go:62	正在进行一次GetUserByMobile调用,调用信息为: {"mobile":"18174687586"}
+2025-03-05T13:57:29.595+0800	INFO	resourse/resourse.go:37	服务配置文件为: &{user_srv user_srv [user] 192.168.199.128 39669 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 user_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 user-srv}}
+2025-03-05T13:58:18.089+0800	INFO	controller/user_cnt.go:122	正在进行一次CheckUserRole调用,调用信息为: {"password":"zxcvbnm52","id":0,"userName":"kensame"}
+2025-03-05T13:58:36.216+0800	INFO	controller/user_cnt.go:62	正在进行一次GetUserByMobile调用,调用信息为: {"mobile":"18174687586"}

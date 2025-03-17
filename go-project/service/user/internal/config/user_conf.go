@@ -32,8 +32,9 @@ type ConsulConf struct {
 // }
 
 type OtelConf struct {
-	Ip   string `mapstructure:"ip"`
-	Port int    `mapstructure:"port"`
+	Ip          string `mapstructure:"ip"`
+	Port        int    `mapstructure:"port"`
+	ServiceName string `mapstructure:"service-name"`
 }
 
 type ServerConf struct {

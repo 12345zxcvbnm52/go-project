@@ -22,6 +22,8 @@ jwt:
 otel:
   ip: '192.168.199.128'
   port: 4318
+  tracer-name: 'gin-user-srv'
+  service-name: 'user-srv'
 
 user-server:
   name: 'user_srv'

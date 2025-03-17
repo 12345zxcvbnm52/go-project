@@ -1,0 +1,279 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/api/swagger.proto";
+option go_package=".;proto";
+
+service Order{
+    //获得用户购物车信息
+    rpc GetUserCartItems(UserInfoReq)returns(CartItemListRes){
+        option (google.api.http) = {
+                get: "/cart/{user_id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.CartItemListRes}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取用户购物车信息",
+            Params: "userId path integer true '(uint32)购物车所属的用户的用户ID'",
+            Params: "pagesNum query integer flase '(int32)'显示购物车内商品的页号",
+            Params: "pageSize query integer false '(int32)显示购物车内商品一页的数量'",
+        };
+    }
+    //为购物车添加商品
+    rpc CreateCartItem(CreateCartItemReq)returns(CartItemInfoRes){
+        option (google.api.http) = {
+                post: "/carts"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.CartItemInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "为购物车添加商品",
+            Params: "userId body integer true '(uint32)购物车所属的用户的用户ID'",
+            Params: "goodsId body integer true '(uint32)欲添加到购物车的商品ID'",
+            Params: "goodsNum body integer true '(uint32)欲添加到购物车的商品数量'",
+        };
+    }
+    //修改购物车的一条记录
+    rpc UpdateCartItem(UpdateCartItemReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            put: "/cart/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Description: "修改购物车的一条记录",
+            Params: "id path integer true '(uint32)购物车记录的ID'",
+            Params: "userId body integer false '(uint32)购物车所属的用户的用户ID'",
+            Params: "goodsId body integer false '(uint32)欲修改的购物车商品的ID'",
+            Params: "goodsNum body integer false '(int32)修改后的商品数量'",
+            Params: "selected body bool false '(uint32)购物车所属的用户的用户ID'",
+        };
+    }
+
+    rpc DeleteCartItem(DelCartItemReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/cart/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除购物车的一条记录",
+            Params: "id path integer true '(uint32)欲删除的购物车记录ID'",
+            Params: "userId body integer false '(uint32)购物车所属的用户的用户ID'",
+            Params: "goodsId body integer false '(uint32)欲删除的购物车商品的ID'",
+        };
+    }
+    
+    rpc CreateOrder(CreateOrderReq)returns(OrderInfoRes){
+        option (google.api.http) = {
+            post: "/orders"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.OrderInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Description: "创建订单",
+            Params: "userId body integer true '(uint32)订单所属的用户的用户ID'",
+            Params: "address body string true '订单的收货地址'",
+            Params: "signerName body string true '收货人'",
+            Params: "signerMobile body string true '收货人电话'",
+            Params: "message body string true '订单额外信息'",
+            Params: "payWay body string true '支付方式'",
+        };
+    }
+
+    rpc GetOrderList(OrderFliterReq)returns(OrderListRes){
+        option (google.api.http) = {
+            get: "/orders/{user_id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.OrderListRes}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Description: "获取订单列表",
+            Params: "userId path integer true '(uint32)订单所属的用户的用户ID'",
+            Params: "pagesNum query integer flase '(int32)'显示购物车内商品的页号",
+            Params: "pageSize query integer false '(int32)显示购物车内商品一页的数量'",
+        };
+    }
+
+    rpc GetOrderInfo(OrderInfoReq)returns(OrderDetailRes){
+        option (google.api.http) = {
+            get: "/order/{id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.OrderDetailRes}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Description: "获取订单详情",
+            Params: "id path integer true '(uint32)订单ID'",
+            Params: "userId query integer true '(uint32)订单所属的用户的用户ID'",
+        };
+    }
+
+    rpc UpdateOrderStatus(OrderStatusReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+            put: "/order/status/{id}",
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json",
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Description: "更新订单状态",
+            Params: "id path integer true '(uint32)订单ID'",
+            Params: "status body integer true '(int32)订单的新状态'",
+            Params: "userId body integer true '(uint32)订单所属的用户的用户ID'",
+            Params: "orderSign body string false '(int32)订单号'",
+        };
+    }
+}
+
+message UserInfoReq{
+    uint32 userId = 1;
+    int32 pagesNum = 2;
+    int32 pageSize = 3;
+}
+
+message CartItemInfoReq{
+    uint32 userId = 1;
+    uint32 goodsId = 2;
+    uint32 id = 3;
+}
+
+message CartItemInfoRes{
+    uint32 id = 1;
+    uint32 userId = 2;
+    uint32 goodsId = 3;
+    int32 goodsNum = 4;
+    bool selected = 5;
+}
+
+message CreateCartItemReq{
+    uint32 userId = 1;
+    uint32 goodsId = 2;
+    int32 goodsNum = 3;
+}
+
+message UpdateCartItemReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    uint32 goodsId = 3;
+    int32 goodsNum = 4;
+    bool selected = 5;
+}
+
+message CartItemListRes{
+    int64 total = 1;
+    repeated CartItemInfoRes data = 2;
+}
+
+message DelCartItemReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    uint32 goodsId = 3;
+}
+
+message OrderInfoReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+}
+
+
+message CreateOrderReq{
+    uint32 userId = 2;
+    string address = 3;
+    string signerName = 4;
+    string signerMobile = 5;
+    string message = 6;
+    string payWay = 7;
+    string orderSign = 8;
+}
+
+message OrderInfoRes{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string orderSign = 3;
+    string payWay = 4;
+    int32 status = 5;
+    string address = 6;
+    float cost = 7;
+    string signerName = 8;
+    string signerMobile = 9;
+    string message = 10;
+    int32 payTime = 11;
+}
+
+message OrderDetailReq{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string OrderSign = 3;
+}
+
+//将一些详细信息放入其中
+message OrderDetailRes{
+    uint32 id = 1;
+    uint32 userId = 2;
+    string orderSign = 3;
+    string payWay = 4;
+    int32 status = 5;
+    string address = 6;
+    float cost = 7;
+    string signerName = 8;
+    string signerMobile = 9;
+    string message = 10;
+    int32 payTime = 11;
+    repeated OrderItemRes items = 12;
+}
+
+message OrderItemRes{
+    uint32 id = 1;
+    uint32 orderId = 2;
+    uint32 goodsId = 3;
+    int32 goodsNum = 4;
+    string goodsName = 5;
+    string goodsImages = 6;
+    float goodsPrice = 7;
+}
+
+message OrderFliterReq{
+    uint32 userId = 1;
+    int32 pagesNum = 2;
+    int32 pageSize = 3;
+}
+
+message OrderListRes{
+    int64 total = 1;
+    repeated OrderInfoRes data = 2;
+}
+
+//暂时只考虑通过订单id来更新状态
+message OrderStatusReq{
+    int32 status = 1;
+    uint32 id = 2;
+    uint32 userId = 3;
+    string orderSign = 4;
+}

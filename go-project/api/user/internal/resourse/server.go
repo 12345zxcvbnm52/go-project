@@ -5,7 +5,9 @@ import (
 	usercontroller "kenshop/api/user/internal/controller"
 	"kenshop/goken/registry/ways/consul"
 	"kenshop/goken/server/httpserver"
+	opengintracing "kenshop/goken/server/httpserver/middlewares/tracing"
 	"kenshop/goken/server/rpcserver"
+	"kenshop/goken/server/rpcserver/cinterceptors"
 
 	"github.com/hashicorp/consul/api"
 )
@@ -22,8 +24,8 @@ func InitServer() {
 
 	s := httpserver.MustNewServer(Ctx,
 		fmt.Sprintf("%s:%d", Conf.Ip, Conf.Port),
-		httpserver.WithGrpcClient(Conf.UserSrv.Name, rpcserver.WithDiscover(d)),
-		httpserver.WithTracer(fmt.Sprintf("%s:%d", Conf.Otel.Ip, Conf.Otel.Port)),
+		httpserver.WithGrpcClient(Conf.UserSrv.Name, rpcserver.WithDiscover(d), rpcserver.WithClientUnaryInterceptor(cinterceptors.UnaryTracingInterceptor)),
+		httpserver.WithTracer(opengintracing.WithTracerName(Conf.Otel.TracerName)),
 		httpserver.WithJWTMiddleware(Conf.Jwt.Key),
 	)
 

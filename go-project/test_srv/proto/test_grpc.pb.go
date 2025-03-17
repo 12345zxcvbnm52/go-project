@@ -7,89 +7,234 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion7
 
-// TestClient is the client API for Test service.
+// DmtClient is the client API for Dmt service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TestClient interface {
-	Conn(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Res, error)
+type DmtClient interface {
+	ACom(ctx context.Context, in *A, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ATrans(ctx context.Context, in *A, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	BTrans(ctx context.Context, in *B, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	BCom(ctx context.Context, in *B, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Try(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type testClient struct {
+type dmtClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTestClient(cc grpc.ClientConnInterface) TestClient {
-	return &testClient{cc}
+func NewDmtClient(cc grpc.ClientConnInterface) DmtClient {
+	return &dmtClient{cc}
 }
 
-func (c *testClient) Conn(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Res, error) {
-	out := new(Res)
-	err := c.cc.Invoke(ctx, "/test/Conn", in, out, opts...)
+func (c *dmtClient) ACom(ctx context.Context, in *A, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dmt/ACom", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TestServer is the server API for Test service.
-// All implementations must embed UnimplementedTestServer
+func (c *dmtClient) ATrans(ctx context.Context, in *A, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dmt/ATrans", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dmtClient) BTrans(ctx context.Context, in *B, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dmt/BTrans", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dmtClient) BCom(ctx context.Context, in *B, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dmt/BCom", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dmtClient) Try(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dmt/Try", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DmtServer is the server API for Dmt service.
+// All implementations must embed UnimplementedDmtServer
 // for forward compatibility
-type TestServer interface {
-	Conn(context.Context, *Req) (*Res, error)
-	mustEmbedUnimplementedTestServer()
+type DmtServer interface {
+	ACom(context.Context, *A) (*emptypb.Empty, error)
+	ATrans(context.Context, *A) (*emptypb.Empty, error)
+	BTrans(context.Context, *B) (*emptypb.Empty, error)
+	BCom(context.Context, *B) (*emptypb.Empty, error)
+	Try(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	mustEmbedUnimplementedDmtServer()
 }
 
-// UnimplementedTestServer must be embedded to have forward compatible implementations.
-type UnimplementedTestServer struct {
+// UnimplementedDmtServer must be embedded to have forward compatible implementations.
+type UnimplementedDmtServer struct {
 }
 
-func (UnimplementedTestServer) Conn(context.Context, *Req) (*Res, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Conn not implemented")
+func (UnimplementedDmtServer) ACom(context.Context, *A) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ACom not implemented")
 }
-func (UnimplementedTestServer) mustEmbedUnimplementedTestServer() {}
+func (UnimplementedDmtServer) ATrans(context.Context, *A) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ATrans not implemented")
+}
+func (UnimplementedDmtServer) BTrans(context.Context, *B) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BTrans not implemented")
+}
+func (UnimplementedDmtServer) BCom(context.Context, *B) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BCom not implemented")
+}
+func (UnimplementedDmtServer) Try(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Try not implemented")
+}
+func (UnimplementedDmtServer) mustEmbedUnimplementedDmtServer() {}
 
-// UnsafeTestServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TestServer will
+// UnsafeDmtServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DmtServer will
 // result in compilation errors.
-type UnsafeTestServer interface {
-	mustEmbedUnimplementedTestServer()
+type UnsafeDmtServer interface {
+	mustEmbedUnimplementedDmtServer()
 }
 
-func RegisterTestServer(s *grpc.Server, srv TestServer) {
-	s.RegisterService(&_Test_serviceDesc, srv)
+func RegisterDmtServer(s *grpc.Server, srv DmtServer) {
+	s.RegisterService(&_Dmt_serviceDesc, srv)
 }
 
-func _Test_Conn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Req)
+func _Dmt_ACom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(A)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TestServer).Conn(ctx, in)
+		return srv.(DmtServer).ACom(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/test/Conn",
+		FullMethod: "/dmt/ACom",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestServer).Conn(ctx, req.(*Req))
+		return srv.(DmtServer).ACom(ctx, req.(*A))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Test_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "test",
-	HandlerType: (*TestServer)(nil),
+func _Dmt_ATrans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(A)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DmtServer).ATrans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dmt/ATrans",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DmtServer).ATrans(ctx, req.(*A))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dmt_BTrans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(B)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DmtServer).BTrans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dmt/BTrans",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DmtServer).BTrans(ctx, req.(*B))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dmt_BCom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(B)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DmtServer).BCom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dmt/BCom",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DmtServer).BCom(ctx, req.(*B))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dmt_Try_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DmtServer).Try(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dmt/Try",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DmtServer).Try(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Dmt_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "dmt",
+	HandlerType: (*DmtServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Conn",
-			Handler:    _Test_Conn_Handler,
+			MethodName: "ACom",
+			Handler:    _Dmt_ACom_Handler,
+		},
+		{
+			MethodName: "ATrans",
+			Handler:    _Dmt_ATrans_Handler,
+		},
+		{
+			MethodName: "BTrans",
+			Handler:    _Dmt_BTrans_Handler,
+		},
+		{
+			MethodName: "BCom",
+			Handler:    _Dmt_BCom_Handler,
+		},
+		{
+			MethodName: "Try",
+			Handler:    _Dmt_Try_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -25,3 +25,4 @@ redis:
 otel:
   ip: '192.168.199.128'
   port: 4318
+  service-name: 'user-srv'

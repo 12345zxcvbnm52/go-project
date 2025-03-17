@@ -1,10 +1,10 @@
 package jwt
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 )
 
@@ -22,41 +22,11 @@ func MustNewGinJWTMiddleware(key string, opts ...JwtOption) *GinJWTMiddleware {
 		CookieName:       "jwt-cookie",
 		ExpField:         "exp",
 		SendCookie:       false,
-		SecureCookie:     false,
-		CookieHTTPOnly:   false,
-		DisabledAbort:    false,
+		SecureCookie:     true,
+		UseAbort:         true,
 		TimeFunc:         time.Now,
 		Key:              []byte(key),
 		CookieSameSite:   http.SameSiteDefaultMode,
-		Unauthorized: func(c *gin.Context, code int, message string) {
-			c.JSON(code, gin.H{
-				"code":  code,
-				"error": message,
-			})
-		},
-		LoginResponse: func(c *gin.Context, code int, token string, expire time.Time) {
-			c.JSON(code, gin.H{
-				"code":   code,
-				"token":  token,
-				"expire": expire.Format(time.RFC3339),
-			})
-		},
-		LogoutResponse: func(c *gin.Context, code int) {
-			c.JSON(http.StatusOK, gin.H{
-				"code": http.StatusOK,
-			})
-		},
-		PayloadFunc: func(keyvalue ...string) jwt.MapClaims {
-			c := make(jwt.MapClaims)
-			//每隔一个设置一对键值对
-			for i := 0; i < len(keyvalue)-1; i += 2 {
-				c[keyvalue[i]] = keyvalue[i+1]
-			}
-			return c
-		},
-		// HTTPStatusMessageFunc: func(e error, c *gin.Context) string {
-		// 	return e.Error()
-		// },
 	}
 
 	// 应用所有选项函数
@@ -87,6 +57,53 @@ func MustNewGinJWTMiddleware(key string, opts ...JwtOption) *GinJWTMiddleware {
 
 	return mw
 }
+
+var (
+	// ErrMissingSecretKey 表示缺少密钥
+	ErrMissingSecretKey = errors.New("secret key is required")
+
+	// ErrForbidden 没有访问该资源的权限
+	ErrForbidden = errors.New("you don't have permission to access this resource")
+
+	// ErrFailedAuthentication 表示身份验证失败,可能是错误的用户名或密码
+	ErrFailedAuthentication = errors.New("incorrect Username or Password")
+
+	// ErrFailedTokenCreation 表示JWT令牌创建失败,原因未知
+	ErrFailedTokenCreation = errors.New("failed to create JWT Token")
+
+	// ErrExpiredToken 表示JWT令牌已过期,无法刷新
+	ErrExpiredToken = errors.New("token is expired")
+
+	// ErrExpiredRefreshToken 表示刷新令牌已过期,无法刷新
+	ErrExpiredRefreshToken = errors.New("refresh token is expired")
+
+	// ErrEmptyToken 在使用 HTTP 头部进行认证时,如果 `Authorization` 头为空,则会抛出该错误
+	ErrEmptyToken = errors.New("token header is empty")
+
+	// ErrMissingExpField 表示令牌缺少 `exp`（过期时间）字段
+	ErrMissingExpField = errors.New("missing exp field")
+
+	// ErrWrongFormatOfExp 表示 `exp` 字段格式错误,必须为 `float64`
+	ErrWrongFormatOfExp = errors.New("exp must be float64 format")
+
+	// ErrInvalidToken 表示认证头无效,例如可能使用了错误的 Realm 名称
+	ErrInvalidToken = errors.New("auth header is invalid")
+
+	// ErrEmptyQueryToken 在 URL 查询参数中进行认证时,如果令牌变量为空,则会抛出该错误
+	ErrEmptyQueryToken = errors.New("query token is empty")
+
+	// ErrEmptyCookieToken 在使用 Cookie 进行认证时,如果令牌 Cookie 为空,则会抛出该错误
+	ErrEmptyCookieToken = errors.New("cookie token is empty")
+
+	// ErrEmptyParamToken 在使用 URL 路径参数进行认证时,如果参数为空,则会抛出该错误
+	ErrEmptyParamToken = errors.New("parameter token is empty")
+
+	// ErrInvalidSigningAlgorithm 表示签名算法无效,必须是 HS256、HS384、HS512、RS256、RS384 或 RS512
+	ErrInvalidSigningAlgorithm = errors.New("invalid signing algorithm")
+
+	//
+	ErrTokenStringInvalid = errors.New("token string invalid")
+)
 
 func WithTokenInside(t string) JwtOption {
 	return func(mw *GinJWTMiddleware) {
@@ -121,30 +138,6 @@ func WithTimeoutFunc(timeoutFunc func(data interface{}) time.Duration) JwtOption
 func WithTimeFunc(timeFunc func() time.Time) JwtOption {
 	return func(mw *GinJWTMiddleware) {
 		mw.TimeFunc = timeFunc
-	}
-}
-
-func WithUnauthorized(unauthorized func(c *gin.Context, code int, message string)) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.Unauthorized = unauthorized
-	}
-}
-
-func WithPayloadFunc(payloadFunc func(keyvalue ...string) jwt.MapClaims) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.PayloadFunc = payloadFunc
-	}
-}
-
-func WithLoginResponse(loginResponse func(c *gin.Context, code int, token string, expire time.Time)) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.LoginResponse = loginResponse
-	}
-}
-
-func WithLogoutResponse(logoutResponse func(c *gin.Context, code int)) JwtOption {
-	return func(mw *GinJWTMiddleware) {
-		mw.LogoutResponse = logoutResponse
 	}
 }
 

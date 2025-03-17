@@ -1,0 +1,37 @@
+#服务注册参数
+name: 'order_srv'
+id: 'order_srv'
+tags: 
+  - 'order'
+version: '1.0'
+
+#这里若使用具体ip则需要关闭mysql的保护模式
+mysql: 
+  ip: '192.168.199.128'
+  port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'order_srv'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  ip: '192.168.199.128'
+  port: 6379
+  password: '123'
+
+otel:
+  ip: '192.168.199.128'
+  port: 4318
+  service-name: 'order-srv'
+
+rocketmq: 
+  ip: '192.168.199.128'
+  port: '9876'
+  reback-topic: 'order-reback'
+  timeout-topic: 'order-timeout'
+  producer-group-name: 'order-create-gn'
+  transaction-producer-group-name: 'order-transaction-reback-gn'
+  consumer-group-name: 'order-timeout-gn'

@@ -25,8 +25,11 @@ message MethodOption{
 	string Accept = 1;
 	string Produce = 2;
 	string Success = 3;
-	string Failure = 4;
+	repeated string Failures = 4;
     string Router = 5;
     string Tags = 6;
-	repeated string Params = 7;
+	string Summary = 7;
+	string Description = 8;
+	repeated string Headers = 9;
+	repeated string Params = 10;
 }

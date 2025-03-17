@@ -2,13 +2,14 @@ package errors
 import (
 	"google.golang.org/grpc/codes"
 )
-{{ range $k1,$v1 := . }} {{ range $k2,$v2 := $v1 }}
+{{- range $k1,$v1 := . }} 
+	{{- range $k2,$v2 := $v1 }}
 	var {{$v2.CodeName}} Coder 
-{{end}}
+	{{- end}}
 
 	func init(){
-{{ range $k2,$v2 := $v1 }}	
+{{- range $k2,$v2 := $v1 }}	
 		{{$v2.CodeName}} = mustNewCoder({{$v2.CodeNum}},{{$v2.HttpCode}},{{$v2.GrpcCode}},"{{$v2.Message}}")
-{{end}}
+{{- end}}
 	}
-{{end}}
+{{- end}}

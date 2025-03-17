@@ -1,0 +1,135 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/api/swagger.proto";
+option go_package=".;proto";
+
+service Inventory{
+    //后续可以考虑给每个库存添加id(同一个id则增加库存量,否则根据地址创建),address(地址)
+    rpc CreateStock(CreateInventoryReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+                post: "/inventories"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json"
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建一个商品库存",
+            Params: "goodsId body integer true '(uint32)欲创建商品库存的id'",
+            Params: "goodsNum body integer true '(int32)欲创建商品库存的数量'",
+        };
+    }
+    
+    rpc SetStock(SetInventoryReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+                put: "/inventory"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json"
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "更新设置商品库存",
+            Params: "goodsId body integer true '(uint32)欲更新设置商品库存的id'",
+            Params: "goodsNum body integer true '(int32)欲更新设置商品库存的数量'",
+        };
+    }
+
+    rpc GetStockInfo(InventoryInfoReq)returns(InventoryInfoRes){
+        option (google.api.http) = {
+                get: "/inventory/{goods_id}"
+        };
+        option (google.api.MethodOpt) = {
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=proto.InventoryInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "获取商品库存信息",
+            Params: "goodsId path integer true '(uint32)商品库存的id'",
+        };
+    }
+
+    rpc DecrStock(UpdateStockReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+                post: "/inventory/decr"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json"
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "扣减商品库存",
+            Params: "decrData body array true '([]*proto.UpdateInventoryReq)扣减库存的数据'",
+            Params: "orderSign body string true '(string)订单签名'",
+        };
+    }
+
+    rpc IncrStock(UpdateStockReq)returns(google.protobuf.Empty){
+        option (google.api.http) = {
+                post: "/inventory/incr"
+        };
+        option (google.api.MethodOpt) = {
+            Accept: "application/json"
+            Produce: "application/json",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "增加商品库存",
+            Params: "incrData body array true '([]*proto.UpdateInventoryReq)增加库存的数据'",
+            Params: "orderSign body string true '(string)订单签名'",
+        };
+    }
+
+    rpc RebackStock(RebackStockReq)returns(google.protobuf.Empty);
+}
+
+message UpdateStockReq{
+    repeated UpdateInventoryReq decrData = 1;
+    string orderSign = 2;
+
+}
+
+message CreateInventoryReq{
+    uint32 goodsId = 1;
+    int32 goodsNum = 2;
+}
+
+message CreateInventoryRes{
+    uint32 goodsId = 1;
+    int32 goodsNum = 2;
+    uint32 id = 3;
+}
+
+message InventoryInfoReq{
+    uint32 goodsId = 1;
+}
+
+message InventoryInfoRes{
+    uint32 goodsId = 1;
+    int32 goodsNum = 2;
+}
+
+message UpdateInventoryReq{
+    uint32 goodsId = 1;
+    int32 goodsNum = 2;
+}
+
+message SetInventoryReq{
+    uint32 goodsId = 1;
+    int32 goodsNum = 2;
+}
+
+message RebackStockReq{
+    string orderSign = 1;
+}

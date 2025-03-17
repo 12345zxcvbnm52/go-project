@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  memcached:
+    image: memcached
+    container_name: memcached
+    restart: always
+    command: ["-m", "128", "-o", "modern"]
+    ports:
+      - "11211:11211"
+    networks:
+      - memcache_net
+
+networks:
+  memcache_net:
+    driver: bridge

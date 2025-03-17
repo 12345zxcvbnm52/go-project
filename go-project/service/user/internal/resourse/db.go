@@ -3,7 +3,7 @@ package resourse
 import (
 	"fmt"
 	userdata "kenshop/service/user/internal/data"
-	"kenshop/service/user/internal/model"
+	model "kenshop/service/user/internal/model"
 	"log"
 	"os"
 	"time"

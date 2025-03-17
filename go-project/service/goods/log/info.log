@@ -1,0 +1,5 @@
+2025-03-12T18:33:54.025+0800	INFO	resourse/resourse.go:37	服务配置文件为: &{goods_srv goods_srv [goods] 192.168.199.128 38713 1.0 {192.168.199.128 3307 root 123 goods_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 goods-srv} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-12T18:34:13.779+0800	INFO	controller/goods_cnt.go:25	正在进行一次GetGoodsListById调用,调用信息为: {"ids":[2,1,3,4]}
+2025-03-12T18:39:18.780+0800	INFO	resourse/resourse.go:37	服务配置文件为: &{goods_srv goods_srv [goods] 192.168.199.128 36333 1.0 {192.168.199.128 3307 root 123 goods_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 goods-srv} {{0 0} 0 0 {{} 0} {{} 0}}}
+2025-03-12T18:39:39.627+0800	INFO	controller/goods_cnt.go:25	正在进行一次GetGoodsListById调用,调用信息为: {"ids":[2,1,3,4]}
+2025-03-12T18:41:08.530+0800	INFO	controller/goods_cnt.go:25	正在进行一次GetGoodsListById调用,调用信息为: {"ids":[2,1,3,4]}

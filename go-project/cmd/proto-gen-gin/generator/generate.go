@@ -2,7 +2,9 @@ package generator
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
+	"os"
 	reflect "reflect"
 	"strings"
 	"text/template"
@@ -14,15 +16,19 @@ import (
 
 const (
 	queryStr = `	if err := c.ShouldBindQuery(u); err != nil {
-		s.ValidatorErrorHandle(c, err)
+		httputil.WriteValidateError(c, s.Server.Validator.Trans, err, s.Server.UseAbort)
 		return
 	}`
-	urlStr = `	if err := c.ShouldBindUrl(u); err != nil {
-		s.ValidatorErrorHandle(c, err)
+	urlStr = `	if err := c.ShouldBindUri(u); err != nil {
+		httputil.WriteValidateError(c, s.Server.Validator.Trans, err, s.Server.UseAbort)
 		return
 	}`
 	headerStr = `	if err := c.ShouldBindHeader(u); err != nil {
-		s.ValidatorErrorHandle(c, err)
+		httputil.WriteValidateError(c, s.Server.Validator.Trans, err, s.Server.UseAbort)
+		return
+	}`
+	bodyStr = `	if err := c.ShouldBind(u); err != nil {
+		httputil.WriteValidateError(c, s.Server.Validator.Trans, err, s.Server.UseAbort)
 		return
 	}`
 )
@@ -69,6 +75,7 @@ func genService(_ *protogen.File, _ *protogen.GeneratedFile, s *protogen.Service
 		ServiceComment: s.Comments.Leading.String(),
 		SwaggerApi:     make(map[string]string),
 		AllRequestForm: make(map[string]map[string]*RequestParam),
+		AllRequestUsed: make(map[string]int),
 	}
 
 	// if sd.ServiceComment != "" && sd.ServiceComment[len(sd.ServiceComment)-1] == '\n' {
@@ -98,12 +105,51 @@ func genService(_ *protogen.File, _ *protogen.GeneratedFile, s *protogen.Service
 
 	for _, method := range s.Methods {
 		m := genMethod(method)
+		if m == nil {
+			continue
+		}
 		if m.MethodComment != "" && m.MethodComment[len(m.MethodComment)-1] == '\n' {
 			m.MethodComment = m.MethodComment[:len(m.MethodComment)-1]
 		}
-		if _, ok := sd.AllRequestForm[m.RequestFormName]; !ok {
-			sd.AllRequestForm[m.RequestFormName] = m.RequestParams
+		if m.RequestFormName == "Empty" {
+			sd.Methods = append(sd.Methods, m)
+			continue
 		}
+
+		for _, v := range m.RequestParams {
+			if v.SubRequestParams != nil {
+				for reqName, subInfo := range v.SubRequestParams {
+					subFormName := reqTurnFormName(reqName)
+					if _, ok := sd.AllRequestForm[subFormName]; !ok {
+						sd.AllRequestForm[subFormName] = subInfo
+					}
+				}
+
+			}
+		}
+		//如果还没有这个Form类型就记录它
+		if v, ok := sd.AllRequestForm[m.RequestFormName]; !ok {
+			sd.AllRequestForm[m.RequestFormName] = m.RequestParams
+			//如果有了这个Form类型,把该form的使用次数加一,并且给该form的命名加上后缀_i,i是第几次出现,以便分别
+		} else {
+			sd.AllRequestUsed[m.RequestFormName]++
+			i := sd.AllRequestUsed[m.RequestFormName]
+			r := fmt.Sprintf("%s_%d", m.RequestFormName, i)
+			if i == 1 {
+				//记得i==1时要把原初的form加上_0
+				sd.AllRequestForm[fmt.Sprintf("%s_%d", m.RequestFormName, 0)] = v
+				for _, v := range sd.Methods {
+					if v.RequestFormName == m.RequestFormName {
+						v.RequestFormName = fmt.Sprintf("%s_%d", m.RequestFormName, 0)
+					}
+				}
+			}
+			sd.AllRequestForm[r] = m.RequestParams
+			//最后要删除原始form
+			delete(sd.AllRequestForm, m.RequestFormName)
+			m.RequestFormName = fmt.Sprintf("%s_%d", m.RequestFormName, i)
+		}
+
 		sd.Methods = append(sd.Methods, m)
 	}
 
@@ -117,9 +163,20 @@ func genService(_ *protogen.File, _ *protogen.GeneratedFile, s *protogen.Service
 func genMethod(m *protogen.Method) *method {
 	var methods *method
 
+	//不导出的方法过滤
+	unimport := m.GoName[:1]
+	if unimport == strings.ToLower(unimport) {
+		return nil
+	}
+
 	rule, ok := proto.GetExtension(m.Desc.Options(), annotations.E_Http).(*annotations.HttpRule)
 	methods = buildHTTPRule(m, rule, ok)
 	buildForm(m, methods)
+	s := ""
+	for k, v := range methods.RequestParams {
+		s += fmt.Sprintf("%s:%+v\n", k, *v)
+	}
+	os.Stderr.Write([]byte(s))
 	buildSwagger(m, methods)
 
 	return methods
@@ -157,26 +214,30 @@ func buildHTTPRule(m *protogen.Method, rule *annotations.HttpRule, conv bool) *m
 	return md
 }
 
-func buildMethodDesc(m *protogen.Method, httpMethod string, path string) *method {
-	f := func(s string) string {
-		if strings.HasSuffix(s, "Req") {
-			return strings.TrimSuffix(s, "Req") + "Form"
-		}
-		return s
+func reqTurnFormName(s string) string {
+	if strings.HasSuffix(s, "Req") {
+		return strings.TrimSuffix(s, "Req") + "Form"
 	}
+	return s
+}
+
+func buildMethodDesc(m *protogen.Method, httpMethod string, path string) *method {
 
 	md := &method{
 		MethodComment:   m.Comments.Leading.String(),
 		HandlerName:     m.GoName,
 		RequestType:     m.Input.GoIdent.GoName,
 		ReplyType:       m.Output.GoIdent.GoName,
-		RequestFormName: f(m.Input.GoIdent.GoName),
+		RequestFormName: reqTurnFormName(m.Input.GoIdent.GoName),
 		Path:            path,
 		Path2Http:       path,
 		Path2Swagger:    path,
 		Method:          httpMethod,
-		SwaggerApi:      make(map[string]string),
+		SwaggoInfo:      make(map[string]string),
 		RequestParams:   make(map[string]*RequestParam),
+		SwaggoParams:    make([]string, 0),
+		SwaggoHeaders:   make([]string, 0),
+		SwaggoFailures:  make([]string, 0),
 	}
 	md.pathParams2Http()
 	md.pathParams2Swagger()
@@ -186,7 +247,7 @@ func buildMethodDesc(m *protogen.Method, httpMethod string, path string) *method
 func buildSwagger(m *protogen.Method, methods *method) {
 	//先把Router定义下来
 	if methods.Method+methods.Path != "" {
-		methods.SwaggerApi["Router"] = fmt.Sprintf("%s [%s]", methods.Path2Swagger, methods.Method)
+		methods.SwaggoInfo["Router"] = fmt.Sprintf("%s [%s]", methods.Path2Swagger, methods.Method)
 	}
 
 	methodRule, ok := proto.GetExtension(m.Desc.Options(), E_MethodOpt).(*MethodOption)
@@ -213,24 +274,32 @@ func buildSwagger(m *protogen.Method, methods *method) {
 				}
 				fieldName := val.Type().Field(i).Name
 
-				methods.SwaggerApi[fieldName] = fieldValue
+				methods.SwaggoInfo[fieldName] = fieldValue
 				//如果是swagger的Params字段(记录多个string,即[]string)
 			} else {
 				fieldValue, ok := val.Field(i).Interface().([]string)
-				if ok && val.Type().Field(i).Name == "Params" {
-					//把'号替换为"
-					f := func(inputs ...string) []string {
-						res := make([]string, 0)
-						for _, v := range inputs {
-							res = append(res, strings.ReplaceAll(v, "'", "\""))
+				if ok {
+					fieldName := val.Type().Field(i).Name
+					switch fieldName {
+					case "Params":
+						//把'号替换为"
+						f := func(inputs ...string) []string {
+							res := make([]string, 0)
+							for _, v := range inputs {
+								res = append(res, strings.ReplaceAll(v, "'", "\""))
+							}
+							return res
 						}
-						return res
+						methods.SwaggoParams = append(methods.SwaggoParams, f(fieldValue...)...)
+					case "Headers":
+						methods.SwaggoHeaders = append(methods.SwaggoHeaders, fieldValue...)
+					case "Failures":
+						methods.SwaggoFailures = append(methods.SwaggoFailures, fieldValue...)
 					}
-					methods.Params = append(methods.Params, f(fieldValue...)...)
 				}
 			}
 		}
-		for _, v := range methods.Params {
+		for _, v := range methods.SwaggoParams {
 			words := strings.Fields(v)
 			im, ok := methods.RequestParams[GoExportedCamelCase(words[0])]
 			if !ok {
@@ -240,42 +309,118 @@ func buildSwagger(m *protogen.Method, methods *method) {
 			//查看Params的第四个参数是否是必须的
 			switch words[3] {
 			case "true":
-				im.Required = "required"
-			case "false":
-				im.Required = ""
+				if words[1] == "body" {
+					im.Required = "required"
+					for _, v := range im.SubRequestParams {
+						for _, v2 := range v {
+							v2.Required = "required"
+						}
+					}
+				}
 			default:
-				im.Required = "required"
+				im.Required = ""
 			}
 
 			switch words[1] {
 			case "path":
 				im.Url = SnakeCase(words[0])
-				im.UrlStr = urlStr
+				for _, v := range im.SubRequestParams {
+					for _, v2 := range v {
+						v2.Url = v2.Snack
+					}
+				}
+				methods.UrlStr = urlStr
 			case "header":
 				im.Header = SnakeCase(words[0])
-				im.HeaderStr = urlStr
+				for _, v := range im.SubRequestParams {
+					for _, v2 := range v {
+						v2.Header = v2.Snack
+					}
+				}
+				methods.HeaderStr = headerStr
 			case "query":
-				im.QueryStr = urlStr
+				methods.QueryStr = queryStr
+			case "body":
+				methods.BodyStr = bodyStr
+			case "formData":
+				methods.BodyStr = bodyStr
 			default:
 			}
 
 			im.Json = SnakeCase(words[0])
+			for _, v := range im.SubRequestParams {
+				for _, v2 := range v {
+					v2.Json = v2.Snack
+				}
+			}
 			im.Form = SnakeCase(words[0])
+			for _, v := range im.SubRequestParams {
+				for _, v2 := range v {
+					v2.Form = v2.Snack
+				}
+			}
 		}
+		// if v, ok := methods.SwaggoInfo["Description"]; !ok || v == "" {
+		// 	methods.SwaggoInfo["Description"] = methods.MethodComment
+		// }
 	}
 }
 
 func buildForm(m *protogen.Method, methods *method) {
 	for _, v := range m.Input.Fields {
-		im, ok := methods.RequestParams[v.GoName]
+		im, ok := methods.RequestParams[GoExportedCamelCase(v.GoName)]
 		if !ok {
-			methods.RequestParams[v.GoName] = &RequestParam{}
-			im = methods.RequestParams[v.GoName]
+			methods.RequestParams[GoExportedCamelCase(v.GoName)] = &RequestParam{}
+			im = methods.RequestParams[GoExportedCamelCase(v.GoName)]
 		}
-		if v.Desc.Kind().String() != "message" && v.Oneof == nil && v.GoName != "" {
+		if v.Oneof == nil && v.GoName != "" {
 			im.Camel = GoExportedCamelCase(v.GoName)
 			im.Snack = SnakeCase(v.GoName)
-			im.Type = v.Desc.Kind().String()
+			if v.Desc.Kind().String() == "message" {
+				im.SubRequestParams = make(map[string]map[string]*RequestParam)
+				im.SubRequestParams[GoExportedCamelCase(v.GoName)] = make(map[string]*RequestParam)
+				for _, iv := range v.Message.Fields {
+					if iv.Oneof == nil && iv.GoName != "" {
+						if iv.Desc.Kind().String() == "message" {
+							panic(errors.New("protoc-gen-gin not allow three message enbed"))
+						}
+						im.SubRequestParams[GoExportedCamelCase(v.GoName)][GoExportedCamelCase(iv.GoName)] = &RequestParam{}
+						cim := im.SubRequestParams[GoExportedCamelCase(v.GoName)][GoExportedCamelCase(iv.GoName)]
+						cim.Camel = GoExportedCamelCase(iv.GoName)
+						cim.Snack = SnakeCase(iv.GoName)
+						ctp := iv.Desc.Kind().String()
+						if ctp == "float" {
+							ctp = "float32"
+						} else if ctp == "double" {
+							ctp = "float64"
+						} else if iv.Desc.IsList() {
+							ctp = "[]*" + ctp
+							cim.IsSlice = true
+						}
+						cim.Type = ctp
+					}
+				}
+				if v.Desc.IsList() {
+					im.Type = "[]" + reqTurnFormName(v.GoName)
+					if v.Desc.IsList() {
+						im.Type = "[]*" + reqTurnFormName(v.GoName)
+					}
+					im.IsSlice = true
+				} else {
+					im.Type = reqTurnFormName(v.GoName)
+				}
+			} else {
+				tp := v.Desc.Kind().String()
+				if tp == "float" {
+					tp = "float32"
+				} else if tp == "double" {
+					tp = "float64"
+				} else if v.Desc.IsList() {
+					tp = "[]" + tp
+					im.IsSlice = true
+				}
+				im.Type = tp
+			}
 		}
 	}
 }

@@ -1,0 +1,29 @@
+#服务注册参数
+ip: '0.0.0.0'
+port: 8083
+name: 'inventory_web'
+id: 'inventory_web'
+tags: 
+  - 'inventory'
+version: '1.0'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  ip: '192.168.199.128'
+  port: 6379
+  password: '123'
+
+jwt:
+  key: 'kensame'
+
+otel:
+  ip: '192.168.199.128'
+  port: 4318
+  tracer-name: 'gin-inventory-srv'
+  service-name: 'inventory-srv'
+
+inventory-server:
+  name: 'inventory_srv'

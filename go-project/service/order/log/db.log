@@ -1,0 +1,126 @@
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.096ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[11.420ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[10.898ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'order_srv' AND table_name = 'orders' AND table_type = 'BASE TABLE'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[5.848ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.847ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[6.401ms] [rows:-] SELECT * FROM `orders` LIMIT 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[7.386ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'order_srv' AND table_name = 'orders' ORDER BY ORDINAL_POSITION
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.210ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.534ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[6.856ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'orders' AND index_name = 'idx_orders_user_id'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[0.799ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.640ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.738ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'orders' AND index_name = 'idx_orders_order_sign'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[0.681ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.762ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.532ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'orders' AND index_name = 'idx_orders_deleted_at'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[0.546ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.687ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.671ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'order_srv' AND table_name = 'carts' AND table_type = 'BASE TABLE'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[0.605ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.427ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.848ms] [rows:-] SELECT * FROM `carts` LIMIT 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.361ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'order_srv' AND table_name = 'carts' ORDER BY ORDINAL_POSITION
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.227ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.996ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.739ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'carts' AND index_name = 'idx_carts_deleted_at'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.026ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.623ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.723ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'carts' AND index_name = 'idx_carts_user_id'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.460ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[7.508ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[7.595ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'carts' AND index_name = 'idx_carts_goods_id'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[0.346ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.503ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.910ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'order_srv' AND table_name = 'order_goods' AND table_type = 'BASE TABLE'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.018ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[4.738ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.801ms] [rows:-] SELECT * FROM `order_goods` LIMIT 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.845ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'order_srv' AND table_name = 'order_goods' ORDER BY ORDINAL_POSITION
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.564ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.525ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.839ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'order_goods' AND index_name = 'idx_order_goods_goods_name'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.985ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.913ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[4.341ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'order_goods' AND index_name = 'idx_order_goods_deleted_at'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.714ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.972ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[5.894ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'order_goods' AND index_name = 'idx_order_goods_order_id'
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[2.036ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[1.619ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'order_srv%' ORDER BY SCHEMA_NAME='order_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:39:29 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/order/internal/resourse/db.go:87
+[3.606ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'order_srv' AND table_name = 'order_goods' AND index_name = 'idx_order_goods_goods_id'
+2025/03/12 18:39:39 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:167: /home/ken/ken/go-project/service/order/internal/data/order_data.go:174 record not found
+[4.169ms] [rows:0] SELECT * FROM `orders` WHERE order_sign = '019589f0445372f4b0f56d21b1b4d02b' AND `orders`.`deleted_at` IS NULL ORDER BY `orders`.`id` LIMIT 1
+2025/03/12 18:39:39 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:181
+[3.806ms] [rows:4] SELECT * FROM `carts` WHERE (user_id = 1 and selected = true) AND `carts`.`deleted_at` IS NULL
+2025/03/12 18:39:40 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:243
+[3.764ms] [rows:1] INSERT INTO `orders` (`created_at`,`updated_at`,`deleted_at`,`user_id`,`order_sign`,`pay_way`,`status`,`trade_num`,`cost`,`address`,`signer_name`,`signer_mobile`,`message`) VALUES ('2025-03-12 18:39:40.175','2025-03-12 18:39:40.175',NULL,1,'019589f0445372f4b0f56d21b1b4d02b','weixin',1,'',148301,'翻斗花园','ken','18174637586','谁是结巴')
+2025/03/12 18:39:40 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:254
+[11.388ms] [rows:4] INSERT INTO `order_goods` (`created_at`,`updated_at`,`deleted_at`,`order_id`,`goods_id`,`goods_name`,`goods_image`,`goods_price`,`goods_num`) VALUES ('2025-03-12 18:39:40.179','2025-03-12 18:39:40.179',NULL,5,1,'商品-0','https://example.com/images/0.jpg',960,11),('2025-03-12 18:39:40.179','2025-03-12 18:39:40.179',NULL,5,2,'商品-1','https://example.com/images/1.jpg',925,21),('2025-03-12 18:39:40.179','2025-03-12 18:39:40.179',NULL,5,3,'商品-2','https://example.com/images/2.jpg',759,146),('2025-03-12 18:39:40.179','2025-03-12 18:39:40.179',NULL,5,4,'商品-3','https://example.com/images/3.jpg',242,31)
+2025/03/12 18:39:40 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:262
+[22.549ms] [rows:4] UPDATE `carts` SET `deleted_at`='2025-03-12 18:39:40.192' WHERE (selected = true and user_id = 1) AND `carts`.`deleted_at` IS NULL
+2025/03/12 18:39:49 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:167: /home/ken/ken/go-project/service/order/internal/data/order_data.go:100 record not found
+[5.662ms] [rows:0] SELECT * FROM `orders` WHERE order_sign = '{"ID":0,"UserId":1,"OrderSign":"019589f0445372f4b0f56d21b1b4d02b","PayWay":"weixin","Status":1,"TradeNum":"","Cost":0,"PayTime":null,"Address":"翻斗花园","SignerName":"ken","SignerMobile":"18174637586","Message":"谁是结巴"}' AND `orders`.`deleted_at` IS NULL ORDER BY `orders`.`id` LIMIT 1
+2025/03/12 18:40:10 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:100
+[17.531ms] [rows:1] SELECT * FROM `orders` WHERE order_sign = '019589f0445372f4b0f56d21b1b4d02b' AND `orders`.`deleted_at` IS NULL ORDER BY `orders`.`id` LIMIT 1
+2025/03/12 18:40:10 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:117
+[17.427ms] [rows:1] UPDATE `orders` SET `status`=7,`updated_at`='2025-03-12 18:40:10.263' WHERE order_sign = '019589f0445372f4b0f56d21b1b4d02b' AND `orders`.`deleted_at` IS NULL
+2025/03/12 18:40:10 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:125
+[1.899ms] [rows:4] SELECT * FROM `order_goods` WHERE order_id = 5 AND `order_goods`.`deleted_at` IS NULL
+2025/03/12 18:40:10 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:140
+[9.526ms] [rows:4] update carts set deleted_at = null where goods_id in (1,2,3,4)
+2025/03/12 18:41:08 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:167: /home/ken/ken/go-project/service/order/internal/data/order_data.go:174 record not found
+[13.002ms] [rows:0] SELECT * FROM `orders` WHERE order_sign = '019589f19f9e739b944335e9294f47f9' AND `orders`.`deleted_at` IS NULL ORDER BY `orders`.`id` LIMIT 1
+2025/03/12 18:41:08 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/order/internal/data/order_data.go:181
+[1.325ms] [rows:4] SELECT * FROM `carts` WHERE (user_id = 1 and selected = true) AND `carts`.`deleted_at` IS NULL

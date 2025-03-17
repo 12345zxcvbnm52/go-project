@@ -1,0 +1,39 @@
+#服务注册参数
+name: 'inventory_srv'
+id: 'inventory_srv'
+tags: 
+  - 'inventory'
+version: '1.0'
+
+#这里若使用具体ip则需要关闭mysql的保护模式
+mysql: 
+  ip: '192.168.199.128'
+  port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'inventory_srv'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  ip: '192.168.199.128'
+  port: 6379
+  password: '123'
+
+otel:
+  ip: '192.168.199.128'
+  port: 4318
+  service-name: 'inventory-srv'
+
+redlock:
+  ip: '192.168.199.128'
+  port: 17715
+  password: '123'
+
+rocketmq:
+  ip: '192.168.199.128'
+  port: 9876
+  consumer-group-name: 'inventory-reback-gn'
+  reback-topic: 'order-reback'

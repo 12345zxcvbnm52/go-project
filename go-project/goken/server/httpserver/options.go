@@ -54,9 +54,9 @@ func WithJWTMiddleware(key string) ServerOption {
 	}
 }
 
-func WithTracer(target string, opts ...opengintracing.GinTracerOption) ServerOption {
+func WithTracer(opts ...opengintracing.GinTracerOption) ServerOption {
 	return func(s *Server) {
-		s.Tracer = opengintracing.MustNewGinTracer(s.Ctx, target)
+		s.Tracer = opengintracing.MustNewGinTracer(s.Ctx, opts...)
 	}
 }
 

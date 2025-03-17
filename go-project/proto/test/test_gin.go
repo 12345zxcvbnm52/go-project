@@ -2,7 +2,6 @@ package proto
 
 import (
 	gin "github.com/gin-gonic/gin"
-	httpserver "kenshop/goken/server/httpserver"
 )
 
 // service
@@ -11,15 +10,11 @@ import (
 // @Host api.example.com
 // @Title My API
 // @Version 1.0.0
-type MessagingHttpServer struct {
-	Server *httpserver.Server
-}
 
-func RegisterMessagingHTTPServer(s *httpserver.Server) *MessagingHttpServer {
-	ss := &MessagingHttpServer{
-		Server: s,
-	}
-	return ss
+type ReqMessageForm struct {
+	Age   int32   `json:"age" form:"age" uri:"age" header:"" binding:""`
+	Name  string  `json:"name" form:"name" uri:"name" header:"" binding:""`
+	Price float64 `json:"price" form:"price" uri:"price" header:"" binding:""`
 }
 
 // Update Message Summary | This function updates a message.
@@ -29,11 +24,8 @@ func RegisterMessagingHTTPServer(s *httpserver.Server) *MessagingHttpServer {
 // @Router /messages/{message_id} [GET]
 // @Success 200 {object} map[string]interface{}
 // @Tags ken tag
-// @Param message_id path string true "消息 ID"
-// @Param message_name path string true "消息 Name"
-func (s *MessagingHttpServer) UpdateMessage(c *gin.Context) {}
-
-func (s *MessagingHttpServer) Execute() error {
-	s.Server.Engine.GET("/messages/:message_id", s.UpdateMessage)
-	return s.Server.Serve()
+// @Param age path uint32 true "消息 ID"
+// @Param name path string true "消息 Name"
+// @Param price path float64 true "jia eg"
+func UpdateMessage(c *gin.Context) {
 }

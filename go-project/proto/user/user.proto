@@ -22,10 +22,12 @@ service User {
         };
         option (google.api.MethodOpt) = {
             Produce: "application/json",
-            Success: "200 {object} map[string]interface{}",
-            Failure: "404 {object} map[string]interface{}",
-            Params: "pagesNum query int false '返回数据集的页号'",
-            Params: "pageSize query int false '返回数据集的页大小'",
+            Success: "200 {object} httputil.JsonResult{data=proto.UserListRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Description: "获取用户列表信息",
+            Params: "pagesNum query integer false '(int32)返回数据集的页号'",
+            Params: "pageSize query integer false '(int32)返回数据集的页大小'",
         };
     }
 
@@ -36,21 +38,29 @@ service User {
         };
         option (google.api.MethodOpt) = {
             Produce: "application/json",
-            Success: "200 {object} map[string]interface{}",
-            Failure: "404 {object} map[string]interface{}",
-            Params: "id path int true '用户ID'",
+            Success: "200 {object} httputil.JsonResult{data=proto.UserInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "通过用户ID获取用户信息",
+            Params: "id path integer true '(uint32)用户ID'",
         };
     }
 
     // 通过手机号获取用户信息
     rpc GetUserByMobile(UserMobileReq) returns (UserInfoRes) {
         option (google.api.http) = {
-            get: "/user/model/{mobile}"
+            get: "/user/mobile/{mobile}"
         };
         option (google.api.MethodOpt) = {
             Produce: "application/json",
-            Success: "200 {object} map[string]interface{}",
-            Failure: "404 {object} map[string]interface{}",
+            Success: "200 {object} httputil.JsonResult{data=proto.UserInfoRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "通过手机号获取用户信息",
             Params: "mobile path string true '用户手机号'",
         };
     }
@@ -63,13 +73,16 @@ service User {
         option (google.api.MethodOpt) = {
             Accept: "application/json",
             Produce: "application/json",
-            Success: "201 {object} map[string]interface{}",
-            Failure: "400 {object} map[string]interface{}",
+            Success: "200 {object} httputil.JsonResult{data=proto.CreateUserRes}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "创建用户",
             Params: "userName body string true '欲创建的用户名'",
             Params: "password body string true '欲创建的用户密码'",
             Params: "mobile body string true '欲创建的用户手机号'",
             Params: "gender body string false '欲创建的用户性别'",
-            Params: "birth body int true '欲创建的用户出生日'",
+            Params: "birth body integer true '(int32)欲创建的用户出生日'",
         };
     }
 
@@ -81,15 +94,18 @@ service User {
         option (google.api.MethodOpt) = {
             Accept: "application/json",
             Produce: "application/json",
-            Success: "204 {object} map[string]interface{}",
-            Failure: "400 {object} map[string]interface{}",
-            Params: "id path int true '欲修改用户ID'",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "绝对更新用户(全量更新)",
+            Params: "id path integer true '(uint32)欲修改用户ID'",
             Params: "userName body string true '欲修改的用户名'",
             Params: "password body string true '欲修改的用户密码'",
             Params: "mobile body string true '欲修改的用户手机号'",
             Params: "gender body string true '欲修改的用户性别'",
-            Params: "birth body int true '欲修改的用户出生日'",
-            Params: "role body int true '欲修改的用户权限'",
+            Params: "birth body integer true '(int32)欲修改的用户出生日'",
+            Params: "role body integer true '(int32)欲修改的用户权限'",
         };
     }
 
@@ -101,15 +117,18 @@ service User {
         option (google.api.MethodOpt) = {
             Accept: "application/json",
             Produce: "application/json",
-            Success: "204 {object} map[string]interface{}",
-            Failure: "400 {object} map[string]interface{}",
-            Params: "id path int true '欲修改用户ID'",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Description: "局部更新用户(部分更新)",
+            Params: "id path integer true '(uint32)欲修改用户ID'",
             Params: "userName body string false '欲修改的用户名'",
             Params: "password body string false '欲修改的用户密码'",
             Params: "mobile body string false '欲修改的用户手机号'",
             Params: "gender body string false '欲修改的用户性别'",
-            Params: "birth body int false '欲修改的用户出生日'",
-            Params: "role body int false '欲修改的用户权限'",
+            Params: "birth body integer false '(int32)欲修改的用户出生日'",
+            Params: "role body integer false '(int32)欲修改的用户权限'",
         };
     }
 
@@ -120,8 +139,12 @@ service User {
         };
         option (google.api.MethodOpt) = {
             Produce: "application/json",
-            Success: "204 {object} map[string]interface{}",
-            Failure: "404 {object} map[string]interface{}",
+            Success: "200 {object} httputil.JsonResult{data=nil}",
+            Failures: "401 {object} httputil.JsonResult{data=nil}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "删除用户",
             Params: "id path int true '欲删除的用户ID'"
             Params: "name query string true '欲删除的用户名'"
         };
@@ -130,16 +153,18 @@ service User {
     // 用户权限验证
     rpc CheckUserRole(UserPasswordReq) returns (UserCheckRes) {
         option (google.api.http) = {
-            post: "/user/{id}/check"
+            get: "/user/login"
         };
         option (google.api.MethodOpt) = {
-            Accept: "application/json",
+            Accept: "multipart/form-data",
             Produce: "application/json",
-            Success: "200 {object} map[string]interface{}",
-            Failure: "403 {object} map[string]interface{}",
-            Params: "id path int true '用户ID'",
-            Params: "userName body string true '欲检查的用户名'",
-            Params: "password body string true '欲检查的用户密码'"
+            Success: "200 {object} httputil.JsonResult{data=proto.UserCheckRes}",
+            Failures: "500 {object} httputil.JsonResult{data=nil}",
+            Failures: "400 {object} httputil.JsonResult{data=nil}",
+            Failures: "404 {object} httputil.JsonResult{data=nil}",
+            Description: "用户权限验证",
+            Params: "userName formData string true '欲检查的用户名'",
+            Params: "password formData string true '欲检查的用户密码'"
         };
     }
 }
@@ -180,7 +205,6 @@ message UserMobileReq {
 
 message UserPasswordReq {
     string password = 1;
-    uint32 id = 2;
     string userName = 3;
 }
 

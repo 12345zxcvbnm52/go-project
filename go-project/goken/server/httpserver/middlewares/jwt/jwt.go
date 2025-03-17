@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"encoding/json"
+	"kenshop/pkg/common/httputil"
 	"net/http"
 	"time"
 
@@ -14,55 +15,55 @@ import (
 func (mw *GinJWTMiddleware) JwtAuthHandler(c *gin.Context) {
 	claims, err := mw.GetClaimsFromContext(c)
 	if err != nil {
-		mw.unauthorized(c, http.StatusUnauthorized, err.Error())
+		httputil.WriteResponse(c, http.StatusUnauthorized, err.Error(), nil, mw.UseAbort)
 		return
 	}
 
 	//判断Token是否Expire
 	switch v := claims[mw.ExpField].(type) {
 	case nil:
-		mw.unauthorized(c, http.StatusBadRequest, ErrMissingExpField.Error())
+		httputil.WriteResponse(c, http.StatusBadRequest, ErrMissingExpField.Error(), nil, mw.UseAbort)
 		return
 	case float64:
 		if int64(v) < mw.TimeFunc().Unix() {
-			mw.unauthorized(c, http.StatusUnauthorized, ErrExpiredToken.Error())
+			httputil.WriteResponse(c, http.StatusUnauthorized, ErrExpiredToken.Error(), nil, mw.UseAbort)
 			return
 		}
 	case json.Number:
 		n, err := v.Int64()
 		if err != nil {
-			mw.unauthorized(c, http.StatusBadRequest, ErrWrongFormatOfExp.Error())
+			httputil.WriteResponse(c, http.StatusBadRequest, ErrWrongFormatOfExp.Error(), nil, mw.UseAbort)
 			return
 		}
 		if n < mw.TimeFunc().Unix() {
-			mw.unauthorized(c, http.StatusUnauthorized, ErrExpiredToken.Error())
+			httputil.WriteResponse(c, http.StatusUnauthorized, ErrExpiredToken.Error(), nil, mw.UseAbort)
 			return
 		}
 	default:
-		mw.unauthorized(c, http.StatusBadRequest, ErrWrongFormatOfExp.Error())
+		httputil.WriteResponse(c, http.StatusBadRequest, ErrWrongFormatOfExp.Error(), nil, mw.UseAbort)
 		return
 	}
 
 	//获得登入者claims和身份并保存到context中方便后续使用
-	c.Set("JWT_PAYLOAD", claims)
+	c.Set("jwt-claims", claims)
 	c.Next()
 }
 
 // RefreshHandler作为middleware可用于验证,刷新token,刷新的token仍然是有效的
 // 刷新策略是生成的新token字符串会先放到Context中,最终会在
 func (mw *GinJWTMiddleware) RefreshHandler(c *gin.Context) {
-
-	tokenString, _, err := mw.RefreshToken(c)
+	tokenString, _, err := mw.refreshToken(c)
 	if err != nil {
-		mw.unauthorized(c, http.StatusUnauthorized, err.Error())
+		httputil.WriteResponse(c, http.StatusUnauthorized, err.Error(), nil, mw.UseAbort)
 		return
 	}
 	c.Set("refresh-token", tokenString)
 	c.Header("refresh-token", tokenString)
+	c.Next()
 }
 
 // 刷新token并检查token是否已过期
-func (mw *GinJWTMiddleware) RefreshToken(c *gin.Context) (string, time.Time, error) {
+func (mw *GinJWTMiddleware) refreshToken(c *gin.Context) (string, time.Time, error) {
 	claims, err := mw.CheckIfTokenExpire(c)
 	//如果refresh token仍旧超时则直接返回错误
 	if err != nil {
@@ -83,7 +84,7 @@ func (mw *GinJWTMiddleware) RefreshToken(c *gin.Context) (string, time.Time, err
 	newClaims["nbf"] = claims["orig_iat"]
 	newClaims["iat"] = claims["orig_iat"]
 	newClaims["rfs_exp"] = expire.Add(mw.MaxRefreshFunc(claims)).Unix()
-	c.Set("JWT_PAYLOAD", newClaims)
+	c.Set("jwt-claims", newClaims)
 
 	tokenString, err := newToken.SignedString(mw.Key)
 	if err != nil {

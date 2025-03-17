@@ -1,0 +1,63 @@
+2025-03-09T16:11:42.672+0800	ERROR	controller/order_cnt.go:74	微服务调用失败	{"msg": "rpc error: code = Unknown desc = this method is not implemented"}
+kenshop/api/order/internal/controller.(*OrderHttpServer).GetUserCartItems
+	/home/ken/ken/go-project/api/order/internal/controller/order_cnt.go:74
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-09T16:19:26.260+0800	ERROR	controller/order_cnt.go:74	微服务调用失败	{"msg": "rpc error: code = NotFound desc = this method is not implemented\nkenshop/service/order/internal/data.(*GormOrderData).GetUserCartItemsDB\n\t/home/ken/ken/go-project/service/order/internal/data/order_data.go:45\nkenshop/service/order/internal/logic.(*OrderService).GetUserCartItemsLogic\n\t/home/ken/ken/go-project/service/order/internal/logic/order_logic.go:18\nkenshop/service/order/internal/controller.(*OrderServer).GetUserCartItems\n\t/home/ken/ken/go-project/service/order/internal/controller/order_cnt.go:38\nkenshop/proto/order._Order_GetUserCartItems_Handler.func1\n\t/home/ken/ken/go-project/proto/order/order_grpc.pb.go:186\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/order._Order_GetUserCartItems_Handler\n\t/home/ken/ken/go-project/proto/order/order_grpc.pb.go:188\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1140003,\"http_code\":404,\"grpc_code\":5,\"message\":\"购物车内不存在商品\"};"}
+kenshop/api/order/internal/controller.(*OrderHttpServer).GetUserCartItems
+	/home/ken/ken/go-project/api/order/internal/controller/order_cnt.go:74
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044
+2025-03-09T16:19:32.035+0800	ERROR	controller/order_cnt.go:74	微服务调用失败	{"msg": "rpc error: code = NotFound desc = this method is not implemented\nkenshop/service/order/internal/data.(*GormOrderData).GetUserCartItemsDB\n\t/home/ken/ken/go-project/service/order/internal/data/order_data.go:45\nkenshop/service/order/internal/logic.(*OrderService).GetUserCartItemsLogic\n\t/home/ken/ken/go-project/service/order/internal/logic/order_logic.go:18\nkenshop/service/order/internal/controller.(*OrderServer).GetUserCartItems\n\t/home/ken/ken/go-project/service/order/internal/controller/order_cnt.go:38\nkenshop/proto/order._Order_GetUserCartItems_Handler.func1\n\t/home/ken/ken/go-project/proto/order/order_grpc.pb.go:186\nkenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22\ngoogle.golang.org/grpc.getChainUnaryHandler.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212\nkenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1\n\t/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21\ngoogle.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203\nkenshop/proto/order._Order_GetUserCartItems_Handler\n\t/home/ken/ken/go-project/proto/order/order_grpc.pb.go:188\ngoogle.golang.org/grpc.(*Server).processUnaryRPC\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400\ngoogle.golang.org/grpc.(*Server).handleStream\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810\ngoogle.golang.org/grpc.(*Server).serveStreams.func2.1\n\t/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030\n;{\"code\":1140003,\"http_code\":404,\"grpc_code\":5,\"message\":\"购物车内不存在商品\"};"}
+kenshop/api/order/internal/controller.(*OrderHttpServer).GetUserCartItems
+	/home/ken/ken/go-project/api/order/internal/controller/order_cnt.go:74
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/home/ken/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	/usr/lib/go-1.22/src/net/http/server.go:3142
+net/http.(*conn).serve
+	/usr/lib/go-1.22/src/net/http/server.go:2044

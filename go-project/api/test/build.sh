@@ -1,1 +1,0 @@
-swag init -g api/test/test.go --parseDependency

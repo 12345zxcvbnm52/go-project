@@ -99,6 +99,6 @@ func (v *Validator) Excute() error {
 		}
 		return nil
 	} else {
-		return errors.New("Validate转化失败")
+		return errors.New("Validate出现未知错误,无法得到gin内部Validator")
 	}
 }

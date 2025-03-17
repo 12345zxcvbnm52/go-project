@@ -32,7 +32,7 @@ func DefaultDial() (*grpc.ClientConn, error) {
 	if err != nil {
 		panic(err)
 	}
-	d := discover.NewBuilder(consul.MustNewConsulDiscover(cli, consul.WithTTL(8*time.Second)))
+	d := discover.MustNewBuilder(consul.MustNewConsulDiscover(cli, consul.WithTTL(8*time.Second)))
 	//理论来讲NewClient的地址应该是consul的地址,我搞错逻辑了
 	return grpc.NewClient(
 		fmt.Sprintf("discovery://%s:%d/%s",
@@ -69,7 +69,7 @@ func test() {
 	tr := tp.Tracer("ken-tracer")
 	ctx, span := tr.Start(context.Background(), "server-test-span1")
 	md := metadata.Pairs("tracer-name", "ken-tracer")
-	trace.InjectMD(ctx, &md)
+	trace.InjectMD(ctx, md)
 	ctx = metadata.NewOutgoingContext(ctx, md)
 
 	c := pb.NewTestClient(cc)

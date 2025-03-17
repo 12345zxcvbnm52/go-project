@@ -3,172 +3,184 @@ package main
 import (
 	"context"
 	"fmt"
+	"kenshop/pkg/cache"
 	"kenshop/pkg/log"
-	ktrace "kenshop/pkg/trace"
-	proto "kenshop/proto/test"
-	"os"
-	"regexp"
-	"strings"
+	"kenshop/pkg/redlock"
+	"kenshop/pkg/rockmq"
+	"sync"
 	"time"
 
-	"github.com/apache/rocketmq-client-go/v2"
-	"github.com/apache/rocketmq-client-go/v2/consumer"
+	"github.com/allegro/bigcache"
+
 	"github.com/apache/rocketmq-client-go/v2/primitive"
-	"github.com/apache/rocketmq-client-go/v2/producer"
-	"github.com/uptrace/opentelemetry-go-extra/otelzap"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
+	"github.com/apache/rocketmq-client-go/v2/rlog"
+	"github.com/redis/go-redis/v9"
 )
 
-var pwd, _ = os.Getwd()
-var logger1 *otelzap.Logger = log.MustNewOtelLogger(log.WithOutputPaths(fmt.Sprintf("%s/e1.log", pwd)))
-var logger2 *otelzap.Logger = log.MustNewOtelLogger(log.WithOutputPaths(fmt.Sprintf("%s/e2.log", pwd)))
-
-func testA(ctx context.Context, tracer trace.Tracer) {
-	//span:=trace.SpanFromContext(ctx)
-	_, cspan := tracer.Start(ctx, "chird pp")
-	ktrace.MessageSent.Event(ctx, 222, &proto.ReqMessage{Req: "222"})
-	defer cspan.End()
-	time.Sleep(2 * time.Second)
+type OrderListener struct {
+	Ctx context.Context
 }
 
-func Span() {
+func (ol *OrderListener) CheckLocalTransaction(msg *primitive.MessageExt) primitive.LocalTransactionState {
+	return primitive.CommitMessageState
+}
 
-	tp := ktrace.MustNewTracer(context.TODO(), ktrace.WithName("ken"))
-	t, err := tp.NewTraceProvider("192.168.199.128:4318")
+func (s *OrderListener) ExecuteLocalTransaction(msg *primitive.Message) primitive.LocalTransactionState {
+	fmt.Println(msg.Body)
+	msg.WithProperty("error", "badrequest")
+	return primitive.RollbackMessageState
+}
+
+func BigCache() {
+	cache, err := bigcache.NewBigCache(bigcache.DefaultConfig(10 * time.Minute))
 	if err != nil {
 		panic(err)
 	}
-	tracer := t.Tracer("ken-tracer", trace.WithInstrumentationAttributes(attribute.Bool("isken", false)))
-	ctx, span := tracer.Start(context.Background(), "pp", trace.WithAttributes(attribute.String("span key", "test")))
-	testA(ctx, tracer)
-
-	span.End()
-	t.Shutdown(context.Background())
+	fmt.Println(cache.Capacity())
+	w := []byte{'w', '2'}
+	cache.Set("ken", w)
+	fmt.Println(cache.Get("ken"))
 }
 
-func Consume1(ctx context.Context, msgs ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
-	for _, v := range msgs {
-		logger1.Info(string(v.Body))
+// func Sentinel() {
+// 	if err := sentinel.InitDefault(); err != nil {
+// 		panic(err)
+// 	}
+// 	_, err := flow.LoadRules([]*flow.Rule{
+// 		{
+// 			Resource:               "ken",
+// 			TokenCalculateStrategy: flow.WarmUp,
+// 			ControlBehavior:        flow.Reject,
+// 			Threshold:              10000,
+// 			StatIntervalInMs:       1000,
+// 			WarmUpPeriodSec:        60,
+// 		},
+// 	})
+// }
+
+func Cache() {
+	d := bigcache.DefaultConfig(5 * time.Minute)
+
+	addr := []string{
+		"192.168.199.128:6380",
+		"192.168.199.128:6381",
+		"192.168.199.128:6382",
+		"192.168.199.128:6383",
+		"192.168.199.128:6384",
+		"192.168.199.128:6379",
 	}
-	return consumer.ConsumeSuccess, nil
-}
+	opts := &redis.ClusterOptions{}
+	opts.Password = "123"
+	opts.Addrs = addr
 
-func Consume2(ctx context.Context, msgs ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
-	for _, v := range msgs {
-		logger2.Info(string(v.Body))
-	}
-	return consumer.ConsumeSuccess, nil
-}
-
-func Consumer(gn string, f func(context.Context, ...*primitive.MessageExt) (consumer.ConsumeResult, error)) {
-	c, err := rocketmq.NewPushConsumer(
-		consumer.WithNameServer([]string{"192.168.199.128:9876"}),
-		consumer.WithGroupName(gn),
+	cache := cache.MustNewMultiCache(context.Background(),
+		cache.MustNewDistributedCache(addr, opts),
+		cache.MustNewLocalCache(&d),
 	)
-	if err != nil {
-		panic(err)
-	}
-
-	err = c.Subscribe("line", consumer.MessageSelector{}, f)
-	if err != nil {
-		panic(err)
-	}
-	err = c.Start()
-	if err != nil {
-		panic(err)
-	}
-	time.Sleep(1 * time.Hour)
-	c.Shutdown()
-}
-
-func Producer() {
-	p, err := rocketmq.NewProducer(producer.WithNameServer([]string{"192.168.199.128:9876"}))
-	if err != nil {
-		panic(err)
-	}
-	if err = p.Start(); err != nil {
-		panic(err)
-	}
-	for i := range 10 {
-		msg := fmt.Sprintf("this is rq msg %d", i)
-		_, err := p.SendSync(context.Background(), primitive.NewMessage("line", []byte(msg)))
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	if err = p.Shutdown(); err != nil {
-		panic("关闭 producer 失败")
-	}
-
-}
-
-func ToSnakeCase(s string) string {
-	// 使用正则表达式匹配大写字母并在前面加上下划线
-	re := regexp.MustCompile(`([a-z0-9])([A-Z])`)
-	snake := re.ReplaceAllString(s, `${1}_${2}`)
-	// 将所有字符转换为小写
-	return strings.ToLower(snake)
-}
-
-// ToExportedCamelCase 转换为 Go 的导出驼峰命名法
-func GoExportedCamelCase(s string) string {
-	return goCamelCase(s)
-}
-
-// ToUnexportedCamelCase 转换为 Go 的不导出驼峰命名法:首字母小写
-func GoUnexportedCamelCase(s string) string {
-	s = goCamelCase(s)
-	return strings.ToLower(s[:1]) + s[1:]
-}
-
-func isASCIILower(c byte) bool {
-	return 'a' <= c && c <= 'z'
-}
-
-func isASCIIDigit(c byte) bool {
-	return '0' <= c && c <= '9'
-}
-
-// 此函数能将str转化为go的驼峰命名格式
-func goCamelCase(str string) string {
-	var b []byte
-	for i := 0; i < len(str); i++ {
-		c := str[i]
-		switch {
-		case c == '.' && i+1 < len(str) && isASCIILower(str[i+1]):
-		case c == '.':
-			b = append(b, '_')
-		case c == '_' && (i == 0 || str[i-1] == '.'):
-
-			b = append(b, 'X')
-		case c == '_' && i+1 < len(str) && isASCIILower(str[i+1]):
-		case isASCIIDigit(c):
-			b = append(b, c)
-		default:
-			if isASCIILower(c) {
-				c -= 'a' - 'A'
+	fmt.Println("begin")
+	t1 := time.Now()
+	f := sync.WaitGroup{}
+	f.Add(500)
+	i := 0
+	for range 500 {
+		go func() {
+			l := redlock.MustNewRedLock(addr, redlock.WithCluster(true), redlock.WithPassword("123"))
+			lock, err := l.GetRedLockAndLock(context.TODO(), "ken")
+			if err != nil {
+				log.Error(err.Error())
+			} else {
+				i = i + 1
+				//time.Sleep(30 * time.Millisecond)
 			}
-			b = append(b, c)
-			for ; i+1 < len(str) && isASCIILower(str[i+1]); i++ {
-				b = append(b, str[i+1])
+			if err := l.UnlockRedLock(context.TODO(), lock); err != nil {
+				log.Error(err.Error())
 			}
-		}
+			f.Done()
+		}()
 	}
-	ss := string(b)
-	return strings.ReplaceAll(ss, "_", "")
+
+	f.Wait()
+	t2 := time.Now()
+	fmt.Println(t2.Sub(t1))
+	fmt.Println(i)
+	cache.Ctx.Deadline()
+	// cache.SetWithMutex(context.Background(), "ken", []byte("1235s"))
+	// data, err := cache.Get(context.Background(), "ken")
+	// fmt.Println(string(data), err)
+	// fmt.Println(cache.Stats())
 }
-func regis() {
-	//fmt.Println(ToSnakeCase("ni_Hao_ma_wqwtq_Z"))
-	fmt.Println(GoExportedCamelCase("userName"))
-	gin.Should
+
+type User struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Version  int64  `json:"version"`
+	Key      string `json:"key"`
+}
+
+func (m *User) GetVersion() int64 {
+	return m.Version
+}
+
+func (m *User) GetKey() string {
+	return m.Key
+}
+
+func RocketCache() {
+	d := bigcache.DefaultConfig(5 * time.Minute)
+
+	addr := []string{
+		"192.168.199.128:6380",
+		"192.168.199.128:6381",
+		"192.168.199.128:6382",
+		"192.168.199.128:6383",
+		"192.168.199.128:6384",
+		"192.168.199.128:6379",
+	}
+	opts := &redis.ClusterOptions{}
+	opts.Password = "123"
+	opts.Addrs = addr
+
+	ca := cache.MustNewMultiCache(context.Background(),
+		cache.MustNewDistributedCache(addr, opts),
+		cache.MustNewLocalCache(&d),
+	)
+
+	// w1 := &User{
+	// 	Password: "12345678",
+	// 	Username: "kensame",
+	// 	Version:  2,
+	// 	Key:      "ken",
+	// }
+	// w2 := &User{
+	// 	Password: "zxcvbnm52",
+	// 	Username: "kensame42",
+	// 	Version:  1,
+	// 	Key:      "ken",
+	// }
+	//req1 := cache.WrapMessageQueueExtractor(w1)
+	//req2 := cache.WrapMessageQueueExtractor(w2)
+	rlog.SetLogLevel("warn")
+	//pd := rockmq.MustNewProducer([]string{"192.168.199.128:9876"}, "name1")
+	cs := rockmq.MustNewPushConsumer([]string{"192.168.199.128:9876"}, "name2")
+	if err := ca.RegisterRocketmq(cs, "cache"); err != nil {
+		panic(err)
+	}
+
+	// msg1 := primitive.NewMessage("cache", req1)
+	// pd.SendSync(context.Background(), msg1)
+	// time.Sleep(500 * time.Millisecond)
+	// msg2 := primitive.NewMessage("cache", req2)
+	// pd.SendSync(context.Background(), msg2)
+	// time.Sleep(8 * time.Second)
+	// b, err := ca.GetWithMutex(context.Background(), "ken")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println(string(b))
+	time.Sleep(10 * time.Second)
 }
 
 func main() {
-	//Span()
-	// go Producer()
-	// go Consumer("ken-consumer1", Consume1)
-	// Consumer("ken-consumer2", Consume2)
-	regis()
+	Cache()
+	//RocketCache()
 }

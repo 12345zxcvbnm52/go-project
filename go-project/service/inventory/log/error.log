@@ -1,0 +1,21 @@
+2025-03-12T18:41:08.561+0800	ERROR	controller/inventory_cnt.go:72	调用DecrStock失败,具体信息为: : 库存不足,无法扣减,库存id为:3,库存现有存量为:145,欲扣减库存量为:146
+kenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock
+	/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:72
+kenshop/proto/inventory._Inventory_DecrStock_Handler.func1
+	/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:208
+kenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22
+google.golang.org/grpc.getChainUnaryHandler.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212
+kenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203
+kenshop/proto/inventory._Inventory_DecrStock_Handler
+	/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:210
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400
+google.golang.org/grpc.(*Server).handleStream
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030

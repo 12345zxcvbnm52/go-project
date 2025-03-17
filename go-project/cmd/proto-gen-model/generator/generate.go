@@ -5,8 +5,10 @@ import (
 )
 
 const (
-	stringsPkg = protogen.GoImportPath("strings")
-	emptyPkg   = protogen.GoImportPath("google.golang.org/protobuf/types/known/emptypb")
+	stringsPkg   = protogen.GoImportPath("strings")
+	emptyPkg     = protogen.GoImportPath("google.golang.org/protobuf/types/known/emptypb")
+	protoJsonPkg = protogen.GoImportPath("google.golang.org/protobuf/encoding/protojson")
+	gprotoPkg    = protogen.GoImportPath("google.golang.org/protobuf/proto")
 )
 
 func GenerateFile(gen *protogen.Plugin, file *protogen.File) *protogen.GeneratedFile {
@@ -23,7 +25,8 @@ func GenerateFile(gen *protogen.Plugin, file *protogen.File) *protogen.Generated
 
 	//该函数是注册全局的packge的内容,但是此时不会写入
 	g.QualifiedGoIdent(stringsPkg.Ident(""))
-
+	g.QualifiedGoIdent(protoJsonPkg.Ident(""))
+	g.QualifiedGoIdent(gprotoPkg.Ident(""))
 	for _, v1 := range file.Services {
 		for _, v2 := range v1.Methods {
 			if v2.Input.GoIdent.GoName == "Empty" || v2.Output.GoIdent.GoName == "Empty" {
@@ -52,9 +55,9 @@ func genService(_ *protogen.File, _ *protogen.GeneratedFile, s *protogen.Service
 
 	for _, method := range s.Methods {
 		s := genMethod(method)
-		// if s.MethodComment[len(s.MethodComment)-1] == '\n' {
-		// 	s.MethodComment = s.MethodComment[:len(s.MethodComment)-1]
-		// }
+		if len(s.MethodComment) != 0 && s.MethodComment[len(s.MethodComment)-1] == '\n' {
+			s.MethodComment = s.MethodComment[:len(s.MethodComment)-1]
+		}
 		sd.Methods = append(sd.Methods, s)
 	}
 

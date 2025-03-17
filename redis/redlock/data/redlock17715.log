@@ -312,3 +312,287 @@
 1:M 06 Jan 2025 11:21:31.689 * DB saved on disk
 1:M 06 Jan 2025 11:21:31.695 * Removing the pid file.
 1:M 06 Jan 2025 11:21:31.695 # Redis is now ready to exit, bye bye...
+1:C 08 Mar 2025 07:22:29.150 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 08 Mar 2025 07:22:29.152 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 08 Mar 2025 07:22:29.152 # Configuration loaded
+1:M 08 Mar 2025 07:22:29.154 * monotonic clock: POSIX clock_gettime
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 17715
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 08 Mar 2025 07:22:29.164 # Server initialized
+1:M 08 Mar 2025 07:22:29.164 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 08 Mar 2025 07:22:29.168 * Reading RDB base file on AOF loading...
+1:M 08 Mar 2025 07:22:29.169 * Loading RDB produced by version 7.0.15
+1:M 08 Mar 2025 07:22:29.170 * RDB age 6488696 seconds
+1:M 08 Mar 2025 07:22:29.171 * RDB memory usage when created 1.51 Mb
+1:M 08 Mar 2025 07:22:29.171 * RDB is base AOF
+1:M 08 Mar 2025 07:22:29.171 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 08 Mar 2025 07:22:29.171 * DB loaded from base file appendonly17715.aof.1.base.rdb: 0.004 seconds
+1:M 08 Mar 2025 07:22:29.174 * DB loaded from incr file appendonly17715.aof.1.incr.aof: 0.002 seconds
+1:M 08 Mar 2025 07:22:29.174 * DB loaded from append only file: 0.006 seconds
+1:M 08 Mar 2025 07:22:29.174 * Opening AOF incr file appendonly17715.aof.1.incr.aof on server start
+1:M 08 Mar 2025 07:22:29.175 * Ready to accept connections
+1:M 08 Mar 2025 07:27:30.042 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 07:27:30.043 * Background saving started by pid 19
+19:C 08 Mar 2025 07:27:30.055 * DB saved on disk
+19:C 08 Mar 2025 07:27:30.057 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 07:27:30.144 * Background saving terminated with success
+1:M 08 Mar 2025 08:06:02.149 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 08:06:02.153 * Background saving started by pid 21
+21:C 08 Mar 2025 08:06:02.165 * DB saved on disk
+21:C 08 Mar 2025 08:06:02.166 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 08:06:02.255 * Background saving terminated with success
+1:M 08 Mar 2025 08:16:00.271 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 08:16:00.275 * Background saving started by pid 22
+22:C 08 Mar 2025 08:16:00.281 * DB saved on disk
+22:C 08 Mar 2025 08:16:00.284 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 08:16:00.377 * Background saving terminated with success
+1:M 08 Mar 2025 08:31:01.030 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 08:31:01.031 * Background saving started by pid 23
+23:C 08 Mar 2025 08:31:01.037 * DB saved on disk
+23:C 08 Mar 2025 08:31:01.039 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 08:31:01.132 * Background saving terminated with success
+1:M 08 Mar 2025 08:46:02.066 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 08:46:02.067 * Background saving started by pid 24
+24:C 08 Mar 2025 08:46:02.073 * DB saved on disk
+24:C 08 Mar 2025 08:46:02.074 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 08:46:02.168 * Background saving terminated with success
+1:M 08 Mar 2025 09:44:36.404 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 09:44:36.435 * Background saving started by pid 25
+25:C 08 Mar 2025 09:44:36.547 * DB saved on disk
+25:C 08 Mar 2025 09:44:36.584 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 09:44:36.685 * Background saving terminated with success
+1:M 08 Mar 2025 11:04:17.551 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 11:04:17.552 * Background saving started by pid 26
+26:C 08 Mar 2025 11:04:17.578 * DB saved on disk
+26:C 08 Mar 2025 11:04:17.579 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 11:04:17.655 * Background saving terminated with success
+1:M 08 Mar 2025 11:11:20.163 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 11:11:20.164 * Background saving started by pid 27
+27:C 08 Mar 2025 11:11:20.170 * DB saved on disk
+27:C 08 Mar 2025 11:11:20.172 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 11:11:20.265 * Background saving terminated with success
+1:M 08 Mar 2025 11:26:21.078 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 11:26:21.095 * Background saving started by pid 28
+28:C 08 Mar 2025 11:26:21.114 * DB saved on disk
+28:C 08 Mar 2025 11:26:21.115 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 11:26:21.197 * Background saving terminated with success
+1:M 08 Mar 2025 11:41:22.039 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 11:41:22.040 * Background saving started by pid 29
+29:C 08 Mar 2025 11:41:22.049 * DB saved on disk
+29:C 08 Mar 2025 11:41:22.050 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 11:41:22.141 * Background saving terminated with success
+1:M 08 Mar 2025 11:46:23.043 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 11:46:23.043 * Background saving started by pid 30
+30:C 08 Mar 2025 11:46:23.048 * DB saved on disk
+30:C 08 Mar 2025 11:46:23.049 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 11:46:23.144 * Background saving terminated with success
+1:M 08 Mar 2025 11:51:24.035 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 11:51:24.037 * Background saving started by pid 31
+31:C 08 Mar 2025 11:51:24.046 * DB saved on disk
+31:C 08 Mar 2025 11:51:24.047 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 11:51:24.140 * Background saving terminated with success
+1:M 08 Mar 2025 12:06:25.061 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 12:06:25.061 * Background saving started by pid 32
+32:C 08 Mar 2025 12:06:25.068 * DB saved on disk
+32:C 08 Mar 2025 12:06:25.068 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 12:06:25.163 * Background saving terminated with success
+1:M 08 Mar 2025 12:25:50.667 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 12:25:50.668 * Background saving started by pid 33
+33:C 08 Mar 2025 12:25:50.672 * DB saved on disk
+33:C 08 Mar 2025 12:25:50.673 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 12:25:50.771 * Background saving terminated with success
+1:M 08 Mar 2025 12:31:06.725 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 12:31:06.726 * Background saving started by pid 34
+34:C 08 Mar 2025 12:31:06.738 * DB saved on disk
+34:C 08 Mar 2025 12:31:06.740 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 12:31:06.827 * Background saving terminated with success
+1:M 08 Mar 2025 13:08:13.373 * 1 changes in 900 seconds. Saving...
+1:M 08 Mar 2025 13:08:13.374 * Background saving started by pid 35
+35:C 08 Mar 2025 13:08:13.390 * DB saved on disk
+35:C 08 Mar 2025 13:08:13.392 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 13:08:13.476 * Background saving terminated with success
+1:M 08 Mar 2025 13:17:28.535 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 13:17:28.536 * Background saving started by pid 36
+36:C 08 Mar 2025 13:17:28.547 * DB saved on disk
+36:C 08 Mar 2025 13:17:28.549 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 13:17:28.641 * Background saving terminated with success
+1:M 08 Mar 2025 13:25:23.371 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 13:25:23.373 * Background saving started by pid 37
+37:C 08 Mar 2025 13:25:23.379 * DB saved on disk
+37:C 08 Mar 2025 13:25:23.381 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 13:25:23.474 * Background saving terminated with success
+1:M 08 Mar 2025 13:32:19.275 * 10 changes in 300 seconds. Saving...
+1:M 08 Mar 2025 13:32:19.278 * Background saving started by pid 38
+38:C 08 Mar 2025 13:32:19.285 * DB saved on disk
+38:C 08 Mar 2025 13:32:19.287 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 08 Mar 2025 13:32:19.380 * Background saving terminated with success
+1:M 09 Mar 2025 04:19:13.793 * 1 changes in 900 seconds. Saving...
+1:M 09 Mar 2025 04:19:13.911 * Background saving started by pid 39
+39:C 09 Mar 2025 04:19:14.115 * DB saved on disk
+39:C 09 Mar 2025 04:19:14.138 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 09 Mar 2025 04:19:14.275 * Background saving terminated with success
+1:M 09 Mar 2025 05:04:00.778 * 1 changes in 900 seconds. Saving...
+1:M 09 Mar 2025 05:04:00.782 * Background saving started by pid 40
+40:C 09 Mar 2025 05:04:00.812 * DB saved on disk
+40:C 09 Mar 2025 05:04:00.813 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 09 Mar 2025 05:04:00.884 * Background saving terminated with success
+1:M 09 Mar 2025 05:19:01.066 * 1 changes in 900 seconds. Saving...
+1:M 09 Mar 2025 05:19:01.067 * Background saving started by pid 41
+41:C 09 Mar 2025 05:19:01.074 * DB saved on disk
+41:C 09 Mar 2025 05:19:01.075 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 09 Mar 2025 05:19:01.168 * Background saving terminated with success
+1:M 09 Mar 2025 06:07:12.736 * 1 changes in 900 seconds. Saving...
+1:M 09 Mar 2025 06:07:12.740 * Background saving started by pid 42
+42:C 09 Mar 2025 06:07:12.749 * DB saved on disk
+42:C 09 Mar 2025 06:07:12.751 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 09 Mar 2025 06:07:12.841 * Background saving terminated with success
+1:M 09 Mar 2025 06:22:13.011 * 1 changes in 900 seconds. Saving...
+1:M 09 Mar 2025 06:22:13.013 * Background saving started by pid 43
+43:C 09 Mar 2025 06:22:13.017 * DB saved on disk
+43:C 09 Mar 2025 06:22:13.019 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 09 Mar 2025 06:22:13.114 * Background saving terminated with success
+1:signal-handler (1741524674) Received SIGTERM scheduling shutdown...
+1:M 09 Mar 2025 12:51:14.397 # User requested shutdown...
+1:M 09 Mar 2025 12:51:14.407 * Calling fsync() on the AOF file.
+1:M 09 Mar 2025 12:51:14.407 * Saving the final RDB snapshot before exiting.
+1:M 09 Mar 2025 12:51:14.446 * DB saved on disk
+1:M 09 Mar 2025 12:51:14.447 * Removing the pid file.
+1:M 09 Mar 2025 12:51:14.449 # Redis is now ready to exit, bye bye...
+1:C 09 Mar 2025 12:52:55.324 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 09 Mar 2025 12:52:55.324 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 09 Mar 2025 12:52:55.324 # Configuration loaded
+1:M 09 Mar 2025 12:52:55.326 * monotonic clock: POSIX clock_gettime
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 17715
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 09 Mar 2025 12:52:55.330 # Server initialized
+1:M 09 Mar 2025 12:52:55.330 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 09 Mar 2025 12:52:55.341 * Reading RDB base file on AOF loading...
+1:M 09 Mar 2025 12:52:55.341 * Loading RDB produced by version 7.0.15
+1:M 09 Mar 2025 12:52:55.341 * RDB age 6594922 seconds
+1:M 09 Mar 2025 12:52:55.341 * RDB memory usage when created 1.51 Mb
+1:M 09 Mar 2025 12:52:55.341 * RDB is base AOF
+1:M 09 Mar 2025 12:52:55.342 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 09 Mar 2025 12:52:55.342 * DB loaded from base file appendonly17715.aof.1.base.rdb: 0.001 seconds
+1:M 09 Mar 2025 12:52:55.344 * DB loaded from incr file appendonly17715.aof.1.incr.aof: 0.002 seconds
+1:M 09 Mar 2025 12:52:55.344 * DB loaded from append only file: 0.004 seconds
+1:M 09 Mar 2025 12:52:55.344 * Opening AOF incr file appendonly17715.aof.1.incr.aof on server start
+1:M 09 Mar 2025 12:52:55.344 * Ready to accept connections
+1:M 09 Mar 2025 12:57:56.066 * 10 changes in 300 seconds. Saving...
+1:M 09 Mar 2025 12:57:56.067 * Background saving started by pid 19
+19:C 09 Mar 2025 12:57:56.070 * DB saved on disk
+19:C 09 Mar 2025 12:57:56.071 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 09 Mar 2025 12:57:56.168 * Background saving terminated with success
+1:M 11 Mar 2025 13:24:01.460 * 1 changes in 900 seconds. Saving...
+1:M 11 Mar 2025 13:24:01.467 * Background saving started by pid 21
+21:C 11 Mar 2025 13:24:01.490 * DB saved on disk
+21:C 11 Mar 2025 13:24:01.491 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 11 Mar 2025 13:24:01.570 * Background saving terminated with success
+1:M 12 Mar 2025 00:12:57.790 * 1 changes in 900 seconds. Saving...
+1:M 12 Mar 2025 00:12:58.291 * Background saving started by pid 22
+22:C 12 Mar 2025 00:12:58.352 * DB saved on disk
+22:C 12 Mar 2025 00:12:58.367 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 12 Mar 2025 00:12:58.395 * Background saving terminated with success
+1:M 12 Mar 2025 09:04:43.914 * 1 changes in 900 seconds. Saving...
+1:M 12 Mar 2025 09:04:43.921 * Background saving started by pid 23
+23:C 12 Mar 2025 09:04:43.958 * DB saved on disk
+23:C 12 Mar 2025 09:04:43.959 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 12 Mar 2025 09:04:44.024 * Background saving terminated with success
+1:M 12 Mar 2025 09:53:51.631 * 1 changes in 900 seconds. Saving...
+1:M 12 Mar 2025 09:53:51.637 * Background saving started by pid 24
+24:C 12 Mar 2025 09:53:51.687 * DB saved on disk
+24:C 12 Mar 2025 09:53:51.717 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 12 Mar 2025 09:53:51.748 * Background saving terminated with success
+1:M 12 Mar 2025 10:27:35.978 * 1 changes in 900 seconds. Saving...
+1:M 12 Mar 2025 10:27:35.979 * Background saving started by pid 25
+25:C 12 Mar 2025 10:27:36.006 * DB saved on disk
+25:C 12 Mar 2025 10:27:36.009 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 12 Mar 2025 10:27:36.091 * Background saving terminated with success
+1:M 12 Mar 2025 10:39:40.240 * 10 changes in 300 seconds. Saving...
+1:M 12 Mar 2025 10:39:40.256 * Background saving started by pid 26
+26:C 12 Mar 2025 10:39:40.292 * DB saved on disk
+26:C 12 Mar 2025 10:39:40.294 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 12 Mar 2025 10:39:40.358 * Background saving terminated with success
+1:M 12 Mar 2025 10:54:41.096 * 1 changes in 900 seconds. Saving...
+1:M 12 Mar 2025 10:54:41.101 * Background saving started by pid 27
+27:C 12 Mar 2025 10:54:41.106 * DB saved on disk
+27:C 12 Mar 2025 10:54:41.107 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 12 Mar 2025 10:54:41.202 * Background saving terminated with success
+1:signal-handler (1742024790) Received SIGTERM scheduling shutdown...
+1:M 15 Mar 2025 07:46:30.261 # User requested shutdown...
+1:M 15 Mar 2025 07:46:30.297 * Calling fsync() on the AOF file.
+1:M 15 Mar 2025 07:46:30.297 * Saving the final RDB snapshot before exiting.
+1:M 15 Mar 2025 07:46:30.326 * DB saved on disk
+1:M 15 Mar 2025 07:46:30.327 * Removing the pid file.
+1:M 15 Mar 2025 07:46:30.327 # Redis is now ready to exit, bye bye...
+1:C 15 Mar 2025 07:54:12.076 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 15 Mar 2025 07:54:12.076 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 15 Mar 2025 07:54:12.076 # Configuration loaded
+1:M 15 Mar 2025 07:54:12.079 * monotonic clock: POSIX clock_gettime
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 17715
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 15 Mar 2025 07:54:12.084 # Server initialized
+1:M 15 Mar 2025 07:54:12.087 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 15 Mar 2025 07:54:12.096 * Reading RDB base file on AOF loading...
+1:M 15 Mar 2025 07:54:12.096 * Loading RDB produced by version 7.0.15
+1:M 15 Mar 2025 07:54:12.096 * RDB age 7095399 seconds
+1:M 15 Mar 2025 07:54:12.096 * RDB memory usage when created 1.51 Mb
+1:M 15 Mar 2025 07:54:12.096 * RDB is base AOF
+1:M 15 Mar 2025 07:54:12.096 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 15 Mar 2025 07:54:12.099 * DB loaded from base file appendonly17715.aof.1.base.rdb: 0.004 seconds
+1:M 15 Mar 2025 07:54:12.104 * DB loaded from incr file appendonly17715.aof.1.incr.aof: 0.005 seconds
+1:M 15 Mar 2025 07:54:12.104 * DB loaded from append only file: 0.009 seconds
+1:M 15 Mar 2025 07:54:12.104 * Opening AOF incr file appendonly17715.aof.1.incr.aof on server start
+1:M 15 Mar 2025 07:54:12.104 * Ready to accept connections
+1:M 15 Mar 2025 07:59:13.082 * 10 changes in 300 seconds. Saving...
+1:M 15 Mar 2025 07:59:13.084 * Background saving started by pid 19
+19:C 15 Mar 2025 07:59:13.087 * DB saved on disk
+19:C 15 Mar 2025 07:59:13.088 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 15 Mar 2025 07:59:13.185 * Background saving terminated with success

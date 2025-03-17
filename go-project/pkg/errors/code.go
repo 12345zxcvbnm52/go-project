@@ -39,16 +39,16 @@ type defaultCoder struct {
 	message string
 }
 
-func (coder defaultCoder) ErrorCode() int {
+func (coder *defaultCoder) ErrorCode() int {
 	return coder.code
 
 }
 
-func (coder defaultCoder) Message() string {
+func (coder *defaultCoder) Message() string {
 	return coder.message
 }
 
-func (coder defaultCoder) HTTPCode() int {
+func (coder *defaultCoder) HTTPCode() int {
 	if coder.httpCode == 0 {
 		return http.StatusInternalServerError
 	}
@@ -56,18 +56,18 @@ func (coder defaultCoder) HTTPCode() int {
 	return coder.httpCode
 }
 
-func (coder defaultCoder) GrpcCode() grpccode.Code {
+func (coder *defaultCoder) GrpcCode() grpccode.Code {
 	return coder.grpcCode
 }
 
 // 一组记录code的map元数据
-var codeMap = map[int]defaultCoder{}
+var codeMap = map[int]*defaultCoder{}
 
 func mustNewCoder(code int, httpCode int, rpcCode grpccode.Code, msg string) Coder {
 	if code < 1000000 || httpCode < 200 || rpcCode < grpccode.OK {
 		panic(Errorf("错误的code参数,其中code为:%d,httpCode为:%d,grpcCode为:%d", code, httpCode, rpcCode))
 	}
-	coder := defaultCoder{code, httpCode, rpcCode, msg}
+	coder := &defaultCoder{code, httpCode, rpcCode, msg}
 
 	codeMap[code] = coder
 	return coder
@@ -98,4 +98,9 @@ func HasCode(err error, code int) bool {
 	}
 
 	return false
+}
+
+func IfWithCoder(err error) bool {
+	_, ok := err.(*withCode)
+	return ok
 }

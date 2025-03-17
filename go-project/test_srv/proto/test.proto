@@ -1,14 +1,21 @@
 syntax = "proto3";
 option go_package="./;proto";
+import "google/protobuf/empty.proto";
 
-message req{
-    string name = 1;
+service dmt{
+    rpc ACom(A)returns(google.protobuf.Empty);
+    rpc ATrans(A)returns(google.protobuf.Empty);
+    rpc BTrans(B)returns(google.protobuf.Empty);
+    rpc BCom(B)returns(google.protobuf.Empty);
+    rpc Try(google.protobuf.Empty)returns(google.protobuf.Empty);
 }
 
-message res{
-    string res = 1;
+message A{
+    int32 Id = 2;
+    int32 decr = 1;
 }
 
-service test {
-    rpc Conn(req)returns(res);
+message B{
+    int32 Id = 2;
+    int32 incr = 1;
 }

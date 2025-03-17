@@ -26,8 +26,9 @@ service Messaging {
             Success: "200 {object} map[string]interface{}",
             Failure: "500 {object} map[string]interface{}",
             Tags: "ken tag",
-            Params: "message_id path string true '消息 ID'",
-            Params: "message_name path string true '消息 Name'",
+            Params: "age path integer true '消息 ID'",
+            Params: "name path string true '消息 Name'",
+            Params: "price path float true 'jia eg'",
         };
     }
 }
@@ -35,6 +36,7 @@ service Messaging {
 message ReqMessage{
     string name = 1;
     int32 age = 2;
+    double price = 3;
 }
 
 message ResMessage{

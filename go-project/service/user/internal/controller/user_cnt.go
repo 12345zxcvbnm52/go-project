@@ -24,18 +24,18 @@ var ProtoJson = protojson.MarshalOptions{
 	EmitUnpopulated: true,
 }
 
-func MethodInfoRecord(data gproto.Message) []byte {
+func MethodInfoRecord(data gproto.Message) string {
 	r, err := ProtoJson.Marshal(data)
 	if err != nil {
-		return []byte{}
+		return ""
 	}
-	return r
+	return string(r)
 }
 
 // 获得用户列表,可通过FliterReq过滤
 func (s *UserServer) GetUserList(ctx context.Context, in *proto.UserFliterReq) (*proto.UserListRes, error) {
 	info := MethodInfoRecord(in)
-	s.Logger.Sugar().Infof("正在进行一次GetUserList调用,调用信息为: %s", string(info))
+	s.Logger.Sugar().Infof("正在进行一次GetUserList调用,调用信息为: %s", info)
 	res, err := s.Service.GetUserListLogic(ctx, in)
 	if err != nil {
 		s.Logger.Sugar().Errorf("调用GetUserList失败,具体信息为: %s", err.Error())

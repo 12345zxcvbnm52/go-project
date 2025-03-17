@@ -1,0 +1,28 @@
+#服务注册参数
+name: 'goods_srv'
+id: 'goods_srv'
+tags: 
+  - 'goods'
+version: '1.0'
+
+#这里若使用具体ip则需要关闭mysql的保护模式
+mysql: 
+  ip: '192.168.199.128'
+  port: 3307
+  password: '123'
+  username: 'root'
+  db_name: 'goods_srv'
+
+consul: 
+  ip: '192.168.199.128'
+  port: 8500
+
+redis: 
+  ip: '192.168.199.128'
+  port: 6379
+  password: '123'
+
+otel:
+  ip: '192.168.199.128'
+  port: 4318
+  service-name: 'goods-srv'

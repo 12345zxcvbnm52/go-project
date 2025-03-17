@@ -3,14 +3,16 @@ package opengintracing
 import (
 	"context"
 	"errors"
+	"fmt"
 	ktrace "kenshop/pkg/trace"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/propagation"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 	"go.opentelemetry.io/otel/trace"
-	"google.golang.org/grpc/metadata"
 )
 
 type GinTracer struct {
@@ -19,7 +21,6 @@ type GinTracer struct {
 	SpanGinCtxKey string
 	AbortOnErrors bool
 	TracerName    string
-	Host          string
 }
 
 var (
@@ -28,39 +29,55 @@ var (
 
 type GinTracerOption func(*GinTracer)
 
-func MustNewGinTracer(ctx context.Context, host string, opts ...GinTracerOption) *GinTracer {
+func MustNewGinTracer(ctx context.Context, opts ...GinTracerOption) *GinTracer {
 	gt := &GinTracer{
 		Ctx:           ctx,
 		SpanGinCtxKey: "gin-goken",
 		AbortOnErrors: true,
 		TracerName:    "goken",
-		Host:          host,
 	}
 
 	for _, opt := range opts {
 		opt(gt)
 	}
-
-	if host != "" {
-		tracer := ktrace.MustNewTracer(ctx)
-		tp, err := tracer.NewTraceProvider(host)
-		if err != nil {
-			panic(err)
-		}
-		otel.SetTracerProvider(tp)
-	}
 	return gt
 }
 
-// NewSpan会返回一个Handler,在其中启动一个新的Span并注入到请求上下文中,
-// 它会测量所有后续处理程序的执行时间,
-func (g *GinTracer) WithSpanHandler(spanName string, opts ...trace.SpanStartOption) gin.HandlerFunc {
+// 在TraceHandler的基础上允许自定义span名称而非方法+路径名
+func (g *GinTracer) TraceHandlerWithSpanName(spanName string, opts ...trace.SpanStartOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		tracer := otel.Tracer(g.TracerName)
 		c, span := tracer.Start(g.Ctx, spanName, opts...)
 		ctx.Set(g.SpanGinCtxKey, c)
 		ctx.Set("tracer-name", g.TracerName)
 		defer span.End()
+		ctx.Next()
+	}
+}
+
+// NewSpan会返回一个Handler,在其中启动一个新的Span并注入到请求上下文中,
+// 它会测量所有后续处理程序的执行时间,
+func (g *GinTracer) TraceHandler(opts ...trace.SpanStartOption) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		tracer := otel.Tracer(g.TracerName)
+		c, span := tracer.Start(g.Ctx, fmt.Sprintf("%s-%s", ctx.Request.Method, ctx.Request.URL.Path), opts...)
+		c = ktrace.NewSpanOutgoingContext(c, span)
+		ctx.Set("tracer-name", g.TracerName)
+		ctx.Set(g.SpanGinCtxKey, c)
+		defer func() {
+			span.SetAttributes(
+				// 记录 HTTP 方法
+				semconv.HTTPMethodKey.String(ctx.Request.Method),
+				// 记录完整URL
+				semconv.HTTPURLKey.String(ctx.Request.URL.String()),
+				// 记录客户端Host
+				semconv.HTTPHostKey.String(ctx.Request.Host),
+				// 记录响应状态码
+				semconv.HTTPStatusCodeKey.Int(ctx.Writer.Status()),
+				attribute.String("http.referer", ctx.Request.Referer()),
+			)
+			span.End()
+		}()
 		ctx.Next()
 	}
 }
@@ -115,16 +132,6 @@ func (g *GinTracer) InjectToHeaders(tracer trace.Tracer) gin.HandlerFunc {
 		}
 
 	}
-}
-
-func (g *GinTracer) InjectMD(c *gin.Context) *metadata.MD {
-	md := metadata.Pairs("tracer-name", g.TracerName)
-	spanContextAny, _ := c.Get(g.SpanGinCtxKey)
-	spanContext, typeOk := spanContextAny.(context.Context)
-	if spanContext != nil && typeOk {
-		ktrace.InjectMD(spanContext, &md)
-	}
-	return &md
 }
 
 // GetSpan从上下文中提取Span

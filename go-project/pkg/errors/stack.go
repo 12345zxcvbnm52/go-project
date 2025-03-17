@@ -2,166 +2,77 @@ package errors
 
 import (
 	"fmt"
-	"io"
 	"path"
 	"runtime"
-	"strconv"
 	"strings"
 )
 
-// 出于go的历史原因,如果用uintptr解释栈帧指令,默认会存储pc+1的指令,
-// 这类似于链表的next指针,这样解释能更方便处理一些事情
-type Frame uintptr
-
-// 返回pc中的指令
-func (f Frame) pc() uintptr { return uintptr(f) - 1 }
-
-// 返回出现问题的文件的全路径
-func (f Frame) file() string {
-	fn := runtime.FuncForPC(f.pc())
-	if fn == nil {
-		return "unknown"
-	}
-	file, _ := fn.FileLine(f.pc())
-	return file
+// Frame 代表一个调用栈帧
+type Frame struct {
+	pc       uintptr
+	function string
+	file     string
+	line     int
 }
 
-// 返回调用函数在源码中的具体行号
-func (f Frame) line() int {
-	fn := runtime.FuncForPC(f.pc())
+// 创建 Frame 时直接解析文件名,行号,函数名,避免多次 runtime.FuncForPC
+func newFrame(pc uintptr) Frame {
+	pc--
+	fn := runtime.FuncForPC(pc)
 	if fn == nil {
-		return 0
+		return Frame{pc: pc, function: "unknown", file: "unknown", line: 0}
 	}
-	_, line := fn.FileLine(f.pc())
-	return line
+	file, line := fn.FileLine(pc)
+	return Frame{pc: pc, function: fn.Name(), file: file, line: line}
 }
 
-// 返回调用函数在源码中的具体名字
-func (f Frame) name() string {
-	fn := runtime.FuncForPC(f.pc())
-	if fn == nil {
-		return "unknown"
-	}
-	return fn.Name()
-}
-
-// 自实现的fmt.Printf系函数
-// Format formats the frame according to the fmt.Formatter interface.
-//
-//	%s    source file
-//	%d    source line
-//	%n    function name
-//	%v    equivalent to %s:%d
-//
-// Format accepts flags that alter the printing of some verbs, as follows:
-//
-//	%+s   function name and path of source file relative to the compile time
-//	      GOPATH separated by \n\t (<funcname>\n\t<path>)
-//	%+v   equivalent to %+s:%d
+// 格式化输出 Frame
 func (f Frame) Format(s fmt.State, verb rune) {
 	switch verb {
 	case 's':
-		switch {
-		case s.Flag('+'):
-			io.WriteString(s, f.name())
-			io.WriteString(s, "\n\t")
-			io.WriteString(s, f.file())
-		default:
-			io.WriteString(s, path.Base(f.file()))
+		if s.Flag('+') {
+			fmt.Fprintf(s, "%s\n\t%s", f.function, f.file)
+		} else {
+			fmt.Fprint(s, path.Base(f.file))
 		}
 	case 'd':
-		io.WriteString(s, strconv.Itoa(f.line()))
+		fmt.Fprint(s, f.line)
 	case 'n':
-		io.WriteString(s, funcname(f.name()))
+		fmt.Fprint(s, funcname(f.function))
 	case 'v':
 		f.Format(s, 's')
-		io.WriteString(s, ":")
+		fmt.Fprint(s, ":")
 		f.Format(s, 'd')
 	}
 }
 
-// MarshalText将一个stacktrace Frame格式化为文本字符串,
-// 输出格式与 fmt.Sprintf("%+v", f) 相同,但不包含换行符或制表符
+// 实现 `MarshalText`
 func (f Frame) MarshalText() ([]byte, error) {
-	name := f.name()
-	if name == "unknown" {
-		return []byte(name), nil
+	if f.function == "unknown" {
+		return []byte(f.function), nil
 	}
-	return []byte(fmt.Sprintf("%s %s:%d", name, f.file(), f.line())), nil
+	return []byte(fmt.Sprintf("%s %s:%d", f.function, f.file, f.line)), nil
 }
 
-// 可以看出异常栈的本质仍然是切片,从内到外意味着函数栈的外到内
-type StackTrace []Frame
+// stack 代表调用栈
+type stack []Frame
 
-// Format formats the stack of Frames according to the fmt.Formatter interface.
-//
-//	%s	lists source files for each Frame in the stack
-//	%v	lists the source file and line number for each Frame in the stack
-//
-// Format accepts flags that alter the printing of some verbs, as follows:
-//
-//	%+v   Prints filename, function, and line number for each Frame in the stack.
-func (st StackTrace) Format(s fmt.State, verb rune) {
-	switch verb {
-	case 'v':
-		switch {
-		case s.Flag('+'):
-			for _, f := range st {
-				io.WriteString(s, "\n")
-				f.Format(s, verb)
-			}
-		case s.Flag('#'):
-			fmt.Fprintf(s, "%#v", []Frame(st))
-		default:
-			st.formatSlice(s, verb)
-		}
-	case 's':
-		st.formatSlice(s, verb)
-	}
-}
-
-// 对StackTrace Format的实际逻辑,但只会处理%s和%v时的逻辑,%#的逻辑不在此
-func (st StackTrace) formatSlice(s fmt.State, verb rune) {
-	io.WriteString(s, "[")
-	for i, f := range st {
-		if i > 0 {
-			io.WriteString(s, " ")
-		}
-		f.Format(s, verb)
-	}
-	io.WriteString(s, "]")
-}
-
-// stack represents a stack of program counters.
-// 这里不是很明白为什么要在更底层写一个stack,或许是指令读取需要uintptr?
-type stack []uintptr
-
+// 格式化 stack
 func (s *stack) Format(st fmt.State, verb rune) {
-	switch verb {
-	case 'v':
-		switch {
-		case st.Flag('+'):
-			for _, pc := range *s {
-				f := Frame(pc)
-				fmt.Fprintf(st, "%+v\n", f)
-			}
+	if verb == 'v' && st.Flag('+') {
+		for _, f := range *s {
+			fmt.Fprintf(st, "%+v\n", f)
 		}
 	}
 }
 
-func (s *stack) StackTrace() StackTrace {
-	f := make([]Frame, len(*s))
-	for i := 0; i < len(f); i++ {
-		f[i] = Frame((*s)[i])
-	}
-	return f
-}
-
+// 获取调用栈
 func callers() *stack {
 	const depth = 32
 	var pcs [depth]uintptr
-	n := runtime.Callers(3, pcs[:])
-	filtered := make(stack, 0, n)
+	n := runtime.Callers(3, pcs[:]) // 2 以获取调用 callers() 之上的栈帧
+
+	st := make(stack, 0, n)
 	for _, pc := range pcs[:n] {
 		fn := runtime.FuncForPC(pc)
 		if fn == nil {
@@ -170,39 +81,21 @@ func callers() *stack {
 		name := fn.Name()
 
 		// 过滤掉 runtime 和 asm 相关的帧
-		if !strings.HasPrefix(name, "runtime") && !strings.Contains(name, "asm_") {
-			filtered = append(filtered, pc)
+		if !strings.Contains(name, "runtime.") && !strings.Contains(name, "asm_") {
+			st = append(st, newFrame(pc))
 		}
 	}
 
-	return &filtered
+	return &st
 }
 
-func Callers() *stack {
-	const depth = 32
-	var pcs [depth]uintptr
-	n := runtime.Callers(2, pcs[:])
-	filtered := make(stack, 0, n)
-	for _, pc := range pcs[:n] {
-		fn := runtime.FuncForPC(pc)
-		if fn == nil {
-			continue
-		}
-		name := fn.Name()
-
-		// 过滤掉 runtime 和 asm 相关的帧
-		if !strings.HasPrefix(name, "runtime") && !strings.Contains(name, "asm_") {
-			filtered = append(filtered, pc)
-		}
-	}
-
-	return &filtered
-}
-
-// funcname removes the path prefix component of a function's name reported by func.Name().
+// 解析函数名,去除路径前缀
 func funcname(name string) string {
-	i := strings.LastIndex(name, "/")
-	name = name[i+1:]
-	i = strings.Index(name, ".")
-	return name[i+1:]
+	if i := strings.LastIndex(name, "/"); i != -1 {
+		name = name[i+1:]
+	}
+	if i := strings.Index(name, "."); i != -1 {
+		name = name[i+1:]
+	}
+	return name
 }

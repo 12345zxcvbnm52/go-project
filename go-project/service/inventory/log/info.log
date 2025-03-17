@@ -1,0 +1,27 @@
+2025-03-12T18:33:55.331+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{inventory_srv inventory_srv [inventory] 192.168.199.128 45765 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 inventory_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 inventory-srv} {192.168.199.128 17715 123} {192.168.199.128 9876 inventory-reback-gn order-reback}}
+2025-03-12T18:34:13.794+0800	INFO	controller/inventory_cnt.go:69	正在进行一次DecrStock调用,调用信息为: {"decrData":[{"goodsId":1,"goodsNum":11},{"goodsId":2,"goodsNum":21},{"goodsId":3,"goodsNum":146},{"goodsId":4,"goodsNum":31}],"orderSign":""}
+2025-03-12T18:39:20.368+0800	INFO	resourse/resourse.go:39	服务配置文件为: &{inventory_srv inventory_srv [inventory] 192.168.199.128 44425 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 inventory_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 inventory-srv} {192.168.199.128 17715 123} {192.168.199.128 9876 inventory-reback-gn order-reback}}
+2025-03-12T18:39:40.123+0800	INFO	controller/inventory_cnt.go:69	正在进行一次DecrStock调用,调用信息为: {"decrData":[{"goodsId":1,"goodsNum":11},{"goodsId":2,"goodsNum":21},{"goodsId":3,"goodsNum":146},{"goodsId":4,"goodsNum":31}],"orderSign":"019589f0445372f4b0f56d21b1b4d02b"}
+2025-03-12T18:41:08.535+0800	INFO	controller/inventory_cnt.go:69	正在进行一次DecrStock调用,调用信息为: {"decrData":[{"goodsId":1,"goodsNum":11},{"goodsId":2,"goodsNum":21},{"goodsId":3,"goodsNum":146},{"goodsId":4,"goodsNum":31}],"orderSign":"019589f19f9e739b944335e9294f47f9"}
+2025-03-12T18:41:08.561+0800	ERROR	controller/inventory_cnt.go:72	调用DecrStock失败,具体信息为: : 库存不足,无法扣减,库存id为:3,库存现有存量为:145,欲扣减库存量为:146
+kenshop/service/inventory/internal/controller.(*InventoryServer).DecrStock
+	/home/ken/ken/go-project/service/inventory/internal/controller/inventory_cnt.go:72
+kenshop/proto/inventory._Inventory_DecrStock_Handler.func1
+	/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:208
+kenshop/goken/server/rpcserver/sinterceptors.UnaryTracingInterceptor
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/tracing.go:22
+google.golang.org/grpc.getChainUnaryHandler.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1212
+kenshop/goken/server/rpcserver.MustNewServer.HealthCheckInterceptor.func1
+	/home/ken/ken/go-project/goken/server/rpcserver/sinterceptors/health.go:21
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1203
+kenshop/proto/inventory._Inventory_DecrStock_Handler
+	/home/ken/ken/go-project/proto/inventory/inventory_grpc.pb.go:210
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1400
+google.golang.org/grpc.(*Server).handleStream
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1810
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ken/go/pkg/mod/google.golang.org/grpc@v1.70.0/server.go:1030
+2025-03-12T18:54:44.175+0800	INFO	resourse/resourse.go:41	服务配置文件为: &{inventory_srv inventory_srv [inventory] 192.168.199.128 46581 {{0 0} 0 0 {{} 0} {{} 0}} 1.0 {192.168.199.128 3307 root 123 inventory_srv} {192.168.199.128 8500} {192.168.199.128 6379 123} {192.168.199.128 4318 inventory-srv} {192.168.199.128 17715 123} {192.168.199.128 9876 inventory-reback-gn order-reback}}

@@ -10,7 +10,7 @@ import (
 var _ propagation.TextMapCarrier = (*metadataSupplier)(nil)
 
 type metadataSupplier struct {
-	metadata *metadata.MD
+	metadata metadata.MD
 }
 
 func (s *metadataSupplier) Get(key string) string {
@@ -27,8 +27,8 @@ func (s *metadataSupplier) Set(key, value string) {
 }
 
 func (s *metadataSupplier) Keys() []string {
-	out := make([]string, 0, len(*s.metadata))
-	for key := range *s.metadata {
+	out := make([]string, 0, len(s.metadata))
+	for key := range s.metadata {
 		out = append(out, key)
 	}
 
@@ -36,11 +36,11 @@ func (s *metadataSupplier) Keys() []string {
 }
 
 // spanContext注入到metadata中
-func InjectMD(ctx context.Context, metadata *metadata.MD) {
+func InjectMD(ctx context.Context, metadata metadata.MD) {
 	Inject(ctx, &metadataSupplier{metadata: metadata})
 }
 
 // 从metadata中提取spanContext并将其注入到context中
-func ExtractMD(ctx context.Context, metadata *metadata.MD) context.Context {
+func ExtractMD(ctx context.Context, metadata metadata.MD) context.Context {
 	return Extract(ctx, &metadataSupplier{metadata: metadata})
 }

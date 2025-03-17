@@ -10,7 +10,6 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 
 	"kenshop/goken/registry"
@@ -27,7 +26,6 @@ import (
 	"kenshop/pkg/log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 )
 
 var ErrNilHttpRegistor = errors.New("该http服务不存在注册器")
@@ -38,6 +36,7 @@ type Server struct {
 	Host     string
 	Mode     string
 	InSecure bool
+	UseAbort bool
 
 	Jwt       *jwt.GinJWTMiddleware
 	Registor  registry.Registor
@@ -72,6 +71,7 @@ func MustNewServer(ctx context.Context, host string, opts ...ServerOption) *Serv
 		Middlewares:     make(map[string]gin.HandlerFunc),
 		InSecure:        true,
 		Server:          &http.Server{},
+		UseAbort:        true,
 	}
 
 	s.Instance = &registry.ServiceInstance{
@@ -195,17 +195,4 @@ func (s *Server) Serve() error {
 		close(ech)
 		return err
 	}
-}
-
-func (s *Server) TranslateErr(err validator.ValidationErrors) map[string]string {
-	// 移除默认字段检测时多出来的结构体名称.
-	f := func(msg map[string]string) map[string]string {
-		res := map[string]string{}
-		for k, v := range msg {
-			res[k[strings.Index(k, ".")+1:]] = v
-		}
-		return res
-	}
-
-	return f(err.Translate(s.Validator.Trans))
 }

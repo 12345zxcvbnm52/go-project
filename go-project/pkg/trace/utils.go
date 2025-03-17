@@ -28,7 +28,6 @@ func ParseFullMethod(fullMethod string) (string, []attribute.KeyValue) {
 	name := strings.TrimLeft(fullMethod, "/")
 	parts := strings.SplitN(name, "/", 2)
 	if len(parts) != 2 {
-		// Invalid format, does not follow `/package.service/method`.
 		return name, []attribute.KeyValue(nil)
 	}
 
@@ -60,18 +59,17 @@ func PeerAttr(addr string) []attribute.KeyValue {
 	}
 }
 
-// PeerFromCtx returns the peer from ctx.
-func PeerFromCtx(ctx context.Context) string {
+// PeerAddrFromCtx 返回客户端信息
+func PeerAddrFromCtx(ctx context.Context) string {
 	p, ok := peer.FromContext(ctx)
 	if !ok || p == nil {
 		return ""
 	}
-
 	return p.Addr.String()
 }
 
-// SpanInfo returns the span info.
-func SpanInfo(fullMethod, peerAddress string) (string, []attribute.KeyValue) {
+// SpanInfo 返回
+func ResolveGrpcInfo(fullMethod, peerAddress string) (string, []attribute.KeyValue) {
 	attrs := []attribute.KeyValue{RPCSystemGRPC}
 	name, mAttrs := ParseFullMethod(fullMethod)
 	attrs = append(attrs, mAttrs...)
@@ -82,9 +80,9 @@ func SpanInfo(fullMethod, peerAddress string) (string, []attribute.KeyValue) {
 // TracerFromContext returns a tracer in ctx, otherwise returns a global tracer.
 func TracerFromContext(ctx context.Context) (tracer trace.Tracer) {
 	if span := trace.SpanFromContext(ctx); span.SpanContext().IsValid() {
-		tracer = span.TracerProvider().Tracer(TraceName)
+		tracer = span.TracerProvider().Tracer(KTraceName)
 	} else {
-		tracer = otel.Tracer(TraceName)
+		tracer = otel.Tracer(KTraceName)
 	}
 
 	return

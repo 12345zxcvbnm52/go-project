@@ -1,0 +1,65 @@
+2025/03/12 18:54:43 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[4.379ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:43 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[30.185ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[23.905ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory_srv' AND table_name = 'inventories' AND table_type = 'BASE TABLE'
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[0.860ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[3.696ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[5.654ms] [rows:-] SELECT * FROM `inventories` LIMIT 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[6.073ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory_srv' AND table_name = 'inventories' ORDER BY ORDINAL_POSITION
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: 
+[1.313ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: 
+[2.521ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[17.027ms] [rows:4] 
+SELECT
+	TABLE_NAME,
+	COLUMN_NAME,
+	INDEX_NAME,
+	NON_UNIQUE 
+FROM
+	information_schema.STATISTICS 
+WHERE
+	TABLE_SCHEMA = 'inventory_srv' 
+	AND TABLE_NAME = 'inventories' 
+ORDER BY
+	INDEX_NAME,
+	SEQ_IN_INDEX
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: 
+[0.552ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: 
+[2.427ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: 
+[75.863ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'inventory_srv' AND table_name = 'inventories' AND constraint_name = 'uni_inventories_goods_id'
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[0.935ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[1.747ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[4.662ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory_srv' AND table_name = 'inventories' AND index_name = 'idx_inventories_deleted_at'
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[0.582ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[1.770ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[3.785ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory_srv' AND table_name = 'inventories' AND index_name = 'idx_inventories_goods_id'
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[1.402ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[1.688ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[3.947ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory_srv' AND table_name = 'order_decr_records' AND table_type = 'BASE TABLE'
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[0.709ms] [rows:-] SELECT DATABASE()
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:182: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[2.308ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory_srv%' ORDER BY SCHEMA_NAME='inventory_srv' DESC,SCHEMA_NAME limit 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[5.983ms] [rows:-] SELECT * FROM `order_decr_records` LIMIT 1
+2025/03/12 18:54:44 /home/ken/go/pkg/mod/gorm.io/gorm@v1.25.12/logger/logger.go:180: /home/ken/ken/go-project/service/inventory/internal/resourse/db.go:60
+[3.199ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory_srv' AND table_name = 'order_decr_records' ORDER BY ORDINAL_POSITION

@@ -1,8 +1,6 @@
 package jwt
 
 import (
-	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -11,17 +9,9 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-const (
-	TokenInHeader = "header:x-token"
-	TokenInQuery  = "query:x-token"
-	TokenInCookie = "cookie:x-token"
-	TokenInParam  = "param:x-token"
-	TokenInForm   = "form:x-token"
-)
-
 // GinJWTMiddleware 提供了一个 Json-Web-Token 认证实现,失败时返回 401 HTTP 响应,
 // 成功时调用该包装的中间件后可以通过c.Get("userID").(string)获取用户ID,
-// 用户可以通过向LoginHandler发送json请求来获取token,然后需要在http-header的Authenticatio中传递该token,
+// 用户可以通过向LoginHandler发送json请求来获取token,然后需要在http-header的Authentication中传递该token,
 // 例如:Authorization:Bearer XXX_TOKEN_XXX
 type GinJWTMiddleware struct {
 	// jwt所属的域名,也可以用于签发者姓名
@@ -55,23 +45,6 @@ type GinJWTMiddleware struct {
 
 	WithCache bool
 
-	// 在登录期间调用的回调函数,使用此函数可以向webtoken添加自定义的payload数据(负载数据),
-	// 默认不会设置额外的PayloadFunc
-	// 除此之外还可以通过c.Get("JWT_PAYLOAD")在请求期间得到这些数据,请注意payload在jwt存储中是不会加密的,
-	PayloadFunc func(keyvalue ...string) jwt.MapClaims
-
-	// 用户自定义的未授权时回调处理函数,默认功能类似于WriteErrorToResponse,
-	//当认证失败时,调用该函数返回一个自定义的响应,默认返回401状态码和错误信息
-	Unauthorized func(c *gin.Context, httpCode int, message string)
-
-	// 用户自定义的登录响应回调函数,类似于AfterLogin钩子函数,
-	//当用户登录成功并返回token时,会调用此函数来定制登录后的响应内容,
-	LoginResponse func(c *gin.Context, httpCode int, message string, time time.Time)
-
-	// 用户自定义的登出回调函数,类似于AfterLogout钩子函数,
-	//当用户登录成功并返回token时,会调用此函数来定制登出后的响应内容,
-	LogoutResponse func(c *gin.Context, httpCode int)
-
 	//TokenInside是一个字符串,用于指定token在请求中的位置,默认值为"header",允许有多个值,用,分隔
 	TokenInside string
 
@@ -82,26 +55,17 @@ type GinJWTMiddleware struct {
 	//可以覆盖它以使用其他时间值,这对于测试或如果服务器使用与token不同的时区非常有用,
 	TimeFunc func() time.Time
 
-	// 动态返回JWT中间件中内容失败时的HTTP状态错误消息,
-	//HTTPStatusMessageFunc func(e error, c *gin.Context) string
+	// 是否使用gin.Context的abort(),
+	UseAbort bool
 
-	// 可选地将token作为cookie返回
+	// 可选地将token作为cookie返回,默认关闭
 	SendCookie bool
 
 	// cookie的有效时长,默认等于Timeout值,
 	CookieMaxAge time.Duration
 
-	// 允许在开发过程中通过http使用不安全的cookie
+	// 允许在使用不安全的cookie,默认开启
 	SecureCookie bool
-
-	// 允许在开发过程中客户端访问cookie
-	CookieHTTPOnly bool
-
-	// 允许在开发过程中更改cookie域名
-	CookieDomain string
-
-	// 禁用gin.Context的abort(),
-	DisabledAbort bool
 
 	// 允许在开发过程中更改cookie名称
 	CookieName string
@@ -119,50 +83,6 @@ type GinJWTMiddleware struct {
 	ExpField string
 }
 
-var (
-	// ErrMissingSecretKey indicates Secret key is required
-	ErrMissingSecretKey = errors.New("secret key is required")
-
-	// ErrForbidden when HTTP status 403 is given
-	ErrForbidden = errors.New("you don't have permission to access this resource")
-
-	// ErrFailedAuthentication indicates authentication failed, could be faulty username or password
-	ErrFailedAuthentication = errors.New("incorrect Username or Password")
-
-	// ErrFailedTokenCreation indicates JWT Token failed to create, reason unknown
-	ErrFailedTokenCreation = errors.New("failed to create JWT Token")
-
-	// ErrExpiredToken indicates JWT token has expired. Can't refresh.
-	ErrExpiredToken = errors.New("token is expired") // in practice, this is generated from the jwt library not by us
-
-	//ErrExpiredRefreshToken indicates JWT token has expired. Can't refresh.
-	ErrExpiredRefreshToken = errors.New("refresh token is expired")
-
-	// ErrEmptyToken can be thrown if authing with a HTTP header, the Auth header needs to be set
-	ErrEmptyToken = errors.New("token header is empty")
-
-	// ErrMissingExpField missing exp field in token
-	ErrMissingExpField = errors.New("missing exp field")
-
-	// ErrWrongFormatOfExp field must be float64 format
-	ErrWrongFormatOfExp = errors.New("exp must be float64 format")
-
-	// ErrInvalidToken indicates auth header is invalid, could for example have the wrong Realm name
-	ErrInvalidToken = errors.New("auth header is invalid")
-
-	// ErrEmptyQueryToken can be thrown if authing with URL Query, the query token variable is empty
-	ErrEmptyQueryToken = errors.New("query token is empty")
-
-	// ErrEmptyCookieToken can be thrown if authing with a cookie, the token cookie is empty
-	ErrEmptyCookieToken = errors.New("cookie token is empty")
-
-	// ErrEmptyParamToken can be thrown if authing with parameter in path, the parameter in path is empty
-	ErrEmptyParamToken = errors.New("parameter token is empty")
-
-	// ErrInvalidSigningAlgorithm indicates signing algorithm is invalid, needs to be HS256, HS384, HS512, RS256, RS384 or RS512
-	ErrInvalidSigningAlgorithm = errors.New("invalid signing algorithm")
-)
-
 func (mw *GinJWTMiddleware) AuthorizationHandler(c *gin.Context) {
 	//claims:=ExtractClaimsFromContext(c)
 	//identity:=c.GetString(mw.IdentityKey)
@@ -179,14 +99,16 @@ func (mw *GinJWTMiddleware) NewToken(keyvalue ...string) (string, time.Time, err
 	//orig-iat代表着jwt令牌的原始签发时间,这个时间不会因为refresh等更新
 	claims["orig_iat"] = mw.TimeFunc().Unix()
 	claims["iss"] = mw.Realm
-	claims["nbf"] = claims["orig_iat"]
+	// 允许最多5秒时间偏差
+	claims["nbf"] = mw.TimeFunc().Add(-time.Second * 5).Unix()
 	claims["iat"] = claims["orig_iat"]
 	claims["aud"] = mw.Audience
-	claims["rfs_exp"] = expire.Add(mw.MaxRefreshFunc(claims)).Unix()
-	if mw.PayloadFunc != nil {
-		for key, value := range mw.PayloadFunc(keyvalue...) {
-			claims[key] = value
-		}
+	refreshExpire := expire.Add(mw.MaxRefreshFunc(claims))
+	claims["rfs_exp"] = refreshExpire.Unix()
+
+	//把自定义的kv perload加入其中
+	for i := 0; i+1 < len(keyvalue); i += 2 {
+		claims[keyvalue[i]] = keyvalue[i+1]
 	}
 
 	tokenString, err := token.SignedString(mw.Key)
@@ -269,8 +191,11 @@ func (mw *GinJWTMiddleware) getTokenFromCtx(c *gin.Context) (*jwt.Token, error) 
 	if err != nil {
 		return nil, err
 	}
-
-	return mw.parseTokenString(token)
+	t, err := mw.parseTokenString(token)
+	if err != nil {
+		return nil, ErrTokenStringInvalid
+	}
+	return t, nil
 }
 
 // 将TokenStr反序列为jwt.Token
@@ -291,7 +216,8 @@ func (mw *GinJWTMiddleware) parseTokenString(token string) (*jwt.Token, error) {
 	)
 }
 
-// 从gin.Context中得到MapClaims
+// 从gin.Context中得到MapClaims,如果ctx中存在refresh-token(jwt被refresh了)则优先从此中找到token和claims
+// 否则从GinJwtMiddleware指定的位置寻找
 func (mw *GinJWTMiddleware) GetClaimsFromContext(c *gin.Context) (jwt.MapClaims, error) {
 	token, err := mw.getTokenFromCtx(c)
 	if err != nil {
@@ -302,13 +228,12 @@ func (mw *GinJWTMiddleware) GetClaimsFromContext(c *gin.Context) (jwt.MapClaims,
 	for key, value := range token.Claims.(jwt.MapClaims) {
 		claims[key] = value
 	}
-
 	return claims, nil
 }
 
 // 从gin.Context中反解出对应的MapClaims
 func ExtractClaimsFromContext(c *gin.Context) jwt.MapClaims {
-	claims, exists := c.Get("JWT_PAYLOAD")
+	claims, exists := c.Get("jwt-claims")
 	if !exists {
 		return make(jwt.MapClaims)
 	}
@@ -330,32 +255,27 @@ func ExtractClaimsFromToken(token *jwt.Token) jwt.MapClaims {
 	return claims
 }
 
-// 将Token加入到Cookie,只在SendCookie开启时有效
+// 将Token加入到Cookie,仅当 SendCookie 开启时有效
 func (mw *GinJWTMiddleware) SetCookie(c *gin.Context, token string) {
-	if mw.SendCookie {
-		expireCookie := mw.TimeFunc().Add(mw.CookieMaxAge)
-		maxage := int(expireCookie.Unix() - mw.TimeFunc().Unix())
-
-		if mw.CookieSameSite != 0 {
-			c.SetSameSite(mw.CookieSameSite)
-		}
-
-		c.SetCookie(
-			mw.CookieName,
-			token,
-			maxage,
-			"/",
-			mw.CookieDomain,
-			mw.SecureCookie,
-			mw.CookieHTTPOnly,
-		)
+	if !mw.SendCookie {
+		return
 	}
-}
 
-func (mw *GinJWTMiddleware) unauthorized(c *gin.Context, code int, message string) {
-	c.Header("WWW-Authenticate", fmt.Sprintf("JWT realm=%s", mw.Realm))
-	if !mw.DisabledAbort {
-		c.Abort()
+	expireCookie := mw.TimeFunc().Add(mw.CookieMaxAge)
+	maxage := int(expireCookie.Unix() - mw.TimeFunc().Unix())
+
+	// 设置 Cookie
+	c.SetCookie(
+		mw.CookieName,
+		token,
+		maxage,
+		"/",
+		"",
+		mw.SecureCookie,
+		mw.SecureCookie,
+	)
+
+	if mw.CookieSameSite != 0 {
+		c.SetSameSite(mw.CookieSameSite)
 	}
-	mw.Unauthorized(c, code, message)
 }
