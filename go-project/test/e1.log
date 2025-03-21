@@ -1,10 +1,30 @@
-2025-02-28T21:16:01.697+0800	INFO	test/main.go:50	this is rq msg 0
-2025-02-28T21:16:01.700+0800	INFO	test/main.go:50	this is rq msg 6
-2025-02-28T21:16:01.704+0800	INFO	test/main.go:50	this is rq msg 1
-2025-02-28T21:16:01.726+0800	INFO	test/main.go:50	this is rq msg 9
-2025-02-28T21:16:01.733+0800	INFO	test/main.go:50	this is rq msg 2
-2025-02-28T21:16:01.739+0800	INFO	test/main.go:50	this is rq msg 4
-2025-02-28T21:16:01.751+0800	INFO	test/main.go:50	this is rq msg 5
-2025-02-28T21:16:01.761+0800	INFO	test/main.go:50	this is rq msg 7
-2025-02-28T21:16:01.767+0800	INFO	test/main.go:50	this is rq msg 8
-2025-02-28T21:16:01.786+0800	INFO	test/main.go:50	this is rq msg 3
+资料上没记录的命令行指令{
+	1.docker container prune 删除已经停止的容器,
+	2.docker image prune 删除出现问题的镜像,例如虚悬镜像(dangling)
+}
+一些小问题{
+	解决每次挂起VM虚拟机后docker容器无法访问的问题
+	1.需要将docker的网络接口设置为不被NetworkManager管理,做法是新建一个文件 /etc/NetworkManager/conf.d/10-unmanage-docker-interfaces.conf,文件中的内容如下:
+	[keyfile]
+	unmanaged-devices=interface-name:docker*;interface-name:veth*;interface-name:br-*;interface-name:vmnet*;interface-name:vboxnet*
+	2.使用sudo systemctl restart NetworkManager重启NetworkManager
+	3.Dockerfile中通过VOLUME指明的挂载文件若不通过-v覆盖参数则默认创建在容器所在文件夹下(/var/lib/docker/some_container),
+}
+
+DockerFile flag{
+	-f :指定要使用的Dockerfile路径
+	–force-rm :设置镜像过程中删除中间容器
+	–isolation :使用容器隔离技术
+	–label=[] :设置镜像使用的元数据
+	-m :设置内存最大值
+	–memory-swap :设置Swap的最大值为内存+swap,"-1"表示不限swap
+	–no-cache :创建镜像的过程不使用缓存
+	–pull :尝试去更新镜像的新版本
+	–quiet, -q :安静模式,成功后只输出镜像 ID
+	–rm :设置镜像成功后删除中间容器
+	–shm-size :设置/dev/shm的大小,默认值是64M
+	–ulimit :Ulimit配置
+	–squash :将 Dockerfile 中所有的操作压缩为一层
+	–tag, -t :镜像的名字及标签,通常 name:tag 或者 name 格式,可以在一次构建中为一个镜像设置多个标签
+	–network :默认 default,在构建期间设置RUN指令的网络模式
+}

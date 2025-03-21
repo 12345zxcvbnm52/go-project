@@ -3,7 +3,7 @@ package httpserver
 import (
 	"kenshop/goken/registry"
 	"kenshop/goken/server/httpserver/middlewares/jwt"
-	opengintracing "kenshop/goken/server/httpserver/middlewares/tracing"
+	otelkgin "kenshop/goken/server/httpserver/middlewares/otel"
 	"kenshop/goken/server/rpcserver"
 	"net/http"
 
@@ -54,9 +54,9 @@ func WithJWTMiddleware(key string) ServerOption {
 	}
 }
 
-func WithTracer(opts ...opengintracing.GinTracerOption) ServerOption {
+func WithTracer(opts ...otelkgin.GinTracerOption) ServerOption {
 	return func(s *Server) {
-		s.Tracer = opengintracing.MustNewGinTracer(s.Ctx, opts...)
+		s.Tracer = otelkgin.MustNewGinTracer(s.Ctx, opts...)
 	}
 }
 

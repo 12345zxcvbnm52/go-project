@@ -10,12 +10,13 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 
 	"kenshop/goken/registry"
 	mws "kenshop/goken/server/httpserver/middlewares"
 	"kenshop/goken/server/httpserver/middlewares/jwt"
-	ginotel "kenshop/goken/server/httpserver/middlewares/tracing"
+	otelkgin "kenshop/goken/server/httpserver/middlewares/otel"
 	"kenshop/goken/server/httpserver/validate"
 	"kenshop/goken/server/rpcserver"
 
@@ -26,6 +27,7 @@ import (
 	"kenshop/pkg/log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/oklog/run"
 )
 
 var ErrNilHttpRegistor = errors.New("该http服务不存在注册器")
@@ -41,7 +43,7 @@ type Server struct {
 	Jwt       *jwt.GinJWTMiddleware
 	Registor  registry.Registor
 	Validator *validate.Validator
-	Tracer    *ginotel.GinTracer
+	Tracer    *otelkgin.GinTracer
 	GrpcCli   *rpcserver.Client
 	//是否开启pprof接口, 默认开启, 如果开启会自动添加/debug/pprof接口
 	EnableProfiling bool
@@ -57,6 +59,7 @@ type Server struct {
 	Instance *registry.ServiceInstance
 
 	Server *http.Server
+	closed bool
 }
 
 func MustNewServer(ctx context.Context, host string, opts ...ServerOption) *Server {
@@ -147,52 +150,82 @@ func (s *Server) Deregister(ctx context.Context) error {
 	if s.Registor == nil {
 		return ErrNilHttpRegistor
 	}
-	return s.Registor.Deregister(ctx, s.Instance.ID)
+	if s.closed == false {
+		s.closed = true
+		return s.Registor.Deregister(ctx, s.Instance.ID)
+	}
+	return nil
 }
 
 func (s *Server) Serve() error {
-	//设置开发模式,打印路由信息格式
+	// 设置开发模式,打印路由信息格式
 	gin.SetMode(s.Mode)
-	//运行前前打印配置信息
-	log.Infof("[httpserver] 服务启动中,服务信息为: msg= %+v", s.Instance)
+	g := &run.Group{}
 
+	// 运行前打印配置信息
+	log.Infof("[httpserver] 服务启动中,监听信息为: host = %s,服务信息为: msg = %+v", s.Host, s.Instance)
+
+	// 执行 Validator 校验
 	if err := s.Validator.Excute(); err != nil {
 		return err
 	}
 
-	//如果注册器为空就不进行注册而不是返回错误,
+	// 如果注册器为空就不进行注册,而不是返回错误
 	if err := s.Register(s.Ctx, s.Instance); err != nil && err != ErrNilHttpRegistor {
 		return err
 	}
 
-	//监听终止信号,优雅退出
+	// 监听终止信号,优雅退出
 	sign := make(chan os.Signal, 1)
 	signal.Notify(sign, syscall.SIGTERM, syscall.SIGINT)
-	ech := make(chan error, 1)
-	go func() {
-		if err := s.Server.ListenAndServe(); err != nil {
-			//同理若注册器为空就不进行注销
+
+	// 确保Deregister只执行一次
+	var deregisterOnce sync.Once
+	deregisterFunc := func() {
+		deregisterOnce.Do(func() {
 			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilHttpRegistor {
 				log.Errorf("[httpserver] 服务注销失败, err= %v", e)
+			} else {
+				log.Info("[httpserver] 服务正常注销")
 			}
-			ech <- err
-		}
-	}()
-	select {
-	case <-sign:
-		close(sign)
-		if e1 := s.Server.Shutdown(s.Ctx); e1 != nil {
-			log.Errorf("[httpserver] 服务注销失败, err= %v", e1)
-			return e1
-		}
-		if e2 := s.Deregister(s.Ctx); e2 != nil && e2 != ErrNilHttpRegistor {
-			log.Errorf("[httpserver] 服务注销失败, err= %v", e2)
-			return e2
-		}
-		log.Info("[httpserver] 服务正常注销")
-		return nil
-	case err := <-ech:
-		close(ech)
-		return err
+		})
 	}
+
+	// 启动 HTTP 服务器
+	g.Add(
+		func() error {
+			if err := s.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+				return err
+			}
+			return nil
+		},
+		func(err error) {
+			if e1 := s.Server.Shutdown(s.Ctx); e1 != nil {
+				log.Errorf("[httpserver] http根服务注销失败, err= %v", e1)
+			}
+			deregisterFunc()
+		},
+	)
+
+	// 监听终止信号,优雅退出
+	g.Add(
+		func() error {
+			<-sign
+			if e1 := s.Server.Shutdown(s.Ctx); e1 != nil {
+				log.Errorf("[httpserver] 服务注销失败, err= %v", e1)
+				return e1
+			}
+			deregisterFunc()
+			return nil
+		},
+		func(err error) {
+			// 发送终止信号,而不是 close(sign)
+			select {
+			case sign <- syscall.SIGINT:
+			default:
+			}
+		},
+	)
+
+	return g.Run()
 }

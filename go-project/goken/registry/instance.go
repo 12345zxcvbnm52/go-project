@@ -2,6 +2,7 @@ package registry
 
 import (
 	"context"
+	"kenshop/pkg/errors"
 	"net/url"
 )
 
@@ -19,6 +20,11 @@ type Registor interface {
 	Register(context.Context, *ServiceInstance) error
 	Deregister(context.Context, string) error
 }
+
+var (
+	ErrRegisterFailed   = errors.New("服务注册失败")
+	ErrDeregisterFailed = errors.New("服务注销失败")
+)
 
 type Listener interface {
 	//第一次监听或者服务实例发生变化时调用会返回服务实例列表

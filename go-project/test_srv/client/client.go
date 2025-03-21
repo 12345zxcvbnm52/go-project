@@ -1,20 +1,15 @@
 package main
 
 import (
-	"context"
-	"errors"
 	"fmt"
 	"kenshop/goken/registry/discover"
 	"kenshop/goken/registry/ways/consul"
 	"kenshop/goken/server/rpcserver/cinterceptors"
-	"kenshop/pkg/trace"
-	pb "kenshop/test_srv/proto"
 	"time"
 
 	"github.com/hashicorp/consul/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/metadata"
 )
 
 func DefaultDial() (*grpc.ClientConn, error) {
@@ -53,33 +48,7 @@ func DefaultDial() (*grpc.ClientConn, error) {
 }
 
 func test() {
-	cc, err := DefaultDial()
-	if err != nil {
-		panic(err)
-	}
-	if cc == nil {
-		panic(errors.New("conn is nil"))
-	}
 
-	t := trace.MustNewTracer(context.Background(), trace.WithName("server-test"), trace.WithGlobal(true))
-	tp, err := t.NewTraceProvider("192.168.199.128:4318")
-	if err != nil {
-		panic(err)
-	}
-	tr := tp.Tracer("ken-tracer")
-	ctx, span := tr.Start(context.Background(), "server-test-span1")
-	md := metadata.Pairs("tracer-name", "ken-tracer")
-	trace.InjectMD(ctx, md)
-	ctx = metadata.NewOutgoingContext(ctx, md)
-
-	c := pb.NewTestClient(cc)
-	res, err := c.Conn(ctx, &pb.Req{Name: "ken"})
-	if err != nil {
-		panic(err)
-	}
-	span.End()
-	fmt.Println(res)
-	tp.Shutdown(context.Background())
 }
 
 func main() {

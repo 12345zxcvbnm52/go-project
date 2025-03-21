@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"kenshop/pkg/cache"
 	"net/http"
 	"strings"
 	"time"
@@ -43,7 +44,7 @@ type GinJWTMiddleware struct {
 	// 默认为一天,传入数值为0则关闭Refresh模式
 	MaxRefresh time.Duration
 
-	WithCache bool
+	Cache *cache.MultiCache
 
 	//TokenInside是一个字符串,用于指定token在请求中的位置,默认值为"header",允许有多个值,用,分隔
 	TokenInside string

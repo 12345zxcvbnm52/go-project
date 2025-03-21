@@ -1,16 +1,21 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"kenshop/pkg/cache"
+	"kenshop/pkg/encrypt"
 	"kenshop/pkg/log"
 	"kenshop/pkg/redlock"
 	"kenshop/pkg/rockmq"
+	"math/rand/v2"
 	"sync"
 	"time"
 
 	"github.com/allegro/bigcache"
+	es "github.com/elastic/go-elasticsearch/v8"
+	esapi "github.com/elastic/go-elasticsearch/v8/esapi"
 
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/apache/rocketmq-client-go/v2/rlog"
@@ -180,7 +185,60 @@ func RocketCache() {
 	time.Sleep(10 * time.Second)
 }
 
+type Goods struct {
+	//Id       uint32  `json:"id" form:"id" uri:"id" header:"" binding:""`
+	Name     string  `json:"name" form:"name" uri:"" header:"" binding:""`
+	Price    float32 `json:"price" form:"sale_price" uri:"" header:"" binding:""`
+	ShipFree bool    `json:"free" form:"ship_free" uri:"" header:"" binding:""`
+}
+
+func Es() {
+	cfg := es.Config{}
+	cfg.Addresses = append(cfg.Addresses, "http://192.168.199.128:9200")
+	cli, err := es.NewClient(cfg)
+	if err != nil {
+		panic(err)
+	}
+	mapping := `{
+		"mappings": {
+		    "properties": {
+				"name": { "type": "text" },
+				"price": { "type": "float" },
+				"ship_free": { "type": "boolean", "index": false },
+				"id": { "type": "long" }
+		    }
+		}
+	}`
+	buf := []byte(mapping)
+	f := bytes.NewBuffer(buf)
+
+	t := esapi.IndicesCreateRequest{}
+	t.Index = "goods"
+	t.Body = f
+	res, err := t.Do(context.Background(), cli)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(res.IsError())
+
+	tcli, _ := es.NewTypedClient(cfg)
+	for i := range 1000 {
+		g := Goods{
+			Name:     fmt.Sprintf("goods_%d", i),
+			Price:    rand.Float32() * 1000,
+			ShipFree: true,
+		}
+		tcli.Index("goods").Id(fmt.Sprintf("%d", i)).Document(&g).Do(context.Background())
+	}
+}
+
+func Encrypt() {
+	password := "w1231fnwon"
+	fmt.Println(encrypt.EncryptString(password))
+}
+
 func main() {
-	Cache()
+	//Es()
 	//RocketCache()
+	Encrypt()
 }

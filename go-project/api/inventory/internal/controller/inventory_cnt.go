@@ -156,7 +156,7 @@ func (s *InventoryHttpServer) DecrStock(c *gin.Context) {
 			GoodsNum: v.GoodsNum,
 		})
 	}
-	res, err := s.InventoryData.DecrStockDB(s.Server.Ctx, &proto.DecrStockReq{
+	res, err := s.InventoryData.DecrStockDB(s.Server.Ctx, &proto.UpdateStockReq{
 		DecrData:  decrData,
 		OrderSign: u.OrderSign,
 	})

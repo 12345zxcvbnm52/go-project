@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"kenshop/goken/registry"
+	"kenshop/pkg/log"
 	"net/url"
 	"strconv"
 	"time"
@@ -111,7 +112,8 @@ func (r *registor) Register(ctx context.Context, ins *registry.ServiceInstance) 
 
 	err := r.cli.Agent().ServiceRegister(asr)
 	if err != nil {
-		return err
+		log.Errorf("[consul] 服务注册失败 err = %v", err)
+		return registry.ErrRegisterFailed
 	}
 	return nil
 }
@@ -176,7 +178,11 @@ func (r *registor) Register(ctx context.Context, ins *registry.ServiceInstance) 
 
 // 移除服务中心的服务
 func (r *registor) Deregister(ctx context.Context, serviceID string) error {
-	return r.cli.Agent().ServiceDeregister(serviceID)
+	if err := r.cli.Agent().ServiceDeregister(serviceID); err != nil {
+		log.Errorf("[consul] 服务注销失败 err = %v", err)
+		return registry.ErrDeregisterFailed
+	}
+	return nil
 }
 
 // 设置Timeout,

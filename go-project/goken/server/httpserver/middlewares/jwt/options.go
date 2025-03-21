@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"errors"
+	"kenshop/pkg/cache"
 	"net/http"
 	"time"
 
@@ -174,5 +175,11 @@ func WithExpField(expField string) JwtOption {
 func WithKeyFunc(keyFunc func(t *jwt.Token) (interface{}, error)) JwtOption {
 	return func(mw *GinJWTMiddleware) {
 		mw.KeyFunc = keyFunc
+	}
+}
+
+func WithCache(c *cache.MultiCache) JwtOption {
+	return func(gj *GinJWTMiddleware) {
+		gj.Cache = c
 	}
 }

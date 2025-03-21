@@ -596,3 +596,10 @@
 19:C 15 Mar 2025 07:59:13.087 * DB saved on disk
 19:C 15 Mar 2025 07:59:13.088 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
 1:M 15 Mar 2025 07:59:13.185 * Background saving terminated with success
+1:signal-handler (1742358130) Received SIGTERM scheduling shutdown...
+1:M 19 Mar 2025 04:22:10.790 # User requested shutdown...
+1:M 19 Mar 2025 04:22:10.798 * Calling fsync() on the AOF file.
+1:M 19 Mar 2025 04:22:10.799 * Saving the final RDB snapshot before exiting.
+1:M 19 Mar 2025 04:22:10.815 * DB saved on disk
+1:M 19 Mar 2025 04:22:10.819 * Removing the pid file.
+1:M 19 Mar 2025 04:22:10.819 # Redis is now ready to exit, bye bye...

@@ -593,3 +593,107 @@
 1:S 17 Mar 2025 09:44:41.854 * Trying a partial resynchronization (request 11c2b9662e03a35bc847c7072408780c5762e2e7:33083).
 1:S 17 Mar 2025 09:44:41.861 * Successful partial resynchronization with master.
 1:S 17 Mar 2025 09:44:41.861 * MASTER <-> REPLICA sync: Master accepted a Partial Resynchronization.
+1:S 17 Mar 2025 11:54:32.182 # Connection with master lost.
+1:S 17 Mar 2025 11:54:32.184 * Caching the disconnected master state.
+1:S 17 Mar 2025 11:54:32.184 * Reconnecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:32.193 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:32.193 * Non blocking connect for SYNC fired the event.
+1:S 17 Mar 2025 11:54:32.339 # Failed to read response from the server: Success
+1:S 17 Mar 2025 11:54:32.341 # Master did not respond to command during SYNC handshake
+1:S 17 Mar 2025 11:54:33.062 * Connecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:33.063 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:33.063 # Error condition on socket for SYNC: Connection refused
+1:S 17 Mar 2025 11:54:34.088 * Connecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:34.090 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:34.090 # Error condition on socket for SYNC: Connection refused
+1:S 17 Mar 2025 11:54:35.103 * Connecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:35.103 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:35.104 # Error condition on socket for SYNC: Connection refused
+1:S 17 Mar 2025 11:54:36.116 * Connecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:36.116 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:36.120 # Error condition on socket for SYNC: Connection refused
+1:S 17 Mar 2025 11:54:37.132 * Connecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:37.133 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:37.133 # Error condition on socket for SYNC: Connection refused
+1:S 17 Mar 2025 11:54:37.469 * FAIL message received from b873d33d82d9bac06fbedab0bc89ff6b8a41fe5c about 987cd123528343e530903bb093e9c85ba6e0ad29
+1:S 17 Mar 2025 11:54:37.469 # Cluster state changed: fail
+1:S 17 Mar 2025 11:54:37.546 # Start of election delayed for 878 milliseconds (rank #0, offset 43876).
+1:S 17 Mar 2025 11:54:38.154 * Connecting to MASTER 172.19.0.1:6380
+1:S 17 Mar 2025 11:54:38.154 * MASTER <-> REPLICA sync started
+1:S 17 Mar 2025 11:54:38.155 # Error condition on socket for SYNC: Connection refused
+1:S 17 Mar 2025 11:54:38.458 # Starting a failover election for epoch 10.
+1:S 17 Mar 2025 11:54:38.468 # Failover election won: I'm the new master.
+1:S 17 Mar 2025 11:54:38.468 # configEpoch set to 10 after successful failover
+1:M 17 Mar 2025 11:54:38.468 * Discarding previously cached master state.
+1:M 17 Mar 2025 11:54:38.469 # Setting secondary replication ID to 11c2b9662e03a35bc847c7072408780c5762e2e7, valid up to offset: 43877. New replication ID is a3e21832a75133ea3c2a1076831631089e126fe3
+1:M 17 Mar 2025 11:54:38.473 # Cluster state changed: ok
+1:M 17 Mar 2025 11:54:47.586 * Marking node dc7831a1af8d1c54d92c6cf6d6569247dca288ce as failing (quorum reached).
+1:M 17 Mar 2025 11:54:54.260 * Marking node b873d33d82d9bac06fbedab0bc89ff6b8a41fe5c as failing (quorum reached).
+1:M 17 Mar 2025 11:54:54.260 # Cluster state changed: fail
+1:M 17 Mar 2025 11:54:55.287 # Failover auth granted to ea736cd9ec7c33d8bbaaf8a3a16da17da7c246ff for epoch 11
+1:M 17 Mar 2025 11:54:55.299 # Cluster state changed: ok
+1:M 17 Mar 2025 11:55:04.931 * Marking node ea736cd9ec7c33d8bbaaf8a3a16da17da7c246ff as failing (quorum reached).
+1:M 17 Mar 2025 11:55:04.932 # Cluster state changed: fail
+1:signal-handler (1742212511) Received SIGTERM scheduling shutdown...
+1:M 17 Mar 2025 11:55:11.286 # User requested shutdown...
+1:M 17 Mar 2025 11:55:11.287 * Calling fsync() on the AOF file.
+1:M 17 Mar 2025 11:55:11.287 * Saving the final RDB snapshot before exiting.
+1:M 17 Mar 2025 11:55:11.294 * DB saved on disk
+1:M 17 Mar 2025 11:55:11.295 * Removing the pid file.
+1:M 17 Mar 2025 11:55:11.295 # Redis is now ready to exit, bye bye...
+1:C 21 Mar 2025 02:09:38.336 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 21 Mar 2025 02:09:38.337 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 21 Mar 2025 02:09:38.337 # Configuration loaded
+1:M 21 Mar 2025 02:09:38.340 * monotonic clock: POSIX clock_gettime
+1:M 21 Mar 2025 02:09:38.342 * Node configuration loaded, I'm c9dfbbf46c6b276a082739e6755d7f896d5a7105
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.15 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in cluster mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6384
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 21 Mar 2025 02:09:38.345 # Server initialized
+1:M 21 Mar 2025 02:09:38.345 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 21 Mar 2025 02:09:38.349 * Reading RDB base file on AOF loading...
+1:M 21 Mar 2025 02:09:38.350 * Loading RDB produced by version 7.0.15
+1:M 21 Mar 2025 02:09:38.350 * RDB age 392780 seconds
+1:M 21 Mar 2025 02:09:38.350 * RDB memory usage when created 1.55 Mb
+1:M 21 Mar 2025 02:09:38.350 * RDB is base AOF
+1:M 21 Mar 2025 02:09:38.350 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:M 21 Mar 2025 02:09:38.351 * DB loaded from base file appendonly6384.aof.6.base.rdb: 0.002 seconds
+1:M 21 Mar 2025 02:09:38.351 * DB loaded from append only file: 0.002 seconds
+1:M 21 Mar 2025 02:09:38.351 * Opening AOF incr file appendonly6384.aof.6.incr.aof on server start
+1:M 21 Mar 2025 02:09:38.351 * Ready to accept connections
+1:M 21 Mar 2025 02:09:38.403 * Clear FAIL state for node dc7831a1af8d1c54d92c6cf6d6569247dca288ce: replica is reachable again.
+1:M 21 Mar 2025 02:09:38.754 * Clear FAIL state for node 987cd123528343e530903bb093e9c85ba6e0ad29: master without slots is reachable again.
+1:M 21 Mar 2025 02:09:38.757 * Replica 172.19.0.1:6380 asks for synchronization
+1:M 21 Mar 2025 02:09:38.758 * Partial resynchronization not accepted: Replication ID mismatch (Replica asked for 'c92e1e787a1b89e378b0a844374726e3ca5bbc8c', my replication IDs are 'bce1c0b060bb142abda32e95d95436d6316bf9bf' and '0000000000000000000000000000000000000000')
+1:M 21 Mar 2025 02:09:38.758 * Replication backlog created, my new replication IDs are '8f979e46184c489fdd61be32e44ab93692a18337' and '0000000000000000000000000000000000000000'
+1:M 21 Mar 2025 02:09:38.758 * Starting BGSAVE for SYNC with target: disk
+1:M 21 Mar 2025 02:09:38.758 * Background saving started by pid 19
+19:C 21 Mar 2025 02:09:38.762 * DB saved on disk
+19:C 21 Mar 2025 02:09:38.763 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+1:M 21 Mar 2025 02:09:38.764 * Background saving terminated with success
+1:M 21 Mar 2025 02:09:38.764 * Synchronization with replica 172.19.0.1:6380 succeeded
+1:M 21 Mar 2025 02:09:38.918 * Clear FAIL state for node b873d33d82d9bac06fbedab0bc89ff6b8a41fe5c: master without slots is reachable again.
+1:M 21 Mar 2025 02:09:48.817 * Clear FAIL state for node ea736cd9ec7c33d8bbaaf8a3a16da17da7c246ff: is reachable again and nobody is serving its slots after some time.
+1:M 21 Mar 2025 02:09:48.817 # Cluster state changed: ok
+1:M 21 Mar 2025 04:03:18.910 # Disconnecting timedout replica (streaming sync): 172.19.0.1:6380
+1:M 21 Mar 2025 04:03:18.910 # Connection with replica 172.19.0.1:6380 lost.
+1:M 21 Mar 2025 04:03:18.968 * Replica 172.19.0.1:6380 asks for synchronization
+1:M 21 Mar 2025 04:03:18.968 * Partial resynchronization request from 172.19.0.1:6380 accepted. Sending 0 bytes of backlog starting from offset 5909.
+1:M 21 Mar 2025 06:45:26.950 # Connection with replica 172.19.0.1:6380 lost.
+1:M 21 Mar 2025 06:45:26.965 * Replica 172.19.0.1:6380 asks for synchronization
+1:M 21 Mar 2025 06:45:26.965 * Partial resynchronization request from 172.19.0.1:6380 accepted. Sending 0 bytes of backlog starting from offset 14743.

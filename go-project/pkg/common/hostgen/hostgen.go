@@ -1,9 +1,13 @@
 package hostgen
 
 import (
+	"kenshop/pkg/errors"
+	"kenshop/pkg/log"
 	"net"
 	"strconv"
 )
+
+var ErrInvalidHost = errors.New("错误的host格式")
 
 func isValidIPAndLocalHost(ip string) bool {
 	parsedIP := net.ParseIP(ip)
@@ -51,7 +55,8 @@ func GetUsagePort() int {
 func ResolveHost(host string) (string, error) {
 	ip, port, err := net.SplitHostPort(host)
 	if err != nil {
-		return "", err
+		log.Errorf("[endpoint] 无法从host中提取有效的ip或port")
+		return "", ErrInvalidHost
 	}
 
 	//如果port为无效值则自动获取port

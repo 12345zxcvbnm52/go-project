@@ -12,9 +12,11 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 
+	"github.com/oklog/run"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 	"google.golang.org/grpc/health/grpc_health_v1"
@@ -37,6 +39,7 @@ type Server struct {
 	//timeout  time.Duration
 	Health   *health.Server
 	Instance *registry.ServiceInstance
+	closed   bool
 }
 
 var ErrNilRpcRegistor = errors.New("该rpc服务不存在注册器")
@@ -65,6 +68,7 @@ func MustNewServer(ctx context.Context, opts ...ServerOption) *Server {
 		Ctx:       ctx,
 		Instance:  new(registry.ServiceInstance),
 		UnaryInts: []grpc.UnaryServerInterceptor{sinterceptors.HealthCheckInterceptor()},
+		closed:    false,
 	}
 	for _, v := range opts {
 		v(s)
@@ -111,42 +115,65 @@ func (s *Server) Deregister(ctx context.Context) error {
 	if s.Registor == nil {
 		return ErrNilRpcRegistor
 	}
-	return s.Registor.Deregister(ctx, s.Instance.ID)
+	if s.closed == false {
+		s.closed = true
+		return s.Registor.Deregister(ctx, s.Instance.ID)
+	}
+	return nil
 }
 
 func (s *Server) Serve() error {
+	g := &run.Group{}
 	//运行前前打印配置信息
-	log.Infof("[rpcserver] 服务启动中,服务信息为: msg= %+v", s.Instance)
+	log.Infof("[rpcserver] 服务启动中,监听信息为: host = %s,服务信息为: msg = %+v", s.Host, s.Instance)
 	//如果注册器为空就不进行注册而不是返回错误,
 	if err := s.Register(s.Ctx, s.Instance); err != nil && err != ErrNilRpcRegistor {
 		return err
 	}
+
+	// 确保Deregister只执行一次
+	var deregisterOnce sync.Once
+	deregisterFunc := func() {
+		deregisterOnce.Do(func() {
+			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRpcRegistor {
+				log.Errorf("[httpserver] 服务注销失败, err= %v", e)
+			} else {
+				log.Info("[httpserver] 服务正常注销")
+			}
+		})
+	}
+
 	//监听终止信号,优雅退出
 	sign := make(chan os.Signal, 1)
 	signal.Notify(sign, syscall.SIGTERM, syscall.SIGINT)
-	ech := make(chan error, 1)
-	go func() {
-		if err := s.Server.Serve(s.Lis); err != nil {
-			//同理若注册器为空就不进行注销
-			if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRpcRegistor {
-				log.Errorf("[rpcserver] 服务注销失败, err= %v", e)
+	g.Add(
+		func() error {
+			if err := s.Server.Serve(s.Lis); err != nil {
+				log.Errorf("[rpcserver] 服务启动失败, err= %v", err)
+				return err
 			}
-			ech <- err
-		}
-	}()
-	select {
-	case <-sign:
-		close(sign)
-		s.Server.GracefulStop()
-		if e := s.Deregister(s.Ctx); e != nil && e != ErrNilRpcRegistor {
-			log.Errorf("[rpcserver] 服务注销失败, err= %v", e)
-		}
-		log.Info("[rpcserver] 服务正常注销")
-		return nil
-	case err := <-ech:
-		close(ech)
-		return err
-	}
+			return nil
+		},
+		func(err error) {
+			s.Server.GracefulStop()
+			deregisterFunc()
+		},
+	)
+
+	g.Add(
+		func() error {
+			select {
+			case <-sign:
+				s.Server.GracefulStop()
+				deregisterFunc()
+				return nil
+			}
+		},
+		func(err error) {
+			sign <- syscall.SIGINT
+		},
+	)
+	return g.Run()
 }
 
 func WithHost(host string) ServerOption {

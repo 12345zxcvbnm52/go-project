@@ -1,0 +1,119 @@
+资料上没记录的命令行指令{
+	1.docker container prune 删除已经停止的容器,
+	2.docker image prune 删除出现问题的镜像,例如虚悬镜像(dangling)
+}
+一些小问题{
+	解决每次挂起VM虚拟机后docker容器无法访问的问题
+	1.需要将docker的网络接口设置为不被NetworkManager管理,做法是新建一个文件 /etc/NetworkManager/conf.d/10-unmanage-docker-interfaces.conf,文件中的内容如下:
+	[keyfile]
+	unmanaged-devices=interface-name:docker*;interface-name:veth*;interface-name:br-*;interface-name:vmnet*;interface-name:vboxnet*
+	2.使用sudo systemctl restart NetworkManager重启NetworkManager
+	3.Dockerfile中通过VOLUME指明的挂载文件若不通过-v覆盖参数则默认创建在容器所在文件夹下(/var/lib/docker/some_container),
+}
+
+Dockerfile{
+	FROM 指定基础镜像,用于后续的指令构建,
+
+	MAINTAINER 指定Dockerfile的作者/维护者,
+
+	LABEL 添加镜像的元数据,使用键值对的形式,
+
+	RUN 在构建过程中在镜像中执行命令(推荐使用shell而不是docker提供的json格式),
+
+	CMD 指定容器创建时的默认命令,
+	ENTRYPOINT 设置容器创建时的主要命令(两者具体区别可看ken博客),
+
+	EXPOSE port EXPOSE只是声明端口,不会自动开放端口,可以配合-P将EXPOSE指定的端口自动映射到宿主机需要的随机端口,
+    如果要手动映射端口,必须用-p,在同一docker network内,EXPOSE 指定的端口可以让其他容器访问,
+
+	ENV 在容器内部设置环境变量,
+
+	ADD 将文件,目录或远程URL复制到镜像中,
+
+	COPY 将文件或目录复制到镜像中,
+
+	VOLUME dir 为容器创建挂载点或声明卷,
+    这种声明可以让指定的dir路径持久化(哪怕容器被删除),如果实际运行时不进行挂载,docker会使用匿名的路径保存它
+
+	WORKDIR dir 设置后续指令的工作目录,
+
+	USER user 指定该镜像以什么样的用户去执行,不指定则默认是root
+
+	ARG 定义在构建过程中传递给构建器的变量,可使用 "docker build" 命令设置,
+
+	ONBUILD 当该镜像被用作另一个构建过程的基础时,添加触发器,
+
+	STOPSIGNAL 设置发送给容器以退出的系统调用信号,
+
+	HEALTHCHECK 定义周期性检查容器健康状态的命令,
+
+	SHELL 覆盖Docker中默认的shell,用于RUN,CMD和ENTRYPOINT指令,
+}
+
+Dockerfile flag{
+	-f :指定要使用的Dockerfile路径
+	–force-rm :设置镜像过程中删除中间容器
+	–isolation :使用容器隔离技术
+	–label=[] :设置镜像使用的元数据
+	-m :设置内存最大值
+	–memory-swap :设置Swap的最大值为内存+swap,"-1"表示不限swap
+	–no-cache :创建镜像的过程不使用缓存
+	–pull :尝试去更新镜像的新版本
+	–quiet, -q :安静模式,成功后只输出镜像 ID
+	–rm :设置镜像成功后删除中间容器
+	–shm-size :设置/dev/shm的大小,默认值是64M
+	–ulimit :Ulimit配置
+	–squash :将 Dockerfile 中所有的操作压缩为一层
+	–tag, -t :镜像的名字及标签,通常 name:tag 或者 name 格式,可以在一次构建中为一个镜像设置多个标签
+	–network :默认 default,在构建期间设置RUN指令的网络模式
+}
+
+容器命令{
+    1. docker run [OPTIONS] IMAGE [COMMAND] [ARG...] 新建并启动容器  
+    常用OPTIONS说明:  
+    -P 使用可用的端口映射,  
+    -p 指定端口映射,  
+
+    2. docker ps [OPTIONS] 常用OPTIONS说明:  
+    -a 列出当前所有正在运行的容器+历史上运行过的容器,  
+    -l 显示最近创建的容器,  
+    -n 显示最近n个创建的容器,  
+    -q 静默模式,只显示容器编号,  
+
+    3. 退出容器的两种方式  
+    exit 由run进入容器时,使用exit退出,容器停止,  
+    ctrl+p+q 由run进入容器时,使用ctrl+p+q退出,容器不停止,  
+
+    4. docker logs 容器ID 查看容器日志  
+
+    5. docker top 容器ID 查看容器内运行的进程  
+
+    6. docker stats [容器ID] 查看所有或指定容器的详细参数(比docker top更详细,使用Ctrl + C退出)  
+
+    7. docker inspect 容器ID 能更详细查看容器的状态  
+
+    8. docker exec -it 容器ID dir 进入正在运行的容器并以命令行交互    
+
+    9. 重新进入容器终端 docker attach 容器ID  
+    attach 与 exec 区别  
+    - attach 直接进入容器启动命令的终端,不会启动新的进程(exit 退出会导致容器停止),  
+    - exec 在容器中打开新的终端,并且可以启动新的进程(exit 退出不会导致容器停止),  
+
+    10. docker kill 容器ID或容器名 强制停止容器  
+
+    11. docker rm -f $(docker ps -a -q) 一次性删除多个容器实例  
+    docker ps -a -q | xargs docker rm  
+
+    注意:Docker是否关闭-d运行的容器,取决于初始时分配给容器的主进程(PID为1)是否结束,  
+    像 Redis,Nginx其本身开启守护进程时会终止主进程并fork子进程,这样就会导致容器退出,  
+
+    12. docker cp 容器ID:容器内路径 目的主机路径 允许将容器内的文件复制到宿主机,  
+
+    13. 导入和导出容器  
+    docker export 容器ID > 文件名.tar 用于导出容器的文件系统,不包含历史层和元数据,  
+    cat 文件名.tar | docker import - 镜像用户/镜像名:镜像版本号 用于从tar文件创建一个新的Docker镜像,但不会恢复环境变量,端口等元数据,  
+
+    14. 保存和加载镜像  
+    docker save -o 文件名.tar 镜像名:版本 用于导出镜像,包含所有层,元数据,适用于完整备份和迁移,  
+    docker load < 文件名.tar 用于从.tar文件加载镜像,并完整恢复所有信息,  
+}

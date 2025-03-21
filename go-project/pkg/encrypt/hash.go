@@ -5,15 +5,9 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
-	"encoding/base64"
-	"encoding/hex"
-	"fmt"
 	"hash"
 	"kenshop/pkg/errors"
-	"strings"
 
-	"github.com/buger/jsonparser"
-	uuid "github.com/google/uuid"
 	"golang.org/x/crypto/sha3"
 
 	"github.com/spaolacci/murmur3"
@@ -21,62 +15,9 @@ import (
 
 const defaultHashAlgorithm = "sha512"
 
-// GenerateToken 生成token,如果哈希算法为空,则不会加密而是直接裸露连接
-func GenerateToken(orgID, keyID, hashAlgorithm string) (string, error) {
-	if keyID == "" {
-		keyID = strings.ReplaceAll(uuid.Must(uuid.NewV7()).String(), "-", "")
-	}
-
-	if hashAlgorithm != "" {
-		_, err := hashFunction(hashAlgorithm)
-		if err != nil {
-			hashAlgorithm = defaultHashAlgorithm
-		}
-
-		jsonToken := fmt.Sprintf(`{"org":"%s","id":"%s","h":"%s"}`, orgID, keyID, hashAlgorithm)
-
-		return base64.StdEncoding.EncodeToString([]byte(jsonToken)), err
-	}
-
-	// Legacy keys
-	return orgID + keyID, nil
-}
-
-// B64JSONPrefix stand for `{"` in base64.
-const B64JSONPrefix = "ey"
-
-// TokenHashAlgo ...
-func TokenHashAlgo(token string) string {
-	// Legacy tokens not b64 and not JSON records
-	if strings.HasPrefix(token, B64JSONPrefix) {
-		if jsonToken, err := base64.StdEncoding.DecodeString(token); err == nil {
-			hashAlgo, _ := jsonparser.GetString(jsonToken, "h")
-
-			return hashAlgo
-		}
-	}
-
-	return ""
-}
-
-// TokenOrg ...
-func TokenOrg(token string) string {
-	if strings.HasPrefix(token, B64JSONPrefix) {
-		if jsonToken, err := base64.StdEncoding.DecodeString(token); err == nil {
-			// Checking error in case if it is a legacy tooken which just by accided has the same b64JSON prefix
-			if org, err := jsonparser.GetString(jsonToken, "org"); err == nil {
-				return org
-			}
-		}
-	}
-
-	// 24 is mongo bson id length
-	if len(token) > 24 {
-		return token[:24]
-	}
-
-	return ""
-}
+var (
+	ErrUndefinedHashFunc = errors.New("未定义的HashFunc")
+)
 
 var (
 	SHA1      = "sha1"
@@ -90,7 +31,33 @@ var (
 	Murmur128 = "murmur128"
 )
 
-func hashFunction(algorithm string) (hash.Hash, error) {
+// 该函数不会返回错误,但如果参数有误则默认使用sha512算法,返回值中string为算法名,避免出现参数有误
+func NewHashFuncWithDefault(algorithm string) (hash.Hash, string) {
+	switch algorithm {
+	case SHA1:
+		return sha1.New(), algorithm
+	case SHA256:
+		return sha256.New(), algorithm
+	case SHA512:
+		return sha512.New(), algorithm
+	case SHA3_256:
+		return sha3.New256(), algorithm
+	case SHA3_512:
+		return sha3.New512(), algorithm
+	case MD5:
+		return md5.New(), algorithm
+	case Murmur64:
+		return murmur3.New64(), algorithm
+	case Murmur128:
+		return murmur3.New128(), algorithm
+	case "", Murmur32:
+		return murmur3.New32(), algorithm
+	default:
+		return sha512.New(), defaultHashAlgorithm
+	}
+}
+
+func NewHashFunc(algorithm string) (hash.Hash, error) {
 	switch algorithm {
 	case SHA1:
 		return sha1.New(), nil
@@ -111,19 +78,42 @@ func hashFunction(algorithm string) (hash.Hash, error) {
 	case "", Murmur32:
 		return murmur3.New32(), nil
 	default:
-		return nil, errors.Errorf("unknown key hash function: %s", algorithm)
+		return nil, ErrUndefinedHashFunc
 	}
 }
 
-// HashStr return hash the give string and return.
-func HashStr(in string) string {
-	h, _ := hashFunction(TokenHashAlgo(in))
-	_, _ = h.Write([]byte(in))
-
-	return hex.EncodeToString(h.Sum(nil))
+// NewHashFuncForPBKDF2 生成适用于PBKDF2的哈希函数
+func NewHashFuncForPBKDF2(algorithm string) (func() hash.Hash, error) {
+	switch algorithm {
+	case SHA1:
+		return sha1.New, nil
+	case SHA256:
+		return sha256.New, nil
+	case SHA512:
+		return sha512.New, nil
+	case SHA3_256:
+		return sha3.New256, nil
+	case SHA3_512:
+		return sha3.New512, nil
+	default:
+		return nil, ErrUndefinedHashFunc
+	}
 }
 
-// HashKey return hash the give string and return.
-func HashKey(in string) string {
-	return HashStr(in)
+// NewHashFuncForPBKDF2 生成适用于PBKDF2的哈希函数
+func NewHashFuncForPBKDF2WithDefault(algorithm string) (func() hash.Hash, string) {
+	switch algorithm {
+	case SHA1:
+		return sha1.New, algorithm
+	case SHA256:
+		return sha256.New, algorithm
+	case SHA512:
+		return sha512.New, algorithm
+	case SHA3_256:
+		return sha3.New256, algorithm
+	case SHA3_512:
+		return sha3.New512, algorithm
+	default:
+		return sha512.New, defaultHashAlgorithm
+	}
 }

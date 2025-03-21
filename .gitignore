@@ -9,3 +9,9 @@ protobuf-master/
 dtm-main/
 GuGoTik-main/
 bigcache-main/
+system_clean.sh
+common_shell
+jenkins/
+/go-project/test_srv
+/go-project/test
+/efk
